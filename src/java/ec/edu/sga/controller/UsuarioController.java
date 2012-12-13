@@ -24,12 +24,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIPanel;
+
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -390,7 +390,7 @@ public class UsuarioController implements Serializable {
         this.ejbFacadeRol = ejbFacadeRol;
     }
 
-   public SelectItem[] getItemsAvailableSelectMany() {
+    public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
