@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="/templates/plantilla.xhtml">
+        <ui:define name="content">
+            <h:form id="formRol">
+                <p:panel id="panelRol">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Nombre: "/>
+                        <p:inputText value="#{rolController.current.nombre}"/>
+                        <h:outputLabel value="Tipo de Rol: "/>
+                        <p:selectOneMenu id="idRol" value="#{rolController.current.tipoRol}">
+                            <f:selectItem itemLabel="#{bundle.Item}"/>
+                            <f:selectItems value="#{typeListController.tipoRol}" var="_rol" />  
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Descripcion: "/>
+                        <p:inputText value="#{rolController.current.descripcion}"/>
+
+                    </h:panelGrid>
+                </p:panel>
+                <p:commandButton value="Guardar" action="#{rolController.persist()}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

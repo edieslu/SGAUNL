@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/plantilla.xhtml">
+        
+        <ui:define name="content">
+            <h:outputText value="#{bundle.ListAsignaturaTitle}"></h:outputText>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListAsignaturaEmpty}" rendered="#{asignaturaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{asignaturaController.items.rowCount > 0}">
+                    <h:outputText value="#{asignaturaController.pagination.pageFirstItem + 1}..#{asignaturaController.pagination.pageLastItem + 1}/#{asignaturaController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{asignaturaController.previous}" value="#{bundle.Previous} #{asignaturaController.pagination.pageSize}" rendered="#{asignaturaController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{asignaturaController.next}" value="#{bundle.Next} #{asignaturaController.pagination.pageSize}" rendered="#{asignaturaController.pagination.hasNextPage}"/>&nbsp;
+                    <p:dataTable value="#{asignaturaController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_nombreAsignatura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreAsignatura}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_tipoAsignatura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoAsignatura}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_cargaHoraria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cargaHoraria}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_docente}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.docente}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_mallaCurricular}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mallaCurricular}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{asignaturaController.prepareView}" value="#{bundle.ListAsignaturaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{asignaturaController.prepareEdit}" value="#{bundle.ListAsignaturaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{asignaturaController.destroy}" value="#{bundle.ListAsignaturaDestroyLink}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{asignaturaController.prepareCreate}" value="#{bundle.ListAsignaturaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListAsignaturaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

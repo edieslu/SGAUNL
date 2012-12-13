@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditHorarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditHorarioLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{horarioController.selected.id}" title="#{bundle.EditHorarioTitle_id}" />
+                    <h:outputLabel value="#{bundle.EditHorarioLabel_numeroHorasPedagogicas}" for="numeroHorasPedagogicas" />
+                    <h:inputText id="numeroHorasPedagogicas" value="#{horarioController.selected.numeroHorasPedagogicas}" title="#{bundle.EditHorarioTitle_numeroHorasPedagogicas}" />
+                    <h:outputLabel value="#{bundle.EditHorarioLabel_timepoHoraPedagogica}" for="timepoHoraPedagogica" />
+                    <h:inputText id="timepoHoraPedagogica" value="#{horarioController.selected.timepoHoraPedagogica}" title="#{bundle.EditHorarioTitle_timepoHoraPedagogica}" />
+                </h:panelGrid>
+                <h:commandLink action="#{horarioController.update}" value="#{bundle.EditHorarioSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditHorarioViewLink}"/>
+                <br />
+                <h:commandLink action="#{horarioController.prepareList}" value="#{bundle.EditHorarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditHorarioIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <f:metadata>
+        <f:viewParam name="especialidadId" value="#{especialidadController.especialidadId}">
+            
+        </f:viewParam>
+    </f:metadata>
+
+    <ui:composition template="/templates/plantilla.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditEspecialidadTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+
+            
+               <p:messages autoUpdate="true" closable="true"/>
+            
+            
+            <h:form id="formEditEspecialidad">
+                <p:panel header="#{especialidadController.especialidadId!=null ? bundle['boton.editar']:bundle['boton.nuevo']}" id="panelEditEspecialidad">
+                    <p:panelGrid columns="2">
+                        
+                        <h:outputLabel value="#{bundle['especialidadController.nombre']}"/>
+                        <p:inputText required="true" 
+                                     label="#{bundle['especialidadController.nombre']}" 
+                                     value="#{especialidadController.current.nombreEspecialidad}"/>
+                        
+                        <h:outputLabel value="#{bundle['especialidadController.descripción']}"/>
+                        <p:inputTextarea label="#{bundle['especialidadController.descripción']}" 
+                                         required="true" 
+                                         value="#{especialidadController.current.descripcionEspecialidad}"/>
+                        
+                        
+                        <h:outputLabel value="#{bundle['especialidadController.nivel']}"/>
+                        <p:selectOneMenu label="#{bundle['especialidadController.nivel']}"
+                                         value="#{especialidadController.current.nivel}"
+                                         converter="genericConverter">
+                            <f:selectItem itemLabel="#{bundle.item}"/>
+                            <f:selectItems value="#{nivelController.itemsAvailableSelectOne}" />
+                            
+                        </p:selectOneMenu>
+                        
+                        
+                     
+
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.guardar']}" 
+                                             action="#{especialidadController.persist()}"
+                                             update="panelEditEspecialidad"
+                                             icon="#{bundle['icono.guardar']}"/>
+                            <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             icon="#{bundle['icono.actualizar']}"/>
+                            <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                             action="#{especialidadController.cancelEdit()}" 
+                                             icon="#{bundle['icono.cancelar']}"/>
+
+                        </f:facet>
+
+                    </p:panelGrid>
+
+
+
+                </p:panel>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

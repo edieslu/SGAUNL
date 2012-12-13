@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListRegistroAsistenciaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListRegistroAsistenciaEmpty}" rendered="#{registroAsistenciaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{registroAsistenciaController.items.rowCount > 0}">
+                    <h:outputText value="#{registroAsistenciaController.pagination.pageFirstItem + 1}..#{registroAsistenciaController.pagination.pageLastItem + 1}/#{registroAsistenciaController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{registroAsistenciaController.previous}" value="#{bundle.Previous} #{registroAsistenciaController.pagination.pageSize}" rendered="#{registroAsistenciaController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{registroAsistenciaController.next}" value="#{bundle.Next} #{registroAsistenciaController.pagination.pageSize}" rendered="#{registroAsistenciaController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{registroAsistenciaController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroAsistenciaTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroAsistenciaTitle_numeroAsistencias}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroAsistencias}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroAsistenciaTitle_numeroFaltasInjunstificadas}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroFaltasInjunstificadas}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroAsistenciaTitle_numeroFaltasJustificadas}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroFaltasJustificadas}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRegistroAsistenciaTitle_totalDiasLaborables}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalDiasLaborables}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{registroAsistenciaController.prepareView}" value="#{bundle.ListRegistroAsistenciaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{registroAsistenciaController.prepareEdit}" value="#{bundle.ListRegistroAsistenciaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{registroAsistenciaController.destroy}" value="#{bundle.ListRegistroAsistenciaDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{registroAsistenciaController.prepareCreate}" value="#{bundle.ListRegistroAsistenciaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListRegistroAsistenciaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:metadata>
+        <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
+    </f:metadata>
+
+    <ui:composition template="/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+
+            <h:form id="formEdit">
+                
+                <p:messages autoUpdate="true" closable="true"/>
+                
+                <p:panel header="#{anioLectivoController.anioLectivoId!=null  ? bundle['boton.editar'] : bundle['boton.nuevo']}" 
+                         id="panelEditAnio">
+
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="#{bundle['anioController.fechainicio']}"/>
+                        <p:calendar label="#{bundle['anioController.fechainicio']}" 
+                                    required="true" 
+                                    navigator="true" 
+                                    showOn="button" 
+                                    value="#{anioLectivoController.current.fechaInicio}"/>
+
+
+                        <h:outputLabel value="#{bundle['anioController.fechafin']}"/>
+                        <p:calendar label="#{bundle['anioController.fechafin']}" 
+                                    value="#{anioLectivoController.current.fechaFin}" 
+                                    navigator="true" 
+                                    showOn="button"
+                                    required="true"/>
+
+                        <h:outputLabel value="#{bundle['anioController.duracion']}"/>
+                        <p:inputText label="#{bundle['anioController.duracion']}" 
+                                     value="#{anioLectivoController.current.duracion}"/>
+
+                        <h:outputLabel value="#{bundle['anioController.anioActivo']}"/>
+                        <p:selectBooleanButton value="#{anioLectivoController.current.estado}" 
+                                               onLabel="#{bundle['boton.si']}" offLabel="#{bundle['boton.no']}"/>
+
+
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                             rendered="#{anioLectivoController.anioLectivoId!=null}"
+                                             action="#{anioLectivoController.update()}"
+                                             update="panelEditAnio"
+                                             icon="#{bundle['icono.actualizar']}"/>
+
+
+                            <p:commandButton value="#{bundle['boton.guardar']}" 
+                                             rendered="#{anioLectivoController.anioLectivoId == null}"
+                                             action="#{anioLectivoController.persist()}"
+                                             update="panelEditAnio"
+                                             icon="#{bundle['icono.guardar']}"/>
+
+
+                            <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                             action="#{anioLectivoController.cancelEdit()}"
+                                             immediate="true" 
+                                             icon="#{bundle['icono.cancelar']}"/>
+                        </f:facet> 
+                    </p:panelGrid>
+                </p:panel>
+
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

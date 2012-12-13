@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="./../templates/base.xhtml">
+<ui:define name="content">
+
+    #{homeController.accesoURL(true, "/menu/index")}
+    <f:view>
+        <h:form>
+
+            <h2> <h:graphicImage library="images" name="menu.png" /> <h:outputText value="Opciones de Menú"/> </h2>
+
+            <h4> <h:messages globalOnly="false" style="color: red" /> </h4>
+
+            <h:dataTable value="#{menuController.listado()}" var="item" rowClasses="webgrid-selected-row" headerClass="webgrid-header">
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="ID"/> </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="Nombre"/> </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="Action"/> </f:facet>
+                    <h:outputText value="#{item.action}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="URL"/> </f:facet>
+                    <h:outputText value="#{item.url}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="Raiz"/> </f:facet>
+                    <h:outputText value="#{item.raiz}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="Orden"/> </f:facet>
+                    <h:outputText value="#{item.orden}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value="Modificado"/> </f:facet>
+                    <h:outputText value="#{item.updated}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value=""/> </f:facet>
+                    <h:commandLink action="#{menuController.edit(item.id)}">
+                        <h:graphicImage library="images" name="edit.gif" />
+                    </h:commandLink>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header"> <h:outputText value=""/> </f:facet>
+                    <h:commandLink action="#{menuController.eliminar(item.id)}">
+                        <h:graphicImage library="images" name="delete.gif" />
+                    </h:commandLink>
+                </h:column>
+
+            </h:dataTable>
+
+            <h:commandLink action="#{menuController.create()}">
+                <h:graphicImage library="images" name="crear.gif" />
+            </h:commandLink>
+
+        </h:form>
+
+    </f:view>
+
+</ui:define>
+</ui:composition>

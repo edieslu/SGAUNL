@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:viewParam name="id" value="#{usuarioController.usuarioId}"/>
+    </f:metadata>
+
+    <ui:composition template="/templates/plantilla.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEstudianteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+
+
+
+            <script type="text/javascript">        
+                
+                $j(document).ready(function(){
+                    $j('.numeros').numeric();
+                    $j('.letras').alpha({allow:" "});
+                    $j('.mayusculas').alpha({allcaps:true});
+                    $j('.email').alphanumeric({allow:"._-"});
+                    
+                });
+                
+            </script>
+
+
+
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage library="img" name="ajaxloading.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+
+            <h:form id="formBuscarUsuario" prependId="false">
+                <h:panelGrid columns="3">
+                    <h:outputText value="Buscar: "></h:outputText>
+                    <p:inputText id="criterio" value="#{usuarioController.criterio}" size="30" label="criterio">
+                    </p:inputText>
+                    <p:commandButton value="Buscar: " action="#{usuarioController.find()}" ajax="true" 
+                                     icon="ui-icon ui-icon-disk" update="lista">
+
+                    </p:commandButton>
+
+                </h:panelGrid>
+                <p:dataTable id="lista" value="#{usuarioController.resultlist}" var="usuario" paginator="true" rows="10">
+                    <p:column headerText="#{bundle.ListEstudianteTitle_dni}" >
+                        <h:outputText value="#{usuario.dni}"></h:outputText>
+                    </p:column> 
+                    <p:column headerText="#{bundle.ListEstudianteTitle_nombres}" >
+                        <h:outputText value="#{usuario.nombres}"></h:outputText>
+                    </p:column> 
+                    <p:column headerText="#{bundle.ListEstudianteTitle_apellidos}" >
+                        <h:outputText value="#{usuario.apellidos}"></h:outputText>
+                    </p:column>   
+                    <p:column headerText="#{bundle.ListEstudianteTitle_fechaNacimiento}" >
+                        <h:outputText value="#{usuario.fechaNacimiento}"></h:outputText>
+                    </p:column> 
+                    <p:column headerText="#{bundle.ListEstudianteTitle_genero}" >
+                        <h:outputText value="#{usuario.sexo}"></h:outputText>
+                    </p:column> 
+
+                    <p:column headerText="#{bundle.ListEstudianteTitle_opciones}">
+                        <p:button value="#{bundle.ListEstudianteEditLink}" outcome="/usuario/Create" icon="ui-icon ui-icon-pencil">
+                            <f:param name="id" value="#{usuario.id}"/>
+                        </p:button>
+                        
+                        
+                        
+                        <p:commandButton id="btnDelete" value="#{bundle.ListEstudianteDestroyLink}" icon="ui-icon ui-icon-trash"
+                                         oncomplete="confirmation.show()" ajax="true"
+                                         update=":formBuscarUsuario:confirmDialog"  
+                                         process="@this">
+                            <f:param name="id" value="#{usuario.id}"/>
+                        </p:commandButton>
+                        <p:button value="Matricular" outcome="/matricula/Edit" >
+                            <f:param name="usuarioId" value="#{usuario.id}"/>
+                        </p:button>
+                    </p:column>
+
+                </p:dataTable>
+                <p:confirmDialog id="confirmDialog" message="Esta seguro que desea eliminar al Usuario:  #{usuarioController.current.nombres}?"  
+                                 header="Initiating destroy process" severity="alert" widgetVar="confirmation">                   
+
+                    <p:commandButton id="confirm" value="SI" update=":formBuscarUsuario:lista" oncomplete="confirmation.hide()"  
+                                     actionListener="#{usuarioController.delete()}">
+                        <f:param name="id" value="#{usuarioController.current.id}"/>
+                    </p:commandButton>    
+
+                    <p:commandButton id="decline" 
+                                     value="No" 
+                                     oncomplete="confirmation.hide()" 
+                                     action="#{usuarioController.endConversation()}" />
+
+
+                </p:confirmDialog> 
+                <p:button value="Nuevo" outcome="/usuario/Create" 
+                          icon="ui-icon ui-icon-circle-plus">
+                    <f:param name="id" value=""/>
+
+                </p:button>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,72 @@
+/* 
+    Document   : estilos
+    Created on : 25/09/2012, 09:32:16 PM
+    Author     : lucho
+    Description:
+        Purpose of the stylesheet follows.
+*/
+label {
+    width: 150px;
+    font-size: 12px;
+    display:block;
+    float: left;
+
+}
+
+div#cabeza{
+    height: 180px;
+    margin: auto;
+}
+
+#labelcabecera {
+    font-size: 150px;
+    margin: auto;
+}
+
+#menubar {
+
+    height: 20px;
+}
+
+/*
+.error{
+
+    background: red;
+    color:#fff;
+    display: none;
+    font-size: 40px;
+    margin-top: -80px;
+    margin-left: 340px;
+    padding: 10px;
+    position: absolute;
+
+}*/
+
+input.error{
+color:#b94a48;
+background-color:#f2dede;
+border-color:red;
+border:1px solid;
+margin:10px 0px;
+padding:10px 10px 10px 10px;
+/*position: absolute;*/
+
+    
+}
+
+.myPanelStyle.ui-panel .ui-panel-titlebar {
+background:#003946;
+}
+
+.myPanelStyleTitle.ui-panel .ui-panel-titlebar .ui-panel-title {
+background:#003946;
+color:white;
+font-weight:bold;
+font-family: verdana;
+}
+
+.ayuda{
+    font-size:xx-small;
+    color: red;
+    
+}

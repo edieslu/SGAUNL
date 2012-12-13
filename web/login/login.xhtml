@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+
+        <h:form>  
+
+            <h:panelGrid columns="2" cellpadding="5">  
+                <h:outputLabel for="idUsername" value="#{bundle['loginController.usuario']}" />  
+                <p:inputText value="#{loginController.usuario}"   
+                             id="idUsername" required="true" label="#{bundle['loginController.usuario']}" />  
+
+                <h:outputLabel for="idPassword" value="#{bundle['loginController.clave']}" />  
+                <p:password  value="#{loginController.clave}"   
+                               id="idPassword" required="true" label="#{bundle['loginController.clave']}" />  
+
+                <f:facet name="footer">  
+                    <h:commandButton value="Ingresar" action="#{loginController.ingresar()}" />
+                    <h:commandButton value="Cancelar" action="#{loginController.index()}" immediate="true" />
+                </f:facet>  
+            </h:panelGrid>  
+
+        </h:form>  
+
+
+    </ui:define>
+
+</ui:composition>

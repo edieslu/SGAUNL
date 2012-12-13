@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+     <ui:composition template="/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+
+
+
+            <script type="text/javascript">        
+                
+                $j(document).ready(function(){
+                    $j('.numeros').numeric();
+                    $j('.letras').alpha({allow:" "});
+                    $j('.mayusculas').alpha({allcaps:true});
+                    $j('.email').alphanumeric({allow:"._-"});
+                    
+                });
+                
+            </script>
+
+
+
+            <h:form id="formEditPerfil" prependId="false">
+                <p:panel header="#{cursoController.cursoId!=null  ? bundle['ListCursoEditLink'] : bundle['ListCursoCreateLink']}" id="panelEditCurso"
+                         styleClass = "myPanelStyle myPanelStyleTitle">
+
+                    <p:messages  autoUpdate="true" closable="true"/>
+
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Descripción del Perfil"/>
+                        <p:inputText id="idDescripcion" label="Descripción del perfil" required="true"
+                                     value="#{perfilController.current.descripcion}" size="30"
+                                     validatorMessage="No ha ingresado un descripción"/>
+
+
+                        <h:outputLabel value="Página"/>
+                        <p:inputText id="idPagina" label="Pagina" required="true"
+                                     value="#{perfilController.current.estudiantes}" size="30"
+                                     validatorMessage="No ha ingresado una página válida"/> 
+
+
+                        <f:facet name="footer">
+                            <p:commandButton value="ACTUALIZAR" rendered="#{perfilController.perfilId!=null}"
+                                             action="#{perfilController.update()}"
+                                             update="panelEditCurso">
+                            </p:commandButton>
+
+                            <p:commandButton value="GUARDAR" rendered="#{perfilController.perfilId == null}"
+                                             action="#{perfilController.persist()}"
+                                             update="panelEditCurso">
+                            </p:commandButton>
+
+                            <p:commandButton value="CANCELAR" action="#{perfilController.cancelEdit()}"
+                                             immediate="true" icon="ui-icon ui-icon-trash">
+                            </p:commandButton>
+
+
+                        </f:facet> 
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

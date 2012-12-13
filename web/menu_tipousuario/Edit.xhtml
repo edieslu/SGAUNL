@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <h2><h:outputText value="Control de Acceso"/></h2>
+
+            <h4> <h:messages globalOnly="false" style="color: red" /> </h4>
+
+
+
+            <p:panelGrid columns="2" >
+                <h:outputLabel value="Menu      :" for="menuId" />
+                <p:selectOneMenu id="menuId" 
+                                 value="#{menuTipousuarioController.current.menuId}" 
+                                 converter="genericConverter">
+                    <f:selectItems value="#{menuController.itemsAvailableSelectOne}"/>
+                </p:selectOneMenu>
+
+                <h:outputLabel value="Tipo Usr. :" for="tipousuarioId" />
+                <p:selectOneMenu id="tipousuarioId" 
+                                 value="#{menuTipousuarioController.current.tipousuarioId}"
+                                 converter="genericConverter">
+                    <f:selectItems value="#{tipousuarioController.itemsAvailableSelectOne}"/>
+                </p:selectOneMenu>
+
+                <f:facet name="footer" >
+                    <p:commandButton value="#{bundle['boton.guardar']}" 
+                                     action="#{menuTipousuarioController.persist()}" 
+                                     icon="#{bundle['icono.guardar']}"/>
+                    <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                     action="#{menuTipousuarioController.update()}" 
+                                     icon="#{bundle['icono.actualizar']}"/> 
+                    <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                     action="#{menuTipousuarioController. cancelEdit()}" 
+                                     immediate="true" 
+                                     icon="#{bundle['icono.cancelar']}"/>
+                </f:facet>
+
+            </p:panelGrid>
+
+        </h:form>
+
+
+
+    </ui:define>
+
+</ui:composition>

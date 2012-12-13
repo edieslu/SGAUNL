@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <body>
+        
+        <ui:composition template="./plantilla.xhtml">
+            
+            <ui:define name="top">
+                 <div id="cabeza">
+            <h:outputLabel id="labelcabecera" value="SGA"/>
+        </div>
+            </ui:define>
+
+            <ui:define name="left">
+                
+            <h:form>
+            <p:menu >  
+                <p:submenu label="Inicio">  
+                    <p:menuitem value="Crear"/>  
+                    <p:menuitem value="Eliminar"/> 
+                     <p:menuitem value="Modificar"/>
+                </p:submenu>  
+                
+                <p:submenu label="Non-Ajax Menuitem">  
+                    <p:menuitem value="Delete"/>  
+                </p:submenu>  
+        
+                <p:submenu label="Navigations">  
+                    <p:menuitem value="External" />  
+                    <p:menuitem value="Internal" />  
+                </p:submenu>  
+            </p:menu> 
+            </h:form>
+                
+            </ui:define>
+
+            <ui:define name="content">
+                
+                
+                <h:form>
+                <p:menubar>
+                    <p:menuitem value="Inicio"/>
+                    <p:submenu label="Administracion">
+                        <p:menuitem value="Cursos"/>
+                        <p:menuitem value="Paralelos"/>
+                        <p:menuitem value="Especialidad"/>
+                             
+                    </p:submenu>
+                    
+                    <p:submenu label="Docentes">
+                        <p:menuitem value="Cursos"/>
+                        <p:menuitem value="Paralelos"/>
+                        <p:menuitem value="Especialidad"/>
+                             
+                    </p:submenu>
+                    
+                    <p:submenu label="Herramientas">
+                        <p:menuitem value="Cursos"/>
+                        <p:menuitem value="Paralelos"/>
+                        <p:menuitem value="Especialidad"/>
+                             
+                    </p:submenu>
+                </p:menubar>
+                </h:form>
+                
+                
+               
+                 <p:accordionPanel>
+            <p:tab title="Datos de Matrícula">
+                <h:outputLabel value="N° de Matrícula"/>
+                <p:inputText/> <br/>
+                <h:outputLabel value="Fecha de Matrícula"/>
+                <p:calendar id="cal" value="#{calendarBean.date1}" navigator="true" display="inline"/>   <br/>
+                <h:outputLabel value="Tipo de Matrícula"/>
+                <p:inputText /> <br/>
+                
+               
+                
+                
+            </p:tab>
+            <p:tab title="Datos del Alumno">
+                <p:tabView>
+                    <p:tab title="Datos Personales">
+                        <h:form>
+                            
+                            <h:outputLabel value="Nombres:"/><p:inputText/> <br/>
+                               <h:outputLabel value="Apellidos:"/> <p:inputText/> <br/>
+                               <h:outputLabel value="N° de Cédula:"/><p:inputText/> <br/>
+                               <h:outputLabel value="N° de Libreta Militar:"/> <p:inputText/> <br/>
+                               <h:outputLabel value="Sexo:"/> 
+                               
+                               <p:selectOneRadio>
+                                    <f:selectItem itemLabel="Hombre" itemValue="1" />  
+                                    <f:selectItem itemLabel="Mujer" itemValue="2" /> 
+                               </p:selectOneRadio>
+                               <p:commandButton value="Enviar"/>  
+                        </h:form>
+                    </p:tab>
+                    
+                    <p:tab title="Datos Socieconómicos">
+                        
+                    </p:tab>
+                    
+                    <p:tab title="Datos Médicos">
+                        
+                    </p:tab>
+                </p:tabView>
+            </p:tab>
+            
+            <p:tab title="Datos del representante">
+                <p:tabView>
+                    <p:tab title="Datos del Padre">
+                        <h:outputLabel value="Nombres:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Apellidos:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Título"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Profesión:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Lugar de Trabajo:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Teléfono Móvil:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Email:"/> <p:inputText/> <br/>
+                    </p:tab>
+                    
+                    <p:tab title="Datos de la Madre">
+                        <h:outputLabel value="Nombres:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Apellidos:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Título"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Profesión:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Lugar de Trabajo:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Teléfono Móvil:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Email:"/> <p:inputText/> <br/>
+                        
+                    </p:tab>
+                    
+                    <p:tab title="Datos del Representante">
+                        <h:outputLabel value="Nombres:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Apellidos:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Título"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Profesión:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Lugar de Trabajo:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Teléfono Móvil:"/> <p:inputText/> <br/>
+                        <h:outputLabel value="Email:"/> <p:inputText/> <br/>
+                        
+                    </p:tab>
+                </p:tabView>
+            </p:tab>
+            
+        </p:accordionPanel>
+                
+            </ui:define>
+
+            
+
+        </ui:composition>
+        
+    </body>
+</html>

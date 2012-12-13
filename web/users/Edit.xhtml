@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:metadata>
+        <f:viewParam name="usersId" value="#{userController.usersId}"/>
+    </f:metadata>
+
+    <ui:composition template="/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+
+
+
+            <script type="text/javascript">        
+                
+                $j(document).ready(function(){
+                    $j('.numeros').numeric();
+                    $j('.letras').alpha({allow:" "});
+                    $j('.mayusculas').alpha({allcaps:true});
+                    $j('.email').alphanumeric({allow:"._-"});
+                    
+                });
+                
+            </script>
+
+
+
+            <h:form id="formEditUsers" prependId="false">
+                <p:panel header="#{cursoController.cursoId!=null  ? bundle['ListCursoEditLink'] : bundle['ListCursoCreateLink']}" id="panelEditCurso"
+                         styleClass = "myPanelStyle myPanelStyleTitle">
+
+                    <p:messages  autoUpdate="true" closable="true"/>
+
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Nombre de Usuario"/>
+                        <p:inputText id="idUser" label="Nombre de Usuario" required="true"
+                                     value="#{userController.current.usuario}" size="30"
+                                     validatorMessage="No ha ingresado un nombre para el usuario"/>
+
+
+                        <h:outputLabel value="Password"/>
+                        <p:inputText id="idPassword" label="Password" required="true"
+                                     value="#{userController.current.password}" size="30"
+                                     validatorMessage="No ha ingresado una contraseña"/> 
+
+
+                        <h:outputLabel value="Perfil"/>
+                        <p:selectOneMenu id="id" converter="genericConverter"
+                                         value="#{userController.current.perfil}"
+                                         validatorMessage="Escoja un nivel">
+                            <f:selectItem itemLabel="#{bundle.Item}" itemValue="" />  
+                            <f:selectItems value="#{perfilController.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+
+
+
+
+                        <f:facet name="footer">
+                            <p:commandButton value="ACTUALIZAR" rendered="#{userController.usersId!=null}"
+                                             action="#{userController.update()}"
+                                             update="panelEditCurso">
+                            </p:commandButton>
+
+                            <p:commandButton value="GUARDAR" rendered="#{userController.usersId == null}"
+                                             action="#{userController.persist()}"
+                                             update="panelEditCurso">
+                            </p:commandButton>
+
+                            <p:commandButton value="CANCELAR" action="#{userController.cancelEdit()}"
+                                             immediate="true" icon="ui-icon ui-icon-trash">
+                            </p:commandButton>
+
+
+                        </f:facet> 
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

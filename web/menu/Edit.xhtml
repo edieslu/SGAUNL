@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <h2><h:outputText value="Opciones de Menú"/></h2>
+
+            <h4> <h:messages globalOnly="false" style="color: red" /> </h4>
+
+
+
+            <p:panelGrid columns="2">
+
+
+                <h:outputLabel value="Nombre :" for="nombre" />
+                <p:inputText id="nombre" value="#{menuController.current.nombre}" />
+
+                <h:outputLabel value="Imagen :" for="imagen" />
+                <p:inputText id="imagen" value="#{menuController.current.imagen}" title="Imagen" />
+
+                <h:outputLabel value="URL :" for="url" />
+                <p:inputText id="url" value="#{menuController.current.url}" title="Url" />
+
+                <h:outputLabel value="Action :" for="action" />
+                <p:inputText id="action" value="#{menuController.current.action}" title="Action" />
+
+                <h:outputLabel value="Raiz :" for="raiz" />
+                <p:inputText id="raiz" value="#{menuController.current.raiz}" title="Raiz">
+                    <f:validateLongRange minimum="0" maximum="10" />
+                </p:inputText>
+
+                <h:outputLabel value="Orden:" for="orden" />
+                <p:inputText id="orden" value="#{menuController.current.orden}" title="Orden">
+                    <f:validateLongRange minimum="0" maximum="10" />
+                </p:inputText>
+
+                <f:facet name="footer" >
+
+                    <p:commandButton value="#{bundle['boton.guardar']}" action="#{menuController.persist()}" />
+                    <p:commandButton value="#{bundle['boton.actualizar']}" action="#{menuController.update()}" />
+                    <p:commandButton value="#{bundle['boton.cancelar']}" action="#{menuController.cancelEdit()}" immediate="true" />
+                </f:facet>
+
+            </p:panelGrid>
+
+
+
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

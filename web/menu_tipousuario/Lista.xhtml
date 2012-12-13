@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+       
+        
+        <f:view>
+            <h:form>
+
+            
+            <p:dataTable value="#{menuTipousuarioController.listado()}" var="item" >
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value="ID"/> </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value="Menu"/> </f:facet>
+                    <h:outputText value="#{item.menuId.nombre}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value="Tipo Usuario"/> </f:facet>
+                    <h:outputText value="#{item.tipousuarioId.nombre}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value="Creado"/> </f:facet>
+                    <h:outputText value="#{item.created}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value="Modificado"/> </f:facet>
+                    <h:outputText value="#{item.updated}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value=""/> </f:facet>
+                    <h:commandLink action="#{menuTipousuarioController.edit(item.id)}">
+                        <h:graphicImage library="images" name="edit.gif" />
+                    </h:commandLink>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header"> <h:outputText value=""/> </f:facet>
+                    <h:commandLink action="#{menuTipousuarioController.eliminar(item.id)}">
+                        <h:graphicImage library="images" name="delete.gif" />
+                    </h:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+            <h:commandLink action="#{menuTipousuarioController.create()}">
+                <h:graphicImage library="images" name="crear.gif" />
+            </h:commandLink>
+
+        </h:form>
+    </f:view>
+        
+        
+    </ui:define>
+
+</ui:composition>

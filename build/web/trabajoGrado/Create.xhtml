@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTrabajoGradoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{trabajoGradoController.selected.id}" title="#{bundle.CreateTrabajoGradoTitle_id}" />
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_nombreTrabajoGrado}" for="nombreTrabajoGrado" />
+                    <h:inputText id="nombreTrabajoGrado" value="#{trabajoGradoController.selected.nombreTrabajoGrado}" title="#{bundle.CreateTrabajoGradoTitle_nombreTrabajoGrado}" />
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_tipoTrabajoGrado}" for="tipoTrabajoGrado" />
+                    <h:inputText id="tipoTrabajoGrado" value="#{trabajoGradoController.selected.tipoTrabajoGrado}" title="#{bundle.CreateTrabajoGradoTitle_tipoTrabajoGrado}" />
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_nombreDirectorTrabajo}" for="nombreDirectorTrabajo" />
+                    <h:inputText id="nombreDirectorTrabajo" value="#{trabajoGradoController.selected.nombreDirectorTrabajo}" title="#{bundle.CreateTrabajoGradoTitle_nombreDirectorTrabajo}" />
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_descripcionTrabajo}" for="descripcionTrabajo" />
+                    <h:inputText id="descripcionTrabajo" value="#{trabajoGradoController.selected.descripcionTrabajo}" title="#{bundle.CreateTrabajoGradoTitle_descripcionTrabajo}" />
+                    <h:outputLabel value="#{bundle.CreateTrabajoGradoLabel_fechaEntrega}" for="fechaEntrega" />
+                    <h:inputText id="fechaEntrega" value="#{trabajoGradoController.selected.fechaEntrega}" title="#{bundle.CreateTrabajoGradoTitle_fechaEntrega}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{trabajoGradoController.create}" value="#{bundle.CreateTrabajoGradoSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{trabajoGradoController.prepareList}" value="#{bundle.CreateTrabajoGradoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTrabajoGradoIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

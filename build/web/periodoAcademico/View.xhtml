@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewQuimestreTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewQuimestreLabel_id}"/>
+                    <h:outputText value="#{quimestreController.selected.id}" title="#{bundle.ViewQuimestreTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewQuimestreLabel_registroCalificaciones}"/>
+                    <h:outputText value="#{quimestreController.selected.registroCalificaciones}" title="#{bundle.ViewQuimestreTitle_registroCalificaciones}"/>
+                    <h:outputText value="#{bundle.ViewQuimestreLabel_nombreQuimestre}"/>
+                    <h:outputText value="#{quimestreController.selected.nombreQuimestre}" title="#{bundle.ViewQuimestreTitle_nombreQuimestre}"/>
+                    <h:outputText value="#{bundle.ViewQuimestreLabel_estadoQuimestre}"/>
+                    <h:outputText value="#{quimestreController.selected.estadoQuimestre}" title="#{bundle.ViewQuimestreTitle_estadoQuimestre}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{quimestreController.destroyAndView}" value="#{bundle.ViewQuimestreDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewQuimestreEditLink}"/>
+                <br />
+                <h:commandLink action="#{quimestreController.prepareCreate}" value="#{bundle.ViewQuimestreCreateLink}" />
+                <br />
+                <h:commandLink action="#{quimestreController.prepareList}" value="#{bundle.ViewQuimestreShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewQuimestreIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

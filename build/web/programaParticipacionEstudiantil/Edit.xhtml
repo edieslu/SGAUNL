@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditProgramaParticipacionEstudiantilTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{programaParticipacionEstudiantilController.selected.id}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_id}" />
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_nombrePrograma}" for="nombrePrograma" />
+                    <h:inputText id="nombrePrograma" value="#{programaParticipacionEstudiantilController.selected.nombrePrograma}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_nombrePrograma}" />
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_descripciónPrograma}" for="descripciónPrograma" />
+                    <h:inputText id="descripciónPrograma" value="#{programaParticipacionEstudiantilController.selected.descripciónPrograma}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_descripciónPrograma}" />
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_duracionPrograma}" for="duracionPrograma" />
+                    <h:inputText id="duracionPrograma" value="#{programaParticipacionEstudiantilController.selected.duracionPrograma}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_duracionPrograma}" />
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_notaPrograma}" for="notaPrograma" />
+                    <h:inputText id="notaPrograma" value="#{programaParticipacionEstudiantilController.selected.notaPrograma}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_notaPrograma}" />
+                    <h:outputLabel value="#{bundle.EditProgramaParticipacionEstudiantilLabel_estadoAprobacion}" for="estadoAprobacion" />
+                    <h:inputText id="estadoAprobacion" value="#{programaParticipacionEstudiantilController.selected.estadoAprobacion}" title="#{bundle.EditProgramaParticipacionEstudiantilTitle_estadoAprobacion}" />
+                </h:panelGrid>
+                <h:commandLink action="#{programaParticipacionEstudiantilController.update}" value="#{bundle.EditProgramaParticipacionEstudiantilSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditProgramaParticipacionEstudiantilViewLink}"/>
+                <br />
+                <h:commandLink action="#{programaParticipacionEstudiantilController.prepareList}" value="#{bundle.EditProgramaParticipacionEstudiantilShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditProgramaParticipacionEstudiantilIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
