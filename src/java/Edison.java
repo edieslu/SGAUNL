@@ -7,6 +7,6 @@
  *
  * @author edison
  */
-public class prueba {
+public class Edison {
     
 }
