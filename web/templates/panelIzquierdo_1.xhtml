@@ -6,9 +6,9 @@
 
     <h3> <h:outputText value="Menú Sistema"/> </h3>
 
-    <c:if test="#{sessionBean.usuarioLogeado != null}">
+    <c:if test="#{sessionBeanController.usuarioLogeado != null}">
 
-        #{sessionBean.usuarioLogeado.nombres} #{sessionBean.usuarioLogeado.apellidos}
+        #{sessionBeanController.usuarioLogeado.nombres} #{sessionBeanController.usuarioLogeado.apellidos}
 
         <h:form>
             <c:forEach items="#{menuController.listado}" var="item">

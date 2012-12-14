@@ -6,7 +6,11 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h3> <h:outputText value="Menú Sistema"/> </h3>
-    <h:form>
-        <p:menu model="#{menuDinamico.model}"/> 
-    </h:form>
+    <c:if test="#{sessionBeanController.usuarioLogeado != null}">
+
+        #{sessionBeanController.usuarioLogeado.nombres} #{sessionBeanController.usuarioLogeado.apellidos}
+        <h:form>
+            <p:menu model="#{menuDinamico.model}"/> 
+        </h:form>
+    </c:if>
 </html>

@@ -4,9 +4,6 @@
  */
 package ec.edu.sga.controller.util;
 
-import com.sun.org.glassfish.gmbal.NameValue;
-import ec.edu.sga.controller.LoginController;
-import ec.edu.sga.controller.MenuController;
 import ec.edu.sga.facade.MenuFacade;
 import ec.edu.sga.modelo.usuarios.Menu;
 import java.io.Serializable;
@@ -19,7 +16,6 @@ import javax.el.ExpressionFactory;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.Application;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;

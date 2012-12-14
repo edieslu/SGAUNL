@@ -13,7 +13,7 @@ import javax.inject.Named;
  *
  * @author edison
  */
-@Named(value="sessionBean")
+@Named(value="sessionBeanController")
 @SessionScoped
 public class SessionBean implements Serializable{
     

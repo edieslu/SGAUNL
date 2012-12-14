@@ -110,7 +110,7 @@ public class LoginController implements Serializable {
 
     // --------------------- Métodos del Bean ---------------------
     public String index() {
-        return "/index";
+        return "/faces/index.xhtml";
     } // Fin public String index
 
     public String acercaDe() {
@@ -118,7 +118,7 @@ public class LoginController implements Serializable {
     } // Fin public String acercaDe
 
     public String login() {
-        return "/login/login";
+        return "/faces/login/login.xhtml";
     } // Fin public String login
 
     // Funcion de ingreso al sistema
@@ -142,7 +142,7 @@ public class LoginController implements Serializable {
 
     public String logout() {
         SessionUtil.closeSession();
-        return "/bienvenida";
+        return "/faces/login/login.xhtml";
     } // Fin public String logout
 
     public String cambio_clave() {
@@ -230,17 +230,18 @@ public class LoginController implements Serializable {
     public String infoDelPie() {
 
         String nombre = SessionUtil.getUserNombreLog();
-        String tipo = SessionUtil.getUserTipoLog();
-        String usuario = "";
-        if (nombre != null && tipo != null) {
-            usuario = nombre + " (" + tipo + ")";
+        //String tipo = SessionUtil.getUserTipoLog();
+        String user = "";
+        if (nombre != null ) {
+            user = nombre;
+            System.out.println("*********************"+user);
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy h:mm a");
         Date d = new Date();
         String fechaStr = sdf.format(d);
 
-        return usuario + " - " + fechaStr + " - Desarrollado con Java EE 6 - ";
+        return user + " - " + fechaStr + " - Desarrollado con Java EE 6 - ";
 
     } // Fin public String infoDelPie
 }
