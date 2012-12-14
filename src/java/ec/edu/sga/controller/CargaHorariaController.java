@@ -1,7 +1,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.modelo.horarios.CargaHoraria;
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.controller.util.PaginationHelper;
 import ec.edu.sga.facade.CargaHorariaFacade;
 
@@ -81,10 +81,10 @@ public class CargaHorariaController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaCreated"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -98,10 +98,10 @@ public class CargaHorariaController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaUpdated"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -131,9 +131,9 @@ public class CargaHorariaController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaDeleted"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("CargaHorariaDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -180,11 +180,11 @@ public class CargaHorariaController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
     @FacesConverter(forClass = CargaHoraria.class)

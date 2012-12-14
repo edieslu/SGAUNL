@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.MenuFacade;
 import ec.edu.sga.modelo.usuarios.Menu;
@@ -156,7 +156,7 @@ public class MenuController implements Serializable {
         this.endConversation();
 
         String summary = ResourceBundle.getBundle("/Bundle").getString("CursoCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
 
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 

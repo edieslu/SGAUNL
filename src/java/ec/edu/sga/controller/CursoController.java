@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.modelo.matriculacion.Curso;
 import ec.edu.sga.modelo.matriculacion.Nivel;
 import ec.edu.sga.modelo.matriculacion.Paralelo;
@@ -150,7 +150,7 @@ public class CursoController implements Serializable {
         this.endConversation();
 
         String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.creado");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
         return "/curso/List?faces-redirect=true";
@@ -166,7 +166,7 @@ public class CursoController implements Serializable {
         this.endConversation();
 
         String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.actualizado");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         return "/curso/List?faces-redirect=true";
 
@@ -180,7 +180,7 @@ public class CursoController implements Serializable {
         //this.findAll();
         this.endConversation();
         String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.eliminado");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         return "/curso/List?faces-redirect=true";
 
@@ -188,11 +188,11 @@ public class CursoController implements Serializable {
 
     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     //Método que muestra la especialidad dependiendo del nivel elegido

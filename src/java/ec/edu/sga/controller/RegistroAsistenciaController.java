@@ -1,7 +1,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.modelo.academico.RegistroAsistencia;
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.controller.util.PaginationHelper;
 import ec.edu.sga.facade.RegistroAsistenciaFacade;
 
@@ -81,10 +81,10 @@ public class RegistroAsistenciaController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaCreated"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -98,10 +98,10 @@ public class RegistroAsistenciaController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaUpdated"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -131,9 +131,9 @@ public class RegistroAsistenciaController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaDeleted"));
+            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("RegistroAsistenciaDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -180,11 +180,11 @@ public class RegistroAsistenciaController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
     @FacesConverter(forClass = RegistroAsistencia.class)

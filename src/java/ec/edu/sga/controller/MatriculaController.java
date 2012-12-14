@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.facade.CursoFacade;
 import ec.edu.sga.facade.EspecialidadFacade;
@@ -215,7 +215,7 @@ public class MatriculaController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         String summary = ResourceBundle.getBundle("/Bundle").getString("MatriculaCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         return "/index";
     }
@@ -261,20 +261,20 @@ public class MatriculaController implements Serializable {
 
     //___________________________MÉTODOS DE BÚSQUEDA___________________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     //Method that return the Anio that are activate == true
     public SelectItem[] getItemAnioActivo() {
-        return JsfUtil.getSelectItem(ejbFacadeAnioLectivo.findAnioActivate(Boolean.TRUE));
+        return SessionUtil.getSelectItem(ejbFacadeAnioLectivo.findAnioActivate(Boolean.TRUE));
     }
 
     public SelectItem[] getItemsNiveles() {
-        return JsfUtil.getSelectItems(ejbFacadeNivel.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacadeNivel.findAll(), false);
     }
     private SelectItem[] itemsCursosByNivelId;
     private SelectItem[] itemsEspecialidadesByNivelId;
@@ -325,11 +325,11 @@ public class MatriculaController implements Serializable {
         if (n.getTipoNivel().equals(TipoNivel.BACHILLERATO)) {
             labelEspecialidadInputText.setRendered(true);
             especialidadInputText.setRendered(true);
-            itemsEspecialidadesByNivelId = JsfUtil.getSelectItems(ejbFacadeEspecialidad.findEspecialidadesByNivelId(n.getId()), false);
+            itemsEspecialidadesByNivelId = SessionUtil.getSelectItems(ejbFacadeEspecialidad.findEspecialidadesByNivelId(n.getId()), false);
         } else {
             labelEspecialidadInputText.setRendered(false);
             especialidadInputText.setRendered(false);
-            itemsCursosByNivelIdOrEspecialidadId = JsfUtil.getSelectItems(ejbFacadeCurso.findAllCursosbyNivelId(n.getId()), false);
+            itemsCursosByNivelIdOrEspecialidadId = SessionUtil.getSelectItems(ejbFacadeCurso.findAllCursosbyNivelId(n.getId()), false);
         }
     }
 
@@ -337,13 +337,13 @@ public class MatriculaController implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         UIViewRoot uiViewRoot = fc.getViewRoot();
         Especialidad n = (Especialidad) e.getNewValue();
-        itemsCursosByNivelIdOrEspecialidadId = JsfUtil.getSelectItems(ejbFacadeCurso.findAllCursosbyEspecialidadId(n.getId()), false);
+        itemsCursosByNivelIdOrEspecialidadId = SessionUtil.getSelectItems(ejbFacadeCurso.findAllCursosbyEspecialidadId(n.getId()), false);
     }
 
     public void prueba3(ValueChangeEvent e) {
         FacesContext fc = FacesContext.getCurrentInstance();
         UIViewRoot uiViewRoot = fc.getViewRoot();
         Curso c = (Curso) e.getNewValue();
-        itemsParalelosByCursoId = JsfUtil.getSelectItems(ejbFacadeParalelo.findAllParalelosByCursoId(c.getId()), false);
+        itemsParalelosByCursoId = SessionUtil.getSelectItems(ejbFacadeParalelo.findAllParalelosByCursoId(c.getId()), false);
     }
 }

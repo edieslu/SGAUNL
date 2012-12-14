@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.MenuTipousuarioFacade;
 import ec.edu.sga.modelo.usuarios.MenuTipousuario;
 import java.io.Serializable;
@@ -116,7 +116,7 @@ public MenuTipousuario getCurrent() {
         this.endConversation();
 
         String summary = ResourceBundle.getBundle("/Bundle").getString("CursoCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
 
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 

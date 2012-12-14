@@ -4,7 +4,7 @@
  */
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.controller.util.PaginationHelper;
 import ec.edu.sga.facade.RolFacade;
 import ec.edu.sga.facade.UsuarioFacade;
@@ -192,7 +192,7 @@ public class UsuarioController implements Serializable {
         this.endConversation();
 
         String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
@@ -391,14 +391,14 @@ public class UsuarioController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
     public SelectItem[] getItemsRol() {
-        return JsfUtil.getSelectItems(ejbFacadeRol.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacadeRol.findAll(), false);
     }
 }

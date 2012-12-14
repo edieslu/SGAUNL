@@ -1,19 +1,21 @@
 package ec.edu.sga.controller.util;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.model.SelectItem;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author edison
- */
 public class SessionUtil {
 
-    // Se crean las variables de sesion.
+    
+    
     public static void addSession(Long userId, String userNombre, Long tipo, String userTipo) {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession)context.getExternalContext().getSession(false);
@@ -23,7 +25,7 @@ public class SessionUtil {
         sesion.setAttribute("userTipoId", tipo);
         sesion.setAttribute("userTipo", userTipo);
     }
-
+    
     // Se cierra la sesion.
     public static void closeSession() {
         ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
@@ -76,10 +78,84 @@ public class SessionUtil {
         try { ctx.redirect(ctxPath + url); }
         catch (IOException ex) {  }
     }
+    
+    public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
+        int size = selectOne ? entities.size() + 1 : entities.size();
+        SelectItem[] items = new SelectItem[size];
+        int i = 0;
+        if (selectOne) {
+            items[0] = new SelectItem("", "---");
+            i++;
+        }
+        for (Object x : entities) {
+            items[i++] = new SelectItem(x, x.toString());
+        }
+        return items;
+    }
+
+    public static SelectItem[] getSelectItem(Object entities) {
+
+        SelectItem[] items = new SelectItem[1];
+        items[0] = new SelectItem(entities, entities.toString());
+        return items;
+    }
+
+    public static void addErrorMessage(Exception ex, String defaultMsg) {
+        String msg = ex.getLocalizedMessage();
+        if (msg != null && msg.length() > 0) {
+            agregarMensajeError(msg);
+        } else {
+            agregarMensajeError(defaultMsg);
+        }
+    }
+
+    public static void addErrorMessages(List<String> messages) {
+        for (String message : messages) {
+            agregarMensajeError(message);
+        }
+    }
 
     public static void addErrorMessage(String msg) {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
+    
+    public static void agregarMensajeError(String mensajeBundle) {
+        String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, summary);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+    }
+    
+    public static void  agregarMensajeErrorOtraPágina(String mensajeBundle){
+        String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, summary);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+    }
+    
+    
 
+    public static void agregarMensajeInformacion(String mensajeBundle) {
+        String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary);
+        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+         
+    }
+    
+    public static void agregarMensajeInformacionOtraPagina(String mensajeBundle) {
+        String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary);
+        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+         
+    }
+
+    public static String getRequestParameter(String key) {
+        return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key);
+    }
+
+    public static Object getObjectFromRequestParameter(String requestParameterName, Converter converter, UIComponent component) {
+        String theId = SessionUtil.getRequestParameter(requestParameterName);
+        return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
+    }
 }

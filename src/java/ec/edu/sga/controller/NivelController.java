@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.NivelFacade;
 import ec.edu.sga.modelo.matriculacion.Nivel;
 import java.io.Serializable;
@@ -86,7 +86,7 @@ public class NivelController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
          String summary = ResourceBundle.getBundle("/Bundle").getString("NivelCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
        
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
@@ -144,11 +144,11 @@ public class NivelController implements Serializable {
     
      // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
     
     

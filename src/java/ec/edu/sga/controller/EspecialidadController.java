@@ -1,6 +1,6 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.EspecialidadFacade;
 import ec.edu.sga.modelo.matriculacion.Especialidad;
 import ec.edu.sga.modelo.matriculacion.Nivel;
@@ -89,7 +89,7 @@ public class EspecialidadController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
          String summary = ResourceBundle.getBundle("/Bundle").getString("EspecialidadCreated");
-        JsfUtil.addInformacionMessage(summary);
+        SessionUtil.agregarMensajeInformacion(summary);
        
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
@@ -147,11 +147,11 @@ public class EspecialidadController implements Serializable {
     
      // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
     
     

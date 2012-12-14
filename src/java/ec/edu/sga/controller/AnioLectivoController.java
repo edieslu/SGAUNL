@@ -1,5 +1,5 @@
 package ec.edu.sga.controller;
-import ec.edu.sga.controller.util.JsfUtil;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.modelo.matriculacion.AnioLectivo;
 import java.io.Serializable;
@@ -92,10 +92,8 @@ public class AnioLectivoController implements Serializable {
         current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.anio.creado");
-        JsfUtil.addInformacionMessage(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        return "/anioLectivo/List?faces-redirect=true";
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+         return "/anioLectivo/List?faces-redirect=true";
     }
 
     public String update() {
@@ -104,9 +102,7 @@ public class AnioLectivoController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el año lectivo: " + current.getFechaInicio());
         this.endConversation();
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.anio.actualizado");
-        JsfUtil.addInformacionMessage(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/anioLectivo/List?faces-redirect=true";
     }
 
@@ -115,9 +111,7 @@ public class AnioLectivoController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el año lectivo");
         this.endConversation();
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.anio.eliminado");
-        JsfUtil.addInformacionMessage(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/anioLectivo/List?faces-redirect=true";
     }
 
@@ -168,16 +162,16 @@ public class AnioLectivoController implements Serializable {
 
     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE AÑOS LECTIVOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
     //Método que retorna el año que está actualmente activo
     public SelectItem[] getItemAnioActivate() {
-        return JsfUtil.getSelectItem(ejbFacade.findAnioActivate(Boolean.TRUE));
+        return SessionUtil.getSelectItem(ejbFacade.findAnioActivate(Boolean.TRUE));
     }
  
 }

@@ -1,226 +1,90 @@
 package ec.edu.sga.controller;
 
-import ec.edu.sga.modelo.academico.Asignatura;
-import ec.edu.sga.controller.util.JsfUtil;
-import ec.edu.sga.controller.util.PaginationHelper;
+import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.AsignaturaFacade;
-
+import ec.edu.sga.modelo.academico.Asignatura;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Named;
 
 @Named("asignaturaController")
-@SessionScoped
+@ConversationScoped
 public class AsignaturaController implements Serializable {
 
     private Asignatura current;
-    private DataModel items = null;
+    private Long asignaturaId;
+    private Conversation conversation;
     @EJB
-    private ec.edu.sga.facade.AsignaturaFacade ejbFacade;
-    private PaginationHelper pagination;
-    private int selectedItemIndex;
+    private AsignaturaFacade ejbFacade;
 
+    //_________________________________Constructores_________________________________________//
     public AsignaturaController() {
+        current = new Asignatura();
     }
 
-    public Asignatura getSelected() {
-        if (current == null) {
-            current = new Asignatura();
-            selectedItemIndex = -1;
-        }
+    //_________________________GETTERS AND SETTERS___________________________________-//
+    public Asignatura getCurrent() {
         return current;
     }
 
-    private AsignaturaFacade getFacade() {
-        return ejbFacade;
+    public void setCurrent(Asignatura current) {
+        this.current = current;
     }
 
-    public PaginationHelper getPagination() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
-                @Override
-                public int getItemsCount() {
-                    return getFacade().count();
-                }
+    public Long getAsignaturaId() {
+        return asignaturaId;
+    }
 
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                }
-            };
+    public void setAsignaturaId(Long asignaturaId) {
+        this.asignaturaId = asignaturaId;
+    }
+
+    //________________________________Métodos_____________________________________________//
+    
+//________________________Metodos para iniciar y finalizar la conversación____________________//
+  
+    public void beginConversation() {
+
+        if (conversation.isTransient()) {
+            conversation.begin();
+            System.out.println("Iniciando la conversación en AsignaturaController");
         }
-        return pagination;
-    }
 
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (Asignatura) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
-    public String prepareCreate() {
-        current = new Asignatura();
-        selectedItemIndex = -1;
-        return "Create";
-    }
-
-    public String create() {
-        try {
-            getFacade().create(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
+    } //Fin del método beginConversation
+    
+    public void endConversation(){
+        if(!conversation.isTransient()){
+            conversation.end();
+            System.out.println("Finalizando la conversación en AsignaturaController");
+            
         }
-    }
+    }//fin del método endConversation
 
-    public String prepareEdit() {
-        current = (Asignatura) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-    public String update() {
-        try {
-            getFacade().edit(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
-            return "View";
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
-
-    public String destroy() {
-        current = (Asignatura) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
-        try {
-            getFacade().remove(current);
-            JsfUtil.addInformacionMessage(ResourceBundle.getBundle("/Bundle").getString("AsignaturaDeleted"));
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-    }
-
-    private void updateCurrentItem() {
-        int count = getFacade().count();
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-        }
-    }
-
-    public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
-    }
-
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
+   
+    //___________________________Métodos para operaciones de tipo CRUD____________________________//
+    
+    public String persist(){
+        System.out.println("Antes de grabar una asignatura: " + current.getNombreAsignatura());
+        ejbFacade.create(current);
+        this.endConversation();
+        System.out.println("Después de crear una asignatura: " + current.getNombreAsignatura());
+               String summary = ResourceBundle.getBundle("/Bundle").getString("");
+        return "/asignatura/List";
+    } //Fin del método persist
+    
+    
+    //___________________Métodos que devuelven una lista de items de tipo Asignatura___________________//
     public SelectItem[] getItemsAvailableSelectMany() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
-
-    @FacesConverter(forClass = Asignatura.class)
-    public static class AsignaturaControllerConverter implements Converter {
-
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            AsignaturaController controller = (AsignaturaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "asignaturaController");
-            return controller.ejbFacade.find(getKey(value));
-        }
-
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
-            return key;
-        }
-
-        String getStringKey(java.lang.Long value) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Asignatura) {
-                Asignatura o = (Asignatura) object;
-                return getStringKey(o.getId());
-            } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Asignatura.class.getName());
-            }
-        }
-    }
-}
+    
+    
+}//Fin de la clase Asignatura Controller
