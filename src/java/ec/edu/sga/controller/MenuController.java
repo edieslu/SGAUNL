@@ -155,11 +155,7 @@ public class MenuController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("CursoCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index?faces-redirect=true";
 
 
@@ -173,9 +169,7 @@ public class MenuController implements Serializable {
         System.out.println("ya modifique");
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
 
         return "/index?faces-redirect=true";
 
@@ -190,9 +184,7 @@ public class MenuController implements Serializable {
 
         this.endConversation();
 
-        String summary = "Curso Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-
+       SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
         return "/index?faces-redirect=true";
 

@@ -191,11 +191,7 @@ public class UsuarioController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index?faces-redirect=true";
         //return "/vehicle/BrandList";
 
@@ -208,9 +204,7 @@ public class UsuarioController implements Serializable {
         System.out.println("ya modifique");
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+      SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
 
         return "/usuario/List?faces-redirect=true";
 
@@ -220,13 +214,11 @@ public class UsuarioController implements Serializable {
         System.out.println("========> INGRESO a Eliminar Estudiante: " + current.getNombres());
         ejbFacade.remove(current);
 
-        // this.find();
+   
 
         this.endConversation();
-
-        String summary = "Estudiante Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-
+   SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        
 
         return "/usuario/List?faces-redirect=true";
 
