@@ -32,7 +32,7 @@ public class MenuFacade extends AbstractFacade<Menu> {
     public List<Menu> findAllOrderMenu() {
         try {
             Query query = em.createNamedQuery("Menu.findAllOrderMenu");
-            return (List<Menu>)query.getResultList();
+            return query.getResultList();
         }
         catch (Exception e) { return null; }
     } // Fin public List<Menu> findAllOrderMenu
