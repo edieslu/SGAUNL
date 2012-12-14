@@ -19,32 +19,27 @@ import javax.inject.Named;
  *
  * @authoredison
  */
-@Named(value="menuTipousuarioController")
+@Named(value = "menuTipousuarioController")
 @ConversationScoped
-public class MenuTipousuarioController implements  Serializable{
+public class MenuTipousuarioController implements Serializable {
 
     @EJB
     private MenuTipousuarioFacade dao;
-     @EJB
+    @EJB
     private MenuTipousuarioFacade ejbFacade;
     private MenuTipousuario selected;
     private MenuTipousuario current;
     @Inject
-    private  Conversation conversation;
-    
-    
+    private Conversation conversation;
 
     // ---------------------- Constructor de la Clase ----------------------
-
     public MenuTipousuarioController() {
         selected = new MenuTipousuario();
-         current = new MenuTipousuario();
+        current = new MenuTipousuario();
     }
 
-    
-     //-------------------------------------------GETTERS AND SETTER------------------------------------------------
-    
-public MenuTipousuario getCurrent() {
+    //-------------------------------------------GETTERS AND SETTER------------------------------------------------
+    public MenuTipousuario getCurrent() {
         return current;
     }
 
@@ -53,31 +48,24 @@ public MenuTipousuario getCurrent() {
         this.beginConversation();
         this.current = current;
     }
-    
-    
-    
-    
+
     public MenuTipousuario getSelected() {
-        if (selected == null) { selected = new MenuTipousuario(); }
+        if (selected == null) {
+            selected = new MenuTipousuario();
+        }
         return selected;
     } // Fin public Usuario getSelected
 
     // ---------------------- Métodos del Managed Bean ----------------------
-
     public String index() {
         return "/menu_tipousuario/index";
     } // Fin public String index
 
-    public List<MenuTipousuario> listado() {        
+    public List<MenuTipousuario> listado() {
         return dao.findAll();
     } // Fin public List<Usuario> listado
 
-   
-  
-    
-    
-
-   //________________MÉTODOS PARA INICIALIZAR Y FINALIZAR LA CONVERSACIÓN_________//
+    //________________MÉTODOS PARA INICIALIZAR Y FINALIZAR LA CONVERSACIÓN_________//
     public void beginConversation() {
         if (conversation.isTransient()) {
             conversation.begin();
@@ -100,43 +88,31 @@ public MenuTipousuario getCurrent() {
 
     //_______________________PERSISTIR OBJETOS________________________________//
     public String createInstance() {
-
         System.out.println("========> INGRESO a Crear una instancia de MenuTipo Usuario: " + current.getId());
         this.current = new MenuTipousuario();
         return "/index?faces-redirect=true";
-       
+
     }
 
     public String persist() {
-
         System.out.println("========> INGRESO a Grabar nuevo MenuTipoUsuario: " + current.getId());
         current.setCreated(new Date());
         current.setUpdated(new Date());
         ejbFacade.create(current);
         this.endConversation();
-
-        String summary = ResourceBundle.getBundle("/Bundle").getString("CursoCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index?faces-redirect=true";
 
 
     }
 
     public String update() {
-
         System.out.println("========> INGRESO a Actualizar al MenuTipoUsurio: " + current.getId());
         current.setUpdated(new Date());
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
-
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/index?faces-redirect=true";
 
     }
@@ -144,19 +120,8 @@ public MenuTipousuario getCurrent() {
     public String delete() {
         System.out.println("========> INGRESO a Eliminar MenuTipoUsuario: " + current.getId());
         ejbFacade.remove(current);
-
-        //cambia este método por uno implementado con búsqueda por criteria
-      //  this.findAll();
-
         this.endConversation();
-
-        String summary = "Curso Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/index?faces-redirect=true";
-
     }
-    
-
 }
