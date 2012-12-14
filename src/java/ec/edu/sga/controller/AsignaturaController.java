@@ -5,11 +5,12 @@ import ec.edu.sga.facade.AsignaturaFacade;
 import ec.edu.sga.modelo.academico.Asignatura;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("asignaturaController")
@@ -18,6 +19,7 @@ public class AsignaturaController implements Serializable {
 
     private Asignatura current;
     private Long asignaturaId;
+    @Inject
     private Conversation conversation;
     @EJB
     private AsignaturaFacade ejbFacade;
@@ -40,17 +42,29 @@ public class AsignaturaController implements Serializable {
     }
 
     public Long getAsignaturaId() {
-        return asignaturaId;
+        if (current != null) {
+            asignaturaId = current.getId();
+            return asignaturaId;
+        }
+        return null;
     }
 
     public void setAsignaturaId(Long asignaturaId) {
-        this.asignaturaId = asignaturaId;
-    }
+        System.out.println("========> Ingreso a fijar el id de una Asignatura: " + asignaturaId);
+        this.beginConversation();
+        if (asignaturaId != null && asignaturaId.longValue() > 0) {
+            this.asignaturaId = this.current.getId();
+            ejbFacade.find(asignaturaId);
+            System.out.println("========> Ingresó a editar una Asignatura: " + current.getNombreAsignatura());
+        } else {
+            System.out.println("========> Ingresó a crear una asignatura: ");
+            this.current = new Asignatura();
+        }
+    } // Fin del método setAsignaturaId
 
     //________________________________Métodos_____________________________________________//
 //________________________Metodos para iniciar y finalizar la conversación____________________//
     public void beginConversation() {
-
         if (conversation.isTransient()) {
             conversation.begin();
             System.out.println("Iniciando la conversación en AsignaturaController");
@@ -100,8 +114,7 @@ public class AsignaturaController implements Serializable {
     public String cancelEdit() {
         this.endConversation();
         return "/asignatura/List?faces-redirect=true";
-
-    }
+    }  // Fin del método Cancel Edit
 
     //___________________Métodos que devuelven una lista de items de tipo Asignatura___________________//
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -110,6 +123,20 @@ public class AsignaturaController implements Serializable {
 
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
+    }
+
+    //Método que muestra una lista de todas las asignaturas
+    public List<Asignatura> getFindAll() {
+                return ejbFacade.findAll();
+    }
+
+    //Métodos para navegar entre distintas páginas
+    public String getOutcomeList() {
+        return "/asignatura/List?faces-redirect=true";
+    }
+
+    public String getOutcomeEdit() {
+        return "/asignatura/Edit?faces-redirect=true";
     }
 }//Fin de la clase Asignatura Controller
 

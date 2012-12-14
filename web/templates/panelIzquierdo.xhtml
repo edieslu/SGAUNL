@@ -2,60 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h3> <h:outputText value="Menú Sistema"/> </h3>
-
-    <c:if test="#{sessionBean.usuarioLogeado != null}">
-
-        #{sessionBean.usuarioLogeado.nombres} #{sessionBean.usuarioLogeado.apellidos}
-
-        <h:form>
-            <c:forEach items="#{menuController.listado}" var="item">
-                <c:choose>
-                    <c:when test="#{item.lengt}">
-                        <h:graphicImage library="images" name="#{img}"/>
-                        <h:commandLink action="#{loginController.irA(item.actio)}" value="#{item.nombre}"/>
-                    </c:when>
-                    <c:otherwise> 
-                        <h:outputText value="#{item.nombre}"/> 
-                    </c:otherwise>
-                </c:choose>
-                <br />
-            </c:forEach>
-        </h:form>
-
-    </c:if>
-
-
-
-
-
-
-
-    <!-- <h:form>
-         <p:menu >  
-             <p:submenu label="Inicio">  
-                 <p:menuitem value="Estudiantes" outcome="/usuario/List"/> 
-                 <p:menuitem value="Eliminar"/> 
-                 <p:menuitem value="Modificar"/>
-             </p:submenu>  
- 
-             <p:submenu label="Configuración del Sistema">  
-                 <p:menuitem value="Años Lectivos" outcome="/anioLectivo/List"/> 
-                 <p:menuitem value="Niveles" outcome="/nivel/Edit"/>
-                 <p:menuitem value="Cursos" outcome="/curso/List"/>
-                 <p:menuitem value="Especialidad" outcome="/especialidad/Edit"/>
-                 <p:menuitem value="Paralelos" outcome="/paralelo/Edit"/>
-                 <p:menuitem value="Matricular" outcome="/matricula/Edit"/>
- 
-             </p:submenu>  
- 
-             <p:submenu label="Navigations">  
-                 <p:menuitem value="External" />  
-                 <p:menuitem value="Internal" />  
-             </p:submenu>  
-         </p:menu> 
-     </h:form> -->
+    <h:form>
+        <p:menu model="#{menuDinamico.model}"/> 
+    </h:form>
 </html>
-
