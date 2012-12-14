@@ -85,11 +85,7 @@ public class NivelController implements Serializable {
         System.out.println("Ingreso a grabar el nivel: " + current.getNombreNivel());
         ejbFacade.create(current);
         this.endConversation();
-         String summary = ResourceBundle.getBundle("/Bundle").getString("NivelCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-       
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion"); 
         return "/index";
     }
 
@@ -98,6 +94,7 @@ public class NivelController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el nivel: " + current.getNombreNivel());
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/nivel/List";
     }
 
@@ -106,6 +103,7 @@ public class NivelController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el nivel");
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/nivel/List";
     }
 

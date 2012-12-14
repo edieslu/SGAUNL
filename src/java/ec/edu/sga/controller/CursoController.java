@@ -149,10 +149,7 @@ public class CursoController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.creado");
-        SessionUtil.agregarMensajeInformacion(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/curso/List?faces-redirect=true";
 
 
@@ -164,10 +161,7 @@ public class CursoController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
-
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.actualizado");
-        SessionUtil.agregarMensajeInformacion(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/curso/List?faces-redirect=true";
 
     }
@@ -175,13 +169,8 @@ public class CursoController implements Serializable {
     public String delete() {
         System.out.println("========> INGRESO a Eliminar Curso: " + current.getNombreCurso());
         ejbFacade.remove(current);
-
-        //cambia este método por uno implementado con búsqueda por criteria
-        //this.findAll();
         this.endConversation();
-        String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.curso.eliminado");
-        SessionUtil.agregarMensajeInformacion(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/curso/List?faces-redirect=true";
 
     }

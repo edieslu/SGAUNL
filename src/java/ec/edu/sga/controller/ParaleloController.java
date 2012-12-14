@@ -90,11 +90,7 @@ public class ParaleloController implements Serializable {
         System.out.println("Ingreso a grabar el paralelo: " + current.getNombreParalelo());
         ejbFacade.create(current);
         this.endConversation();
-         String summary = ResourceBundle.getBundle("/Bundle").getString("CursoCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-       
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index";
     }
 
@@ -103,6 +99,7 @@ public class ParaleloController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el paralelo: " + current.getNombreParalelo());
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/paralelo/List";
     }
 
@@ -111,6 +108,7 @@ public class ParaleloController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el paralelo");
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/paralelo/List";
     }
 

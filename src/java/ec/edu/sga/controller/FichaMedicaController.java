@@ -64,10 +64,7 @@ public class FichaMedicaController implements Serializable{
         ejbFacade.create(current);
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
 
         return "/usuario/Created?faces-redirect=true";
         //return "/vehicle/BrandList";
@@ -81,10 +78,7 @@ public class FichaMedicaController implements Serializable{
         System.out.println("ya modifique");
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+     SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/estudiante/List?faces-redirect=true";
 
     }
@@ -97,9 +91,7 @@ public class FichaMedicaController implements Serializable{
 
         this.endConversation();
 
-        String summary = "Estudiante Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-
+      SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
         return "/estudiante/List?faces-redirect=true";
 

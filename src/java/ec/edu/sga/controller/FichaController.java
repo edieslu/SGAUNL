@@ -29,7 +29,7 @@ import javax.inject.Named;
  */
 @Named(value = "fichaController")
 @ConversationScoped
-public class FichaController implements Serializable{
+public class FichaController implements Serializable {
 
     private Ficha current;
     private DataModel items = null;
@@ -38,15 +38,15 @@ public class FichaController implements Serializable{
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Ficha> resultlist;
-
     @Inject
     Conversation conversation;
+
     public FichaController() {
-        this.current= new Ficha();
-        resultlist= new ArrayList<Ficha>();
+        this.current = new Ficha();
+        resultlist = new ArrayList<Ficha>();
     }
-    
-     public String createInstance() {
+
+    public String createInstance() {
         //return "/vehicle/Edit?faces-redirect=true";
         System.out.println("========> INGRESO a Crear Instance ficha: ");
         this.current = new Ficha();
@@ -59,11 +59,7 @@ public class FichaController implements Serializable{
         System.out.println("========> INGRESO a Grabar nueva ficha: ");
         ejbFacade.create(current);
         this.endConversation();
-
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
 
         return "/usuario/Created?faces-redirect=true";
         //return "/vehicle/BrandList";
@@ -72,29 +68,23 @@ public class FichaController implements Serializable{
 
     public String update() {
 
-        System.out.println("========> INGRESO a Actualizar al Estudiante: " );
+        System.out.println("========> INGRESO a Actualizar al Estudiante: ");
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
-
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/estudiante/List?faces-redirect=true";
 
     }
 
     public String delete() {
-        System.out.println("========> INGRESO a Eliminar Estudiante: " );
+        System.out.println("========> INGRESO a Eliminar Estudiante: ");
         ejbFacade.remove(current);
 
         // this.find();
 
         this.endConversation();
-
-        String summary = "Estudiante Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
 
         return "/estudiante/List?faces-redirect=true";
@@ -226,7 +216,6 @@ public class FichaController implements Serializable{
 //            return null;
 //        }
 //    }
-
     public String destroy() {
         current = (Ficha) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();

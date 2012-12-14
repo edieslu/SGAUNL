@@ -32,7 +32,7 @@ import javax.inject.Named;
  */
 @Named(value = "fichaSocioeconomicaController")
 @ConversationScoped
-public class FichaSocioeconomicaController implements Serializable{
+public class FichaSocioeconomicaController implements Serializable {
 
     private FichaSocioeconomica current;
     private Ficha ficha;
@@ -42,18 +42,17 @@ public class FichaSocioeconomicaController implements Serializable{
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<FichaSocioeconomica> resultlist;
-    
     @Inject
     Conversation conversation;
-    
+
     public FichaSocioeconomicaController() {
-        current= new FichaSocioeconomica();
+        current = new FichaSocioeconomica();
 //        ficha= new Ficha();
 //        current.setFicha(ficha);
-        resultlist= new ArrayList<FichaSocioeconomica>();
+        resultlist = new ArrayList<FichaSocioeconomica>();
     }
-    
-     public String createInstance() {
+
+    public String createInstance() {
         //return "/vehicle/Edit?faces-redirect=true";
         System.out.println("========> INGRESO a Crear Instance FichaSocioeconomica: ");
         this.current = new FichaSocioeconomica();
@@ -63,14 +62,11 @@ public class FichaSocioeconomicaController implements Serializable{
 
     public String persist() {
 
-        System.out.println("========> INGRESO a Grabar nuevo Ficha Socioeconomica: " );
+        System.out.println("========> INGRESO a Grabar nuevo Ficha Socioeconomica: ");
         ejbFacade.create(current);
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
 
         return "/usuario/Create?faces-redirect=true";
         //return "/vehicle/BrandList";
@@ -79,30 +75,26 @@ public class FichaSocioeconomicaController implements Serializable{
 
     public String update() {
 
-        System.out.println("========> INGRESO a Actualizar al Estudiante: " );
+        System.out.println("========> INGRESO a Actualizar al Estudiante: ");
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
 
-        String summary = ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated");
-        FacesContext.getCurrentInstance().addMessage("successInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary));
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
 
         return "/estudiante/List?faces-redirect=true";
 
     }
 
     public String delete() {
-        System.out.println("========> INGRESO a Eliminar Estudiante: " );
+        System.out.println("========> INGRESO a Eliminar Estudiante: ");
         ejbFacade.remove(current);
 
         // this.find();
 
         this.endConversation();
 
-        String summary = "Estudiante Eliminado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
         return "/estudiante/List?faces-redirect=true";
 
@@ -127,7 +119,8 @@ public class FichaSocioeconomicaController implements Serializable{
             System.out.println("========> FINALIZANDO CONVERSACION: ");
         }
     }
-     public FichaSocioeconomica getSelected() {
+
+    public FichaSocioeconomica getSelected() {
         if (current == null) {
             current = new FichaSocioeconomica();
             selectedItemIndex = -1;
@@ -167,7 +160,6 @@ public class FichaSocioeconomicaController implements Serializable{
         this.resultlist = resultlist;
     }
 
-    
     private FichaSocioeconomicaFacade getFacade() {
         return ejbFacade;
     }
@@ -233,7 +225,6 @@ public class FichaSocioeconomicaController implements Serializable{
 //            return null;
 //        }
 //    }
-
     public String destroy() {
         current = (FichaSocioeconomica) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();

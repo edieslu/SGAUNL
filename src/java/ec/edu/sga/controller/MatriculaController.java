@@ -214,9 +214,7 @@ public class MatriculaController implements Serializable {
         current.setCurso(curso);
         ejbFacade.create(current);
         this.endConversation();
-        String summary = ResourceBundle.getBundle("/Bundle").getString("MatriculaCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index";
     }
 
@@ -225,6 +223,7 @@ public class MatriculaController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé la matrícula: " + current.getTipoMatricula());
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/matricula/List";
     }
 
@@ -233,6 +232,7 @@ public class MatriculaController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé la matrícula");
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/matricula/List";
     }
 

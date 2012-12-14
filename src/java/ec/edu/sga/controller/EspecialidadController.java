@@ -48,8 +48,6 @@ public class EspecialidadController implements Serializable {
         this.resultlist = resultlist;
     }
 
-    
-
     public Especialidad getCurrent() {
         return current;
     }
@@ -73,7 +71,7 @@ public class EspecialidadController implements Serializable {
         if (especialidadId != null && especialidadId.longValue() > 0) { //Verifica que el id no sea vacío
             this.current = ejbFacade.find(especialidadId);//BUsca un paralelo de acuerdo al ID y lo asigna a current
             this.especialidadId = current.getId();
-             System.out.println("Ingreso a editar especialidad: " +current.getNombreEspecialidad());
+            System.out.println("Ingreso a editar especialidad: " + current.getNombreEspecialidad());
 
         } else {
             System.out.println("Ingreso a crear una nueva especialidad");
@@ -88,11 +86,7 @@ public class EspecialidadController implements Serializable {
         System.out.println("Ingreso a grabar el paralelo: " + current.getNombreEspecialidad());
         ejbFacade.create(current);
         this.endConversation();
-         String summary = ResourceBundle.getBundle("/Bundle").getString("EspecialidadCreated");
-        SessionUtil.agregarMensajeInformacion(summary);
-       
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index";
     }
 
@@ -101,6 +95,7 @@ public class EspecialidadController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé la especialidad: " + current.getNombreEspecialidad());
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/especialidad/List";
     }
 
@@ -109,6 +104,7 @@ public class EspecialidadController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé la especialidad");
         this.endConversation();
+          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/especialidad/List";
     }
 
@@ -135,17 +131,17 @@ public class EspecialidadController implements Serializable {
     }
 
     public String findAllEspecialidad() {
-       resultlist = ejbFacade.findAll();
+        resultlist = ejbFacade.findAll();
         for (Especialidad object : resultlist) {
-            System.out.println("especialidades: "+ object);
-            
+            System.out.println("especialidades: " + object);
+
         }
         String summary = "Encontrado Correctamente!";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
         return "especialidad/List";
     }
-    
-     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
+
+    // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
@@ -153,8 +149,4 @@ public class EspecialidadController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
-    
-    
-    
-    
 }
