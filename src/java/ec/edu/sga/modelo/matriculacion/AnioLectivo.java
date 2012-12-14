@@ -44,11 +44,11 @@ public class AnioLectivo implements Serializable {
     private List<Matricula> matriculas;
     private Long duracion;
     private Boolean estado;
+    
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-
+    private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+    private Date fechaActualizacion;
 
     
 
@@ -109,21 +109,22 @@ public class AnioLectivo implements Serializable {
         this.estado = estado;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
+
     
     
 

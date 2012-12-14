@@ -88,8 +88,8 @@ public class AnioLectivoController implements Serializable {
     //____________________________MÉTODOS_______________________________
     public String persist() {
         System.out.println("Ingreso a grabar el Año Lectivo: " + current.getFechaInicio());
-        current.setCreated(new Date());
-        current.setUpdated(new Date());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
         String summary = ResourceBundle.getBundle("/Bundle").getString("mensaje.anio.creado");
@@ -100,7 +100,7 @@ public class AnioLectivoController implements Serializable {
 
     public String update() {
         System.out.println("Ingreso a actualizar: " + current.getFechaInicio());
-        current.setUpdated(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el año lectivo: " + current.getFechaInicio());
         this.endConversation();

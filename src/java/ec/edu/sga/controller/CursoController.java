@@ -144,8 +144,8 @@ public class CursoController implements Serializable {
     public String persist() {
 
         System.out.println("========> INGRESO a Grabar nuevo Curso: " + current.getNombreCurso());
-        current.setCreated(new Date());
-        current.setUpdated(new Date());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
 
@@ -160,7 +160,7 @@ public class CursoController implements Serializable {
 
     public String update() {
         System.out.println("========> INGRESO a Actualizar al Curso: " + current.getNombreCurso());
-        current.setUpdated(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();

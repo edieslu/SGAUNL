@@ -6,12 +6,15 @@ package ec.edu.sga.modelo.academico;
 
 import ec.edu.sga.modelo.horarios.CargaHoraria;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -35,8 +38,32 @@ public class Asignatura implements Serializable {
     private String tipoAsignatura; //obligatoria, optativa, a discreción del centro educativo
     @ManyToOne
     private CargaHoraria cargaHoraria;
-
+   
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
+    
+    
     //----------------------------CONSTRUCTORES---------------------------//
+
+    public Asignatura() {
+    }
+    
+    
+
+    public Asignatura(MallaCurricular mallaCurricular, Docente docente, String nombreAsignatura, String tipoAsignatura, CargaHoraria cargaHoraria, Date fechaCreacion, Date fechaActualizacion) {
+        this.mallaCurricular = mallaCurricular;
+        this.docente = docente;
+        this.nombreAsignatura = nombreAsignatura;
+        this.tipoAsignatura = tipoAsignatura;
+        this.cargaHoraria = cargaHoraria;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+    
+    
+    
     //------------------------GETTERS AND SETTERS-------------------------//
     public Long getId() {
         return id;
@@ -84,8 +111,26 @@ public class Asignatura implements Serializable {
 
     public void setMallaCurricular(MallaCurricular mallaCurricular) {
         this.mallaCurricular = mallaCurricular;
+     }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    
+    
     //-------------------------METODOS------------------------------------//
     @Override
     public int hashCode() {

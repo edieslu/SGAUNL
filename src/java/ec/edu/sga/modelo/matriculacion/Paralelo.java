@@ -5,6 +5,7 @@
 package ec.edu.sga.modelo.matriculacion;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -48,6 +51,13 @@ public class Paralelo implements Serializable {
     @OneToMany(mappedBy = "paralelo")
     private List<Matricula> matriculas;
 
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
+    
+    
     //-----------------------------CONTRUCTORES----------------------------------//
     public Paralelo() {
     }
@@ -98,6 +108,22 @@ public class Paralelo implements Serializable {
 
     public void setMatriculas(List<Matricula> matriculas) {
         this.matriculas = matriculas;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
     
     
