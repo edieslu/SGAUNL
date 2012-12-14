@@ -9,11 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
 import javax.faces.component.UIViewRoot;
@@ -77,7 +75,7 @@ public class CursoController implements Serializable {
 
 
 
-            //Method that return an Course whith all their paralels 
+            //Metodo que permite llevar los datos de un curso desde una ventana y editarlos en otra ventana
             this.current = ejbFacade.findCursoByCursoId(cursoId);
             this.cursoId = this.current.getId();
 
