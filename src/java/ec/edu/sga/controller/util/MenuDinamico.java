@@ -41,8 +41,6 @@ public class MenuDinamico implements Serializable {
 ////    @Inject
 ////    private LoginController loginController;
     public MenuDinamico() {
-
-
 //        model = new DefaultMenuModel();
 //
 //
@@ -85,8 +83,6 @@ public class MenuDinamico implements Serializable {
 //
 //
 //        }
-
-
 //        menuDinamico = new DefaultMenuModel();
 //        int var = 0;
 //
@@ -113,8 +109,6 @@ public class MenuDinamico implements Serializable {
 //                    submenu.setLabel(menu.getNombre());
 //            }
 //        }
-
-
     }
 
     public MenuModel getModel() {
@@ -145,35 +139,56 @@ public class MenuDinamico implements Serializable {
     public void lista() {
         this.list = ejbFacadeMenu.findAllOrderMenu();
     }
-    
-    
-     @SuppressWarnings("unused")
-    
+
+    @SuppressWarnings("unused")
     @PostConstruct
-    private void init(){
+    private void init() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Application application = facesContext.getApplication();
         ExpressionFactory expressionFactory = application.getExpressionFactory();
         ELContext elContext = facesContext.getELContext();
         model = new DefaultMenuModel();
-        Submenu submenu;
-        submenu = new Submenu();
-        
+        //  Submenu submenu = new Submenu();
+
+        List<Menu> submenus = new ArrayList<Menu>();
+        List<Menu> menuitems = new ArrayList<Menu>();
+
         for (Menu menu : ejbFacadeMenu.findAllOrderMenu()) {
             System.out.println(menu.getNombre());
             if (menu.isLengt()) {
-                MenuItem item = new MenuItem();
-                item.setValue(menu.getNombre());
-                item.setUrl(menu.getActio());
-                   //item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{menuController.current.actio}", String.class, new Class[0]));
-                submenu.getChildren().add(item);
-                model.addSubmenu(submenu);
+                menuitems.add(menu);
             } else {
-                submenu.setLabel(menu.getNombre());
+                submenus.add(menu);
             }
         }
-
         
+        for (Menu subm : submenus) {
+            Submenu sm = new Submenu();
+            sm.setLabel(subm.getNombre());
+            for (Menu menu : menuitems) {
+                if (subm.getRaiz() == menu.getRaiz()) {
+                    MenuItem m = new MenuItem();
+                    m.setValue(menu.getNombre());
+                    m.setUrl(menu.getActio());
+                    sm.getChildren().add(m);
+                } 
+            }
+            model.addSubmenu(sm);
+
+        }
+    }
+
+//    public void menu(Submenu submenu, Menu menu) {
+//        MenuItem item = new MenuItem();
+//        item.setValue(menu.getNombre());
+//        item.setUrl(menu.getActio());
+//        submenu.getChildren().add(item);
+//    }
+//
+//    public Submenu crearSubmenu() {
+//        Submenu submenu = new Submenu();
+//        return submenu;
+//    }
 //        submenu.setId("idCabecera");
 //        submenu.setLabel("Operaciones");
 //
@@ -194,6 +209,4 @@ public class MenuDinamico implements Serializable {
 //        submenu.getChildren().add(item2);
 //
 //        model.addSubmenu(submenu);
-
-    }
 }
