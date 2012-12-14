@@ -53,11 +53,33 @@ public class Matricula implements Serializable {
     @ManyToOne
     private Paralelo paralelo;
     
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
+    
     //--------------------COSTRUCTORES-----------------------//
     public Matricula() {
         fechaMatricula = new Date();
 
     }
+
+    public Matricula(Date fechaMatricula, int numeroMatricula, int folioMatricula, TipoMatricula tipoMatricula, String observaciones, int segundaTerceraMatricula, Usuario usuario, AnioLectivo anioLectivo, Curso curso, Paralelo paralelo, Date fechaCreacion, Date fechaActualizacion) {
+        this.fechaMatricula = fechaMatricula;
+        this.numeroMatricula = numeroMatricula;
+        this.folioMatricula = folioMatricula;
+        this.tipoMatricula = tipoMatricula;
+        this.observaciones = observaciones;
+        this.segundaTerceraMatricula = segundaTerceraMatricula;
+        this.usuario = usuario;
+        this.anioLectivo = anioLectivo;
+        this.curso = curso;
+        this.paralelo = paralelo;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
+    
+    
 
     //----------------------GETTERS AND SETTERS------------------//
     public Long getId() {
@@ -148,6 +170,24 @@ public class Matricula implements Serializable {
     public void setParalelo(Paralelo paralelo) {
         this.paralelo = paralelo;
     }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+    
+    
     
     
 

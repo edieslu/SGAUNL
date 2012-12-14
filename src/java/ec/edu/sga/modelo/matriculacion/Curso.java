@@ -64,9 +64,9 @@ public class Curso implements Serializable {
     @OneToMany(mappedBy = "curso", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Paralelo> paralelos;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Updated;
+    private Date fechaActualizacion;
 
     //----------------------constructores--------------------------------------//
     public Curso() {
@@ -142,21 +142,24 @@ public class Curso implements Serializable {
         this.paralelos = paralelos;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getUpdated() {
-        return Updated;
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
     }
 
-    public void setUpdated(Date Updated) {
-        this.Updated = Updated;
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
+
+
+    
 
     
     

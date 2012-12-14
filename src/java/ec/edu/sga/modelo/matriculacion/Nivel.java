@@ -6,6 +6,7 @@ package ec.edu.sga.modelo.matriculacion;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,6 +52,12 @@ public class Nivel implements Serializable {
     private List<Curso> cursos;
     @OneToMany(mappedBy = "nivel", cascade= CascadeType.ALL, orphanRemoval=true)
     private List<Especialidad> especialidades;
+    
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
 
     //---------------------CONTRUCTORES--------------------------//
     public Nivel() {
@@ -115,6 +124,22 @@ public class Nivel implements Serializable {
 
     public void setEspecialidades(List<Especialidad> especialidades) {
         this.especialidades = especialidades;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
     
     
