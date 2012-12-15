@@ -20,8 +20,11 @@ import java.util.Date;
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Size;
 
 /**
@@ -110,15 +113,15 @@ public class LoginController implements Serializable {
 
     // --------------------- Métodos del Bean ---------------------
     public String index() {
-        return "/faces/index.xhtml";
+        return "/index.xhtml?faces-redirect=true";
     } // Fin public String index
 
     public String acercaDe() {
-        return "/home/acerca_de";
+        return "/home/acerca_de.xhtml?faces-redirect=true";
     } // Fin public String acercaDe
 
     public String login() {
-        return "/faces/login/login.xhtml";
+        return "/login/login.xhtml?faces-redirect=true";
     } // Fin public String login
 
     // Funcion de ingreso al sistema
@@ -136,17 +139,32 @@ public class LoginController implements Serializable {
         //SessionUtil.closeSession();
         //SessionUtil.addSession(login.getId(), login.getNombres(), login.getTipousuarioId().getId(), login.getTipousuarioId().getNombre());
 
-        return "/index";
+        return "/index.xhtml?faces-redirect=true";
 
     } // Fin public Ingresar
 
+    
+    //Cerrar Sesion
+    public static void closeSession() {
+        ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
+        ((HttpSession) ctx.getSession(false)).invalidate();
+    }
+
+//    public void close() {
+//
+//        WebApplicationContext webCtx = (WebApplicationContext) application.getContext();
+//        HttpSession session = webCtx.getHttpSession();
+//        session.invalidate();
+//    }
+
+    @SuppressWarnings("static-access")
     public String logout() {
-        SessionUtil.closeSession();
-        return "/faces/login/login.xhtml";
+        this.closeSession();
+        return "/faces/login/login.xhtml?faces-redirect=true";
     } // Fin public String logout
 
     public String cambio_clave() {
-        return "/home/cambio_clave";
+        return "/faces/usuario/CambioClave.xhtml?faces-redirect=true";
     } // Fin public String cambio_clave
 
     // Funcion para cambiar la clave del usuario.
@@ -159,7 +177,8 @@ public class LoginController implements Serializable {
         }
 
         // Recupera el usuario actual para conocer su clave
-        Usuario current = ejbUsuario.find(SessionUtil.getUserLog());
+        //Usuario current = ejbUsuario.find(SessionUtil.getUserLog());
+        Usuario current = ejbUsuario.find(sessionbean.getUsuarioLogeado().getId());
         String claveUsr = current.getClave();
 
         // La clave del usuario debe ser la actual
@@ -170,11 +189,10 @@ public class LoginController implements Serializable {
 
         current.setClave(claveNew);
         ejbUsuario.edit(current);
-        return "/index";
+        return "/index.xhtml?faces-redirect=true";
 
     } // Fin public String cambiarPWD
 
-   
     public Boolean getLogueado() {
         Long userLog = SessionUtil.getUserLog();
         return !(userLog == null);
@@ -187,7 +205,7 @@ public class LoginController implements Serializable {
 
     public void accesoURL(Boolean ctrl, String pagina) {
         if (!tieneAcceso(ctrl, pagina)) {
-            SessionUtil.redirectTo("/faces/home/acceso_denegado.xhtml");
+            SessionUtil.redirectTo("/faces/login/AccesoDenegado.xhtml?faces-redirect=true");
         }
     } // Fin public void logout
 
@@ -199,7 +217,7 @@ public class LoginController implements Serializable {
         } // Si el indicador dice que no hay que controlar, tiene acceso.
 
         // Si el usuario no ingreso, no hay acceso.
-        Long userLog = SessionUtil.getUserLog();
+        Long userLog = sessionbean.getUsuarioLogeado().getId(); 
         if (userLog == null) {
             return false;
         }
@@ -217,7 +235,8 @@ public class LoginController implements Serializable {
         }
 
         // No debería pasar, pero si el tipo no existe, no hay acceso.
-        Tipousuario tipo = ejbTipoUsuario.find(SessionUtil.getIdUserTipoLog());
+        //Tipousuario tipo = ejbTipoUsuario.find(SessionUtil.getIdUserTipoLog());
+        Tipousuario tipo = ejbTipoUsuario.find(sessionbean.getUsuarioLogeado().getTipousuarioId().getId());
         if (tipo == null) {
             return false;
         }
@@ -229,12 +248,12 @@ public class LoginController implements Serializable {
 
     public String infoDelPie() {
 
-        String nombre = SessionUtil.getUserNombreLog();
+        String nombre = sessionbean.getUsuarioLogeado().getNombres();
         //String tipo = SessionUtil.getUserTipoLog();
         String user = "";
-        if (nombre != null ) {
+        if (nombre != null) {
             user = nombre;
-            System.out.println("*********************"+user);
+            System.out.println("*********************" + user);
         }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy h:mm a");

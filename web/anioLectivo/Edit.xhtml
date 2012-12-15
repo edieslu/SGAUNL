@@ -6,7 +6,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-
+    
     <f:metadata>
         <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
     </f:metadata>
@@ -14,6 +14,7 @@
     <ui:composition template="/templates/plantilla.xhtml">
 
         <ui:define name="content">
+            #{loginController.accesoURL(true, "/faces/anioLectivo/Edit.xhtml")}
 
             <h:form id="formEdit">
                 

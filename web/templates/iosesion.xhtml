@@ -2,22 +2,13 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
+      
 
-   
-
-    <c:if test="#{sessionBeanController.usuarioLogeado!=null}">
-            <h:form>
-                <p:commandLink  action="#{loginController.login()}" value="Ingreso"/> 
-            </h:form>
-        </c:if>
-
-    <c:if test="#{loginController.logueado == null}">
-            <h:form> 
-                <p:commandLink  action="#{loginController.logout()}" value="Salir"/> 
-            </h:form>
-        </c:if>
-
-
+    <h:form> 
+        <p:commandLink  action="#{loginController.logout()}" value="Salir"/> 
+        <br/>
+        <br/>
+        <p:commandLink  action="#{loginController.cambio_clave()}" value="Cambiar Clave"/> 
+    </h:form>
 </html>

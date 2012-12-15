@@ -41,74 +41,6 @@ public class MenuDinamico implements Serializable {
 ////    @Inject
 ////    private LoginController loginController;
     public MenuDinamico() {
-//        model = new DefaultMenuModel();
-//
-//
-//        Submenu submenu = new Submenu();
-////        submenu.setLabel("Dynamic Submenu 1");
-////
-////        MenuItem item = new MenuItem();
-////        item.setValue("Dynamic Menuitem 1.1");
-////        item.setUrl("#");
-////        submenu.getChildren().add(item);
-////
-////        model.addSubmenu(submenu);
-//
-//
-//        for (Menu menu : ejbFacadeMenu.findAllOrderMenu()) {
-//            System.out.println(menu.getNombre());
-//            if (menu.isLengt()) {
-//                MenuItem item = new MenuItem();
-//                item.setValue(menu.getNombre());
-//                item.setUrl("#");
-//                submenu.getChildren().add(item);
-//                model.addSubmenu(submenu);
-//            } else {
-//                submenu.setLabel(menu.getNombre());
-//            }
-//        }
-//
-////        for (Menu menu : ejbFacadeMenu.findAllOrderMenu()) {
-////            System.out.println(menu.getNombre());
-////
-////            if (menu.isLengt()) {
-////                MenuItem item = new MenuItem();
-////                item.setValue(menu.getNombre());
-////                item.setUrl("#");
-////                submenu.getChildren().add(item);
-////                menuDinamico.addSubmenu(submenu);
-//            } else {
-//                submenu.setLabel(menu.getNombre());
-//            }
-//
-//
-//        }
-//        menuDinamico = new DefaultMenuModel();
-//        int var = 0;
-//
-//
-//
-//        for (Menu menu : ejbFacadeMenu.findAll()) {
-//            Submenu submenu = new Submenu();
-//
-//            if (menu.isLengt()) {
-//                var = 1;
-//            } else {
-//                var = 0;
-//            }
-//
-//            switch (var) {
-//
-//                case 1:
-//                    MenuItem item = new MenuItem();
-//                    item.setValue(menu.getNombre());
-//                    item.setUrl(loginController.irA(menu.getActio()));
-//                    submenu.getChildren().add(item);
-//                    menuDinamico.addSubmenu(submenu);
-//                default:
-//                    submenu.setLabel(menu.getNombre());
-//            }
-//        }
     }
 
     public MenuModel getModel() {
@@ -161,7 +93,7 @@ public class MenuDinamico implements Serializable {
                 submenus.add(menu);
             }
         }
-        
+
         for (Menu subm : submenus) {
             Submenu sm = new Submenu();
             sm.setLabel(subm.getNombre());
@@ -171,13 +103,12 @@ public class MenuDinamico implements Serializable {
                     m.setValue(menu.getNombre());
                     m.setUrl(menu.getActio());
                     sm.getChildren().add(m);
-                } 
+                }
             }
             model.addSubmenu(sm);
 
         }
     }
-
 //    public void menu(Submenu submenu, Menu menu) {
 //        MenuItem item = new MenuItem();
 //        item.setValue(menu.getNombre());
