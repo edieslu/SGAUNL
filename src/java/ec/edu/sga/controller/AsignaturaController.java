@@ -26,6 +26,7 @@ public class AsignaturaController implements Serializable {
 
     //_________________________________Constructores_________________________________________//
     public AsignaturaController() {
+        System.out.println("Llamando al constructor de Asignatura");
         current = new Asignatura();
     }
 
@@ -38,7 +39,7 @@ public class AsignaturaController implements Serializable {
         System.out.println("Ingreso a fijar una Asignatura en current" + this.current);
         System.out.println("Inicio la conversación desde setCurrent");
         this.beginConversation();
-        current = new Asignatura();
+        this.current = current;
     }
 
     public Long getAsignaturaId() {
@@ -53,8 +54,9 @@ public class AsignaturaController implements Serializable {
         System.out.println("========> Ingreso a fijar el id de una Asignatura: " + asignaturaId);
         this.beginConversation();
         if (asignaturaId != null && asignaturaId.longValue() > 0) {
+            current = ejbFacade.find(asignaturaId);
+            System.out.println("Este es el valor de current.getId: " + current.getId());
             this.asignaturaId = this.current.getId();
-            ejbFacade.find(asignaturaId);
             System.out.println("========> Ingresó a editar una Asignatura: " + current.getNombreAsignatura());
         } else {
             System.out.println("========> Ingresó a crear una asignatura: ");
@@ -98,7 +100,7 @@ public class AsignaturaController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Después de actualizar la asignatura: " + current.getNombreAsignatura());
         this.endConversation();
-        SessionUtil.agregarMensajeErrorOtraPágina("mensaje.actualizacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/asignatura/List?faces-redirect=true";
     } // Fin del método Update
 
@@ -107,7 +109,7 @@ public class AsignaturaController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("Después de eliminar la asignatura");
         this.endConversation();
-        SessionUtil.agregarMensajeErrorOtraPágina("mensaje.eliminacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/asignatura/List?faces-redirect=true";
     } // Fin del método delete
 
@@ -127,7 +129,7 @@ public class AsignaturaController implements Serializable {
 
     //Método que muestra una lista de todas las asignaturas
     public List<Asignatura> getFindAll() {
-                return ejbFacade.findAll();
+        return ejbFacade.findAll();
     }
 
     //Métodos para navegar entre distintas páginas

@@ -126,7 +126,7 @@ public class SessionUtil {
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
     
-    public static void  agregarMensajeErrorOtraPágina(String mensajeBundle){
+    public static void  agregarMensajeErrorOtraPagina(String mensajeBundle){
         String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, summary);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);
@@ -145,7 +145,7 @@ public class SessionUtil {
     public static void agregarMensajeInformacionOtraPagina(String mensajeBundle) {
         String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary);
-        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
          FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
          
     }

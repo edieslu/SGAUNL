@@ -8,6 +8,19 @@
 
     <ui:define name="content">
 
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="img" name="ajaxloading.gif" />
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <f:metadata>
+            <f:viewParam name="asignaturaId" value="#{asignaturaController.asignaturaId}"/>
+        </f:metadata>
+
 
         <h:form id="formAsignaturaList">
 
@@ -36,7 +49,11 @@
 
                         </p:button>
                         <p:commandButton value="#{bundle['boton.eliminar']}"
-                                         icon="#{bundle['icono.eliminar']}">
+                                         icon="#{bundle['icono.eliminar']}"
+                                         oncomplete="confirmacion.show()"
+                                         ajax="true"
+                                         process="@this"
+                                         update=":formAsignaturaList:idConfirmDialog">
                             <f:param name="asignaturaId" value="#{_asignatura.id}" />
                         </p:commandButton>
                     </p:column>
@@ -53,6 +70,25 @@
 
 
             </p:panel>
+
+            <p:confirmDialog  header="#{bundle['cabecera.eliminarRegistros']}"
+                              message="#{bundle['mensaje.confirmacion']}: #{asignaturaController.current.nombreAsignatura}"
+                              id="idConfirmDialog" 
+                              widgetVar="confirmacion"
+                              severity="alert">
+
+                <p:commandButton action="#{asignaturaController.delete()}"
+                                 value="#{bundle['boton.si']}"
+                                 update=":formAsignaturaList:idTabla"
+                                 oncomplete="confirmacion.hide()">
+                    <f:param name="asignaturaId" value="#{asignaturaController.current.id}"/>
+                </p:commandButton>
+
+                <p:commandButton value="#{bundle['boton.no']}" 
+                                 action="#{asignaturaController.cancelEdit()}"
+                                 oncomplete="confirmacion.hide()"/>
+
+            </p:confirmDialog>
         </h:form>
 
 

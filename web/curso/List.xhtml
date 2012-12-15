@@ -25,7 +25,7 @@
                 <p:messages autoUpdate="true" closable="true"/>
                 
                 
-                <p:panel header="#{bundle['boton.lista']}">
+                <p:panel header="#{bundle['header.lista']}">
                     
                     <p:panelGrid columns="3" id="panelList">
 
@@ -96,7 +96,7 @@
                 <p:confirmDialog id="dialogConfirmation" 
                                  message="#{bundle['mensaje.confirmacion']}: #{cursoController.current.nombreCurso}"
                                  widgetVar="conf" 
-                                 header="#{bundle['boton.eliminar']}" 
+                                 header="#{bundle['header.eliminarRegistros']}" 
                                  severity="alert">
 
                     <p:commandButton id="confirm" 

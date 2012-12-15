@@ -12,6 +12,37 @@
     <ui:define name="content">
 
 
+        <p:ajaxStatus> 
+            <f:facet name="prestart">
+                <h:outputText value="Starting..." /> 
+                <h:graphicImage library="img" name="ajaxloading.gif" /> 
+            </f:facet>
+
+            <f:facet name="error"> 
+                <h:outputText value="Error" />
+            </f:facet>
+            
+            <f:facet name="success"> 
+                <h:outputText value="Success" />
+            </f:facet>
+            
+            
+            <f:facet name="default"> 
+                <h:outputText value="No estoy haciendo ninguna petición ajax" />
+            </f:facet>
+            
+            
+            <f:facet name="start"> 
+                <h:outputText value="Please Wait" />
+            </f:facet>
+            
+            
+            <f:facet name="complete"> 
+                <h:outputText value="Soy el valor después de una peticón ajax" />
+            </f:facet>
+
+        </p:ajaxStatus>
+
         <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
             <f:facet name="start">
                 <h:graphicImage library="img" name="ajaxloading.gif" />
@@ -31,7 +62,7 @@
         <h:form id="formAnioList"
                 prependId="false">
 
-            <p:messages closable="true" autoUpdate="true"/>
+            <p:messages closable="true" globalOnly="true"/>
 
 
             <!--
@@ -50,15 +81,15 @@
 
             </h:panelGrid>
 
--->
+            -->
 
-            <p:panel header="#{bundle['boton.lista']}">
+            <p:panel header="#{bundle['header.lista']}">
 
                 <p:dataTable id="idAnioTable"   
                              value="#{anioLectivoController.resultlist}" 
                              var="_anio"
                              paginator="true" rows="10">
-                    
+
 
                     <p:column headerText="#{bundle['anioController.fechainicio']}">
 
@@ -93,7 +124,7 @@
                                          update=":formAnioList:idDialogoConfirmacion"
                                          process="@this"
                                          icon="#{bundle['icono.eliminar']}">
-                            
+
                             <f:param name="anioLectivoId" value="#{_anio.id}" />
 
                         </p:commandButton>
@@ -102,19 +133,19 @@
 
 
                 </p:dataTable>
-                
+
                 <f:facet name="footer" >
                     <p:button  value="#{bundle['boton.nuevo']}"
                                icon="#{bundle['icono.agregar']}"
                                outcome="/anioLectivo/Edit"/>
                 </f:facet>
-                    
-                
+
+
             </p:panel>
 
 
             <p:confirmDialog id="idDialogoConfirmacion"
-                             header="#{bundle['label.eliminarRegistros']}"
+                             header="#{bundle['header.eliminarRegistros']}"
                              message="#{bundle['mensaje.confirmacion']}:  #{anioLectivoController.current. fechaInicio}" 
                              widgetVar="confirmacion"
                              severity="alert">
