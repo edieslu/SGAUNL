@@ -37,7 +37,6 @@ import javax.persistence.TemporalType;
 @TableGenerator(name = "UsuarioGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocationSize = 1)
 @NamedQueries({
-    
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login AND u.clave = :clave"),
     @NamedQuery(name = "Usuario.buscarPorClave",
@@ -86,21 +85,11 @@ public class Usuario implements Serializable {
     @OneToOne(mappedBy = "usuario")
     private ExpedienteAcademico expedienteAcademico;
     @OneToMany(mappedBy = "usuario", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private List<Rol> roles;
     @ManyToOne
-    private Tipousuario tipousuarioId;
+    private TipoUsuario tipousuarioId;
 
     public Usuario() {
         matriculas = new ArrayList<Matricula>();
-        roles = new ArrayList<Rol>();
-    }
-
-    public void add(Rol rol) {
-
-        if (!roles.contains(rol)) {
-            roles.add(rol);
-            rol.setUsuario(this);
-        }
 
     }
 
@@ -159,7 +148,6 @@ public class Usuario implements Serializable {
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
-    
 
     public String getDni() {
         return dni;
@@ -241,19 +229,11 @@ public class Usuario implements Serializable {
         this.expedienteAcademico = expedienteAcademico;
     }
 
-    public List<Rol> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
-    }
-
-    public Tipousuario getTipousuarioId() {
+    public TipoUsuario getTipousuarioId() {
         return tipousuarioId;
     }
 
-    public void setTipousuarioId(Tipousuario tipousuarioId) {
+    public void setTipousuarioId(TipoUsuario tipousuarioId) {
         this.tipousuarioId = tipousuarioId;
     }
 

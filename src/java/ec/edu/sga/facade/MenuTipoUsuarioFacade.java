@@ -5,8 +5,8 @@
 package ec.edu.sga.facade;
 
 import ec.edu.sga.modelo.usuarios.Menu;
-import ec.edu.sga.modelo.usuarios.MenuTipousuario;
-import ec.edu.sga.modelo.usuarios.Tipousuario;
+import ec.edu.sga.modelo.usuarios.MenuTipoUsuario;
+import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author lucho
  */
 @Stateless
-public class MenuTipousuarioFacade extends AbstractFacade<MenuTipousuario> {
+public class MenuTipoUsuarioFacade extends AbstractFacade<MenuTipoUsuario> {
     @PersistenceContext(unitName = "SGAUNLPU")
     private EntityManager em;
 
@@ -26,13 +26,13 @@ public class MenuTipousuarioFacade extends AbstractFacade<MenuTipousuario> {
         return em;
     }
 
-    public MenuTipousuarioFacade() {
-        super(MenuTipousuario.class);
+    public MenuTipoUsuarioFacade() {
+        super(MenuTipoUsuario.class);
     }
     
-    public Boolean findByMenuAndTipousuario(Menu menu, Tipousuario tipo) {
+    public Boolean findByMenuAndTipousuario(Menu menu, TipoUsuario tipo) {
         try {
-            Query query = em.createNamedQuery("MenuTipousuario.findByMenuAndTipousuario");
+            Query query = em.createNamedQuery("MenuTipoUsuario.findByMenuAndTipousuario");
             query.setParameter("menu", menu);
             query.setParameter("tipo", tipo);
             query.getSingleResult();

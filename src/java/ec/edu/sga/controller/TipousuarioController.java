@@ -1,8 +1,8 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
-import ec.edu.sga.facade.TipousuarioFacade;
-import ec.edu.sga.modelo.usuarios.Tipousuario;
+import ec.edu.sga.facade.TipoUsuarioFacade;
+import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -12,72 +12,88 @@ import javax.inject.Named;
 
 /**
  *
- * @author juanmanuelmarchese
+ * @author edison
  */
 @Named
 @SessionScoped
 public class TipousuarioController {
 
     @EJB
-    private TipousuarioFacade dao;
-    private ec.edu.sga.modelo.usuarios.Tipousuario selected;
+    private TipoUsuarioFacade ejbFacade;
+    private TipoUsuario current;
 
     // ---------------------- Constructor de la Clase ----------------------
-
     public TipousuarioController() {
     }
+    
+    //-------------------------------------------GETTERS AND SETTER------------------------------------------------
 
-    public ec.edu.sga.modelo.usuarios.Tipousuario getSelected() {
-        if (selected == null) { selected = new Tipousuario(); }
-        return selected;
+    public TipoUsuario getCurrent() {
+        if (current == null) {
+            current = new TipoUsuario();
+        }
+        return current;
+    }
+
+    public void setCurrent(TipoUsuario current) {
+        this.current = current;
+    }
+
+    public TipoUsuarioFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(TipoUsuarioFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
     }
 
     // ---------------------- Métodos del Managed Bean ----------------------
-
     public String index() {
         return "/tipousuario/index";
     }
 
-    public List<Tipousuario> listado() {
-        return dao.findAll();
+    public List<TipoUsuario> listado() {
+        return ejbFacade.findAll();
     }
 
     public String create() {
-        selected = new Tipousuario();
+        current = new TipoUsuario();
         return "/tipousuario/new";
     } // Fin public String create
 
     public String agregar() {
         Date d = new Date();
-        selected.setCreated(d);
-        selected.setUpdated(d);
-        dao.create(selected);
+        current.setFechaCreacion(d);
+        current.setFechaActualizacion(d);
+        ejbFacade.create(current);
         return "/tipousuario/index";
     } // Fin public String agregar
 
     public String edit(int codigo) {
-        selected = dao.find(codigo);
+        current = ejbFacade.find(codigo);
         return "/tipousuario/edit";
-    } // Fin public Tipousuario edit
+    } // Fin public TipoUsuario edit
 
     public String guardar() {
         Date d = new Date();
-        selected.setUpdated(d);
-        dao.edit(selected);
+        current.setFechaActualizacion(d);
+        ejbFacade.edit(current);
         return "/tipousuario/index";
     } // Fin public String guardar
 
     public String eliminar(int codigo) {
-        selected = dao.find(codigo);
-        try { dao.remove(selected); }
-        catch (Exception e) { SessionUtil.addErrorMessage("No se puede eliminar, posibles datos asociados"); }
+        current = ejbFacade.find(codigo);
+        try {
+            ejbFacade.remove(current);
+        } catch (Exception e) {
+            SessionUtil.addErrorMessage("No se puede eliminar, posibles datos asociados");
+        }
         return "/tipousuario/index";
     } // Fin public String eliminar
 
     // --------------------- Métodos de Ayuda para acceder al Bean por otras Clases ---------------------
-
     public SelectItem[] getItemsAvailableSelectOne() {
-        return getSelectItems(dao.findAll(), true);
+        return getSelectItems(ejbFacade.findAll(), true);
     }
 
     // Genera una lista con los items seleccionados (uno o muchos según selectOne). Para tablas relacionadas.
@@ -96,7 +112,4 @@ public class TipousuarioController {
         return items;
 
     }
-
-   
-
 }

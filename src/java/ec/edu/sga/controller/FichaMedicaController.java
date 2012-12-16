@@ -16,8 +16,6 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -30,102 +28,28 @@ import javax.inject.Named;
  */
 @Named(value = "fichaMedicaController")
 @ConversationScoped
-public class FichaMedicaController implements Serializable{
+public class FichaMedicaController implements Serializable {
 
     private FichaMedica current;
-    private Ficha ficha;
-    private DataModel items = null;
     @EJB
     private ec.edu.sga.facade.FichaMedicaFacade ejbFacade;
-    private PaginationHelper pagination;
-    private int selectedItemIndex;
     private List<FichaMedica> resultlist;
-    
     @Inject
     Conversation conversation;
+
+    /**
+     * ********************* CONSTRUCTOR **********************
+     */
     public FichaMedicaController() {
         current = new FichaMedica();
-//        ficha=  new Ficha();
-//        current.setFicha(ficha);
-        resultlist= new ArrayList<FichaMedica>();
+        resultlist = new ArrayList<FichaMedica>();
     }
-    
-     public String createInstance() {
-        //return "/vehicle/Edit?faces-redirect=true";
-        System.out.println("========> INGRESO a Crear Instance estudiante: ");
-        this.current = new FichaMedica();
-        return "/estudiante/Edit?faces-redirect=true";
-        //return "/vehicle/BrandEdit";
-    }
-
-    public String persist() {
-
-        System.out.println("========> INGRESO a Grabar nuevo Usuario: " );
-        ejbFacade.create(current);
-        this.endConversation();
-
-         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-
-        return "/usuario/Created?faces-redirect=true";
-        //return "/vehicle/BrandList";
-
-    }
-
-    public String update() {
-
-        System.out.println("========> INGRESO a Actualizar al Estudiante: " );
-        ejbFacade.edit(current);
-        System.out.println("ya modifique");
-        this.endConversation();
-
-     SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/estudiante/List?faces-redirect=true";
-
-    }
-
-    public String delete() {
-        System.out.println("========> INGRESO a Eliminar Estudiante: " );
-        ejbFacade.remove(current);
-
-        // this.find();
-
-        this.endConversation();
-
-      SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-
-        return "/estudiante/List?faces-redirect=true";
-
-    }
-
-    public String cancelEdit() {
-        System.out.println("me acaban de llamar: canceledit()");
-        this.endConversation();
-        return "/estudiante/List?faces-redirect=true";
-    }
-
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-            System.out.println("========> INICIANDO CONVERSACION: ");
-        }
-    }
-
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-            System.out.println("========> FINALIZANDO CONVERSACION: ");
-        }
-    }
-    
-    public FichaMedica getSelected() {
-        if (current == null) {
-            current = new FichaMedica();
-            selectedItemIndex = -1;
-        }
-        return current;
-    }
+    //_________________________GETTERS AND SETTERS___________________________________-//
 
     public FichaMedica getCurrent() {
+        if (current == null) {
+            current = new FichaMedica();
+        }
         return current;
     }
 
@@ -141,14 +65,6 @@ public class FichaMedicaController implements Serializable{
         this.ejbFacade = ejbFacade;
     }
 
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
-    }
-
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
-    }
-
     public List<FichaMedica> getResultlist() {
         return resultlist;
     }
@@ -157,146 +73,67 @@ public class FichaMedicaController implements Serializable{
         this.resultlist = resultlist;
     }
 
-    
-    private FichaMedicaFacade getFacade() {
-        return ejbFacade;
-    }
-
-    public PaginationHelper getPagination() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
-                @Override
-                public int getItemsCount() {
-                    return getFacade().count();
-                }
-
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                }
-            };
-        }
-        return pagination;
-    }
-
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (FichaMedica) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
-    public String prepareCreate() {
-        current = new FichaMedica();
-        selectedItemIndex = -1;
-        return "Create";
-    }
-
-    public String create() {
-        try {
-            getFacade().create(current);
-            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
+    //________________________________Métodos_____________________________________________//
+//________________________Metodos para iniciar y finalizar la conversación____________________//
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+            System.out.println("========> INICIANDO CONVERSACION: ");
         }
     }
 
-    public String prepareEdit() {
-        current = (FichaMedica) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-//    public String update() {
-//        try {
-//            getFacade().edit(current);
-//            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated"));
-//            return "View";
-//        } catch (Exception e) {
-//            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-//            return null;
-//        }
-//    }
-
-    public String destroy() {
-        current = (FichaMedica) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+            System.out.println("========> FINALIZANDO CONVERSACION: ");
         }
     }
+    //___________________________Métodos para operaciones de tipo CRUD____________________________//
 
-    private void performDestroy() {
-        try {
-            getFacade().remove(current);
-            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("EstudianteDeleted"));
-        } catch (Exception e) {
-            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
+    public String createInstance() {
+        //return "/vehicle/Edit?faces-redirect=true";
+        System.out.println("========> INGRESO a Crear Instance Ficha Medica: ");
+        this.current = new FichaMedica();
+        return "/usuario/Create?faces-redirect=true";
+        //return "/vehicle/BrandEdit";
     }
 
-    private void updateCurrentItem() {
-        int count = getFacade().count();
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-        }
+    public String persist() {
+
+        System.out.println("========> INGRESO a Grabar nueva Ficha Medica: ");
+        ejbFacade.create(current);
+        this.endConversation();
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        return "/usuario/Created?faces-redirect=true";
+
     }
 
-    public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
+    public String update() {
+
+        System.out.println("========> INGRESO a Actualizar al Ficha Medica: ");
+        ejbFacade.edit(current);
+        this.endConversation();
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        return "/usuario/List?faces-redirect=true";
+
     }
 
-    private void recreateModel() {
-        items = null;
+    public String delete() {
+        System.out.println("========> INGRESO a Eliminar Ficha Medica: ");
+        ejbFacade.remove(current);
+        this.endConversation();
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        return "/usuario/List?faces-redirect=true";
+
     }
 
-    private void recreatePagination() {
-        pagination = null;
+    public String cancelEdit() {
+        System.out.println("me acaban de llamar: canceledit()");
+        this.endConversation();
+        return "/usuario/List?faces-redirect=true";
     }
 
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
+//___________________Métodos que devuelven una lista de items de tipo Ficha Medica___________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }

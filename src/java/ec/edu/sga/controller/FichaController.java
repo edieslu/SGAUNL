@@ -15,8 +15,6 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -32,27 +30,64 @@ import javax.inject.Named;
 public class FichaController implements Serializable {
 
     private Ficha current;
-    private DataModel items = null;
     @EJB
     private ec.edu.sga.facade.FichaFacade ejbFacade;
-    private PaginationHelper pagination;
-    private int selectedItemIndex;
     private List<Ficha> resultlist;
     @Inject
     Conversation conversation;
 
+    /**
+     * ********************* CONSTRUCTOR **********************
+     */
     public FichaController() {
         this.current = new Ficha();
         resultlist = new ArrayList<Ficha>();
     }
 
-    public String createInstance() {
-        //return "/vehicle/Edit?faces-redirect=true";
-        System.out.println("========> INGRESO a Crear Instance ficha: ");
-        this.current = new Ficha();
-        return "/estudiante/Edit?faces-redirect=true";
-        //return "/vehicle/BrandEdit";
+//_________________________GETTERS AND SETTERS___________________________________-//
+    public Ficha getCurrent() {
+        if (current == null) {
+            current = new Ficha();
+        }
+        return current;
     }
+
+    public void setCurrent(Ficha current) {
+        this.current = current;
+    }
+
+    public FichaFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(FichaFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public List<Ficha> getResultlist() {
+        return resultlist;
+    }
+
+    public void setResultlist(List<Ficha> resultlist) {
+        this.resultlist = resultlist;
+    }
+    //________________________________Métodos_____________________________________________//
+//________________________Metodos para iniciar y finalizar la conversación____________________//
+
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+            System.out.println("========> INICIANDO CONVERSACION: ");
+        }
+    }
+
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+            System.out.println("========> FINALIZANDO CONVERSACION: ");
+        }
+    }
+    //___________________________Métodos para operaciones de tipo CRUD____________________________//
 
     public String persist() {
 
@@ -60,10 +95,7 @@ public class FichaController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-
         return "/usuario/Created?faces-redirect=true";
-        //return "/vehicle/BrandList";
-
     }
 
     public String update() {
@@ -80,13 +112,8 @@ public class FichaController implements Serializable {
     public String delete() {
         System.out.println("========> INGRESO a Eliminar Estudiante: ");
         ejbFacade.remove(current);
-
-        // this.find();
-
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-
-
         return "/estudiante/List?faces-redirect=true";
 
     }
@@ -97,198 +124,7 @@ public class FichaController implements Serializable {
         return "/estudiante/List?faces-redirect=true";
     }
 
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-            System.out.println("========> INICIANDO CONVERSACION: ");
-        }
-    }
-
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-            System.out.println("========> FINALIZANDO CONVERSACION: ");
-        }
-    }
-
-    public Ficha getSelected() {
-        if (current == null) {
-            current = new Ficha();
-            selectedItemIndex = -1;
-        }
-        return current;
-    }
-
-    public Ficha getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(Ficha current) {
-        this.current = current;
-    }
-
-    public FichaFacade getEjbFacade() {
-        return ejbFacade;
-    }
-
-    public void setEjbFacade(FichaFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
-    public int getSelectedItemIndex() {
-        return selectedItemIndex;
-    }
-
-    public void setSelectedItemIndex(int selectedItemIndex) {
-        this.selectedItemIndex = selectedItemIndex;
-    }
-
-    public List<Ficha> getResultlist() {
-        return resultlist;
-    }
-
-    public void setResultlist(List<Ficha> resultlist) {
-        this.resultlist = resultlist;
-    }
-
-    private FichaFacade getFacade() {
-        return ejbFacade;
-    }
-
-    public PaginationHelper getPagination() {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
-                @Override
-                public int getItemsCount() {
-                    return getFacade().count();
-                }
-
-                @Override
-                public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                }
-            };
-        }
-        return pagination;
-    }
-
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (Ficha) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
-    public String prepareCreate() {
-        current = new Ficha();
-        selectedItemIndex = -1;
-        return "Create";
-    }
-
-    public String create() {
-        try {
-            getFacade().create(current);
-            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("EstudianteCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
-
-    public String prepareEdit() {
-        current = (Ficha) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-//    public String update() {
-//        try {
-//            getFacade().edit(current);
-//            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("EstudianteUpdated"));
-//            return "View";
-//        } catch (Exception e) {
-//            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-//            return null;
-//        }
-//    }
-    public String destroy() {
-        current = (Ficha) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
-        try {
-            getFacade().remove(current);
-            SessionUtil.agregarMensajeInformacion(ResourceBundle.getBundle("/Bundle").getString("EstudianteDeleted"));
-        } catch (Exception e) {
-            SessionUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-    }
-
-    private void updateCurrentItem() {
-        int count = getFacade().count();
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-        }
-    }
-
-    public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
-    }
-
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
+//___________________Métodos que devuelven una lista de items de tipo Ficha___________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }

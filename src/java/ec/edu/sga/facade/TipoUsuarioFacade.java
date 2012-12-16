@@ -4,7 +4,7 @@
  */
 package ec.edu.sga.facade;
 
-import ec.edu.sga.modelo.usuarios.Tipousuario;
+import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author lucho
  */
 @Stateless
-public class TipousuarioFacade extends AbstractFacade<Tipousuario> {
+public class TipoUsuarioFacade extends AbstractFacade<TipoUsuario> {
     @PersistenceContext(unitName = "SGAUNLPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class TipousuarioFacade extends AbstractFacade<Tipousuario> {
         return em;
     }
 
-    public TipousuarioFacade() {
-        super(Tipousuario.class);
+    public TipoUsuarioFacade() {
+        super(TipoUsuario.class);
     }
     
 }

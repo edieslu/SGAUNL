@@ -4,26 +4,30 @@
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    
-    
-    
-    <h:form>  
-        <h:panelGrid columns="2" cellpadding="5">  
-            <h:outputLabel for="idUsername" value="#{bundle['loginController.usuario']}" />  
-            <p:inputText value="#{loginController.usuario}"   
-                         id="idUsername" required="true" label="#{bundle['loginController.usuario']}" />  
+      
 
-            <h:outputLabel for="idPassword" value="#{bundle['loginController.clave']}" />  
-            <p:password  value="#{loginController.clave}"   
-                         id="idPassword" required="true" label="#{bundle['loginController.clave']}" />  
 
-            <f:facet name="footer">  
-                <h:commandButton value="Ingresar" action="#{loginController.ingresar()}" />
-                <h:commandButton value="Cancelar" action="#{loginController.index()}" immediate="true" />
-            </f:facet>  
-        </h:panelGrid>  
+    <h:form id="formLogin">  
+        <p:panel id="idPanele" header="Ingreso al Sistema">
+            <h:panelGrid columns="2">  
+                <h:outputLabel for="idUsername" value="#{bundle['loginController.usuario']}" />  
+                <p:inputText value="#{loginController.usuario}"   
+                             id="idUsername" required="true" 
+                             label="#{bundle['loginController.usuario']}" />  
 
+                <h:outputLabel for="idPassword" value="#{bundle['loginController.clave']}" />  
+                <p:password  value="#{loginController.clave}"   
+                             id="idPassword" required="true" 
+                             label="#{bundle['loginController.clave']}" />  
+
+                <f:facet name="footer">  
+                    <p:commandButton value="Ingresar" action="#{loginController.ingresar()}" 
+                                     icon="#{bundle['icono.guardar']}" />
+                    <p:commandButton value="Cancelar" action="#{loginController.index()}" 
+                                     immediate="true" icon="#{bundle['icono.cancelar']}"/>
+                </f:facet>  
+            </h:panelGrid>  
+        </p:panel>
     </h:form>  
-
 
 </html>

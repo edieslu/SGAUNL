@@ -101,7 +101,7 @@ public class MenuDinamico implements Serializable {
                 if (subm.getRaiz() == menu.getRaiz()) {
                     MenuItem m = new MenuItem();
                     m.setValue(menu.getNombre());
-                    m.setUrl(menu.getActio());
+                    m.setUrl(menu.getSrc());
                     sm.getChildren().add(m);
                 }
             }
@@ -109,35 +109,4 @@ public class MenuDinamico implements Serializable {
 
         }
     }
-//    public void menu(Submenu submenu, Menu menu) {
-//        MenuItem item = new MenuItem();
-//        item.setValue(menu.getNombre());
-//        item.setUrl(menu.getActio());
-//        submenu.getChildren().add(item);
-//    }
-//
-//    public Submenu crearSubmenu() {
-//        Submenu submenu = new Submenu();
-//        return submenu;
-//    }
-//        submenu.setId("idCabecera");
-//        submenu.setLabel("Operaciones");
-//
-//        MenuItem item = new MenuItem();
-//        item.setValue("Organismos");
-//        item.setId("idOrganismo");
-//        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{usuarioSesion.listar2}", String.class, new Class[0]));
-//        item.setAjax(false);
-//        item.setAsync(false);
-//        submenu.getChildren().add(item);
-//
-//        MenuItem item2 = new MenuItem();
-//        item2.setId("idAplicacion");
-//        item2.setValue("Aplicacion");
-//        item2.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{usuarioSesion.listar1}", String.class, new Class[0]));
-//        item2.setAjax(false);
-//        item2.setAsync(false);
-//        submenu.getChildren().add(item2);
-//
-//        model.addSubmenu(submenu);
 }

@@ -6,7 +6,6 @@ package ec.edu.sga.controller.util;
 
 import ec.edu.sga.modelo.matriculacion.TipoMatricula;
 import ec.edu.sga.modelo.matriculacion.TipoNivel;
-import ec.edu.sga.modelo.usuarios.TipoRol;
 import ec.edu.sga.modelo.usuarios.TipoSangre;
 import ec.edu.sga.modelo.usuarios.TipoSexo;
 import javax.inject.Named;
@@ -40,8 +39,5 @@ public class TypeListController {
     public TipoNivel[] getTypeTipoNivel(){
         return TipoNivel.values();
     }
-    public TipoRol[] getTipoRol(){
-        return TipoRol.values();
-    }
-            
+              
 }

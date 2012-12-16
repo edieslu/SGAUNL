@@ -13,37 +13,36 @@ import javax.persistence.PreUpdate;
  * @author lucho
  */
 public class EntityListener {
+
     @PrePersist
-public void onPrePersist(Object o) {
-populateTimestamp(o);
-}
+    public void onPrePersist(Object o) {
+        populateTimestamp(o);
+    }
 
-@PreUpdate
-public void onPreUpdate(Object o) {
+    @PreUpdate
+    public void onPreUpdate(Object o) {
 
-populateTimestamp(o);
+        populateTimestamp(o);
 
-}
+    }
 
- 
+    protected void populateTimestamp(Object o) {
 
-protected void populateTimestamp(Object o) {
+        if (o instanceof Timestamped) {
 
-if (o instanceof Timestamped) {
+            Timestamped ts = (Timestamped) o;
 
-Timestamped ts = (Timestamped) o;
+            if (ts.getCreatedOn() == null) {
 
-if (ts.getCreatedOn() == null) {
+                ts.setCreatedOn(new Date());
 
-ts.setCreatedOn(new Date());
+            } else {
 
-} else {
+                ts.setUpdatedOn(new Date());
 
-ts.setUpdatedOn(new Date());
+            }
 
-}
+        }
 
-}
-
-}
+    }
 }

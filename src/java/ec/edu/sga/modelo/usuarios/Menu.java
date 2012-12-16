@@ -18,13 +18,11 @@ valueColumnName = "valor", pkColumnValue = "Menu", initialValue = 1, allocationS
     @NamedQuery(name = "Menu.findAllOrderMenu", query = "SELECT m FROM Menu m order by m.raiz , m.orden"),
     @NamedQuery(name = "Menu.findById", query = "SELECT m FROM Menu m WHERE m.id = :id"),
     @NamedQuery(name = "Menu.findByNombre", query = "SELECT m FROM Menu m WHERE m.nombre = :nombre"),
-    @NamedQuery(name = "Menu.findByImagen", query = "SELECT m FROM Menu m WHERE m.imagen = :imagen"),
-    @NamedQuery(name = "Menu.findByUrl", query = "SELECT m FROM Menu m WHERE m.url = :url"),
-    @NamedQuery(name = "Menu.findByAction", query = "SELECT m FROM Menu m WHERE m.actio = :action"),
+    @NamedQuery(name = "Menu.findBySrc", query = "SELECT m FROM Menu m WHERE m.src = :src"),
     @NamedQuery(name = "Menu.findByRaiz", query = "SELECT m FROM Menu m WHERE m.raiz = :raiz"),
     @NamedQuery(name = "Menu.findByOrden", query = "SELECT m FROM Menu m WHERE m.orden = :orden"),
-    @NamedQuery(name = "Menu.findByCreated", query = "SELECT m FROM Menu m WHERE m.created = :created"),
-    @NamedQuery(name = "Menu.findByUpdated", query = "SELECT m FROM Menu m WHERE m.updated = :updated")})
+    @NamedQuery(name = "Menu.findByFechaCreacion", query = "SELECT m FROM Menu m WHERE m.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Menu.findByFechaActualizacion", query = "SELECT m FROM Menu m WHERE m.fechaActualizacion = :fechaActualizacion")})
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,15 +34,9 @@ public class Menu implements Serializable {
     @Size(min = 1, max = 100, message = "Debe ingresar el Nombre")
     @Column
     private String nombre;
-    @Size(max = 100)
-    @Column
-    private String imagen;
-    @Size
-    @Column(name = "URL")
-    private String url;
     @Size
     @Column
-    private String actio;
+    private String src;
     @Column(name = "RAIZ")
     @NotNull(message = "Debe ingresar Raiz")
     private Integer raiz;
@@ -53,10 +45,10 @@ public class Menu implements Serializable {
     private Integer orden;
     @Column(name = "CREATED")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date fechaCreacion;
     @Column(name = "UPDATED")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+    private Date fechaActualizacion;
 
     // -------------------------- Contructores de la Clase --------------------------
     public Menu() {
@@ -83,28 +75,12 @@ public class Menu implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getSrc() {
+        return src;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getActio() {
-        return actio;
-    }
-
-    public void setActio(String actio) {
-        this.actio = actio;
+    public void setSrc(String src) {
+        this.src = src;
     }
 
     public Integer getRaiz() {
@@ -123,20 +99,20 @@ public class Menu implements Serializable {
         this.orden = orden;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
     // -------------------------- Métodos de la Clase --------------------------
@@ -161,7 +137,7 @@ public class Menu implements Serializable {
     }
 
     public boolean isLengt() {
-        return actio.length() > 0;
+        return src.length() > 0;
 
         }
 

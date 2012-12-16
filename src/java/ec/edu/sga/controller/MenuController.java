@@ -1,19 +1,14 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
-import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.MenuFacade;
 import ec.edu.sga.modelo.usuarios.Menu;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,10 +22,7 @@ import javax.inject.Named;
 public class MenuController implements Serializable {
 
     @EJB
-    private MenuFacade dao;
-    @EJB
     private MenuFacade ejbFacade;
-    private Menu selected;
     private Menu current;
     @Inject
     Conversation conversation;
@@ -39,48 +31,14 @@ public class MenuController implements Serializable {
     // ---------------------- Constructor de la Clase ----------------------
     public MenuController() {
         current = new Menu();
-        selected = new Menu();
-    }
-
-    public Menu getSelected() {
-        if (selected == null) {
-            selected = new Menu();
-        }
-        return selected;
-    }
-
-    // ---------------------- Métodos del Managed Bean ----------------------
-    public String index() {
-        return "/menu/index";
-    }
-
-    public List<Menu> getListado() {
-        return ejbFacade.findAllOrderMenu();
-    }
-
-    // --------------------- Métodos de Ayuda para acceder al Bean por otras Clases ---------------------
-    public SelectItem[] getItemsAvailableSelectOne() {
-        return getSelectItems(dao.findAll(), true);
-    }
-
-    // Genera una lista con los items seleccionados (uno o muchos según selectOne). Para tablas relacionadas.
-    public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
-
-        int size = selectOne ? entities.size() + 1 : entities.size();
-        SelectItem[] items = new SelectItem[size];
-        int i = 0;
-        if (selectOne) {
-            items[0] = new SelectItem("", "---");
-            i++;
-        }
-        for (Object x : entities) {
-            items[i++] = new SelectItem(x, x.toString());
-        }
-        return items;
 
     }
 
+    //_________________________GETTERS AND SETTERS___________________________________-//
     public Menu getCurrent() {
+        if (current == null) {
+            current = new Menu();
+        }
         return current;
     }
 
@@ -131,11 +89,36 @@ public class MenuController implements Serializable {
             System.out.println("========> FINALIZANDO CONVERSACION: ");
         }
     }
+    // ---------------------- Métodos del Managed Bean ----------------------
 
-    public String cancelEdit() {
-        System.out.println("me acaban de llamar: canceledit()");
-        this.endConversation();
-        return "/index?faces-redirect=true";
+    public String index() {
+        return "/menu/index";
+    }
+
+    public List<Menu> getListado() {
+        return ejbFacade.findAllOrderMenu();
+    }
+
+    // --------------------- Métodos de Ayuda para acceder al Bean por otras Clases ---------------------
+    public SelectItem[] getItemsAvailableSelectOne() {
+        return getSelectItems(ejbFacade.findAll(), true);
+    }
+
+    // Genera una lista con los items seleccionados (uno o muchos según selectOne). Para tablas relacionadas.
+    public static SelectItem[] getSelectItems(List<?> entities, boolean selectOne) {
+
+        int size = selectOne ? entities.size() + 1 : entities.size();
+        SelectItem[] items = new SelectItem[size];
+        int i = 0;
+        if (selectOne) {
+            items[0] = new SelectItem("", "---");
+            i++;
+        }
+        for (Object x : entities) {
+            items[i++] = new SelectItem(x, x.toString());
+        }
+        return items;
+
     }
 
     //_______________________PERSISTIR OBJETOS________________________________//
@@ -150,12 +133,12 @@ public class MenuController implements Serializable {
     public String persist() {
 
         System.out.println("========> INGRESO a Grabar nuevo Menu: " + current.getNombre());
-        current.setCreated(new Date());
-        current.setUpdated(new Date());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
 
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index?faces-redirect=true";
 
 
@@ -164,12 +147,12 @@ public class MenuController implements Serializable {
     public String update() {
 
         System.out.println("========> INGRESO a Actualizar al Curso: " + current.getNombre());
-        current.setUpdated(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
 
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
 
         return "/index?faces-redirect=true";
 
@@ -184,11 +167,15 @@ public class MenuController implements Serializable {
 
         this.endConversation();
 
-       SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
         return "/index?faces-redirect=true";
 
     }
 
-    
+    public String cancelEdit() {
+        System.out.println("me acaban de llamar: canceledit()");
+        this.endConversation();
+        return "/index?faces-redirect=true";
+    }
 }

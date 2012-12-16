@@ -15,12 +15,11 @@
 
     <ui:composition template="/templates/plantilla.xhtml">
         <ui:define name="title">
-            #{loginController.accesoURL(true, "/faces/nivel/Edit.xhtml")}
+            
             <h:outputText value="#{bundle.EditNivelTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-
-
+            #{loginController.accesoURL(true, "/faces/nivel/Edit.xhtml")}
             <p:messages autoUpdate="true" closable="true" />
 
             <h:form id="formEditNivel">
