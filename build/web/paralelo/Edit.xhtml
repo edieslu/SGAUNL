@@ -19,7 +19,7 @@
         <ui:define name="content">
 
             <h:form id="formEditParalelo">
-                <p:panel header="Editar Paralelos" id="panelEditParalelos">
+                <p:panel header="#{paraleloController.paraleloId!=null ? bundle['header.editar']:bundle['header.nuevo']}" id="panelEditParalelos">
                     <p:panelGrid columns="2">
                         
                         <h:outputLabel value="#{bundle.ListParaleloTitle_nombreParalelo}"/>
