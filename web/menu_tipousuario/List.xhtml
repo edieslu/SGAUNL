@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-
+        #{loginController.accesoURL(true, "/faces/menu_tipousuario/List.xhtml")}
         <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
             <f:facet name="start">
                 <h:graphicImage library="img" name="ajaxloading.gif" />
@@ -20,7 +20,6 @@
         <f:metadata>
             <f:viewParam name="menuTipoUsuarioId" value="#{menuTipoUsuarioController.menuTipoUsuarioId}"/>
         </f:metadata>
-
 
         <h:form id="formMenuTipoUsuarioList" prependId="false">
 

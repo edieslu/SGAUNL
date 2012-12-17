@@ -152,7 +152,7 @@ public class MenuController implements Serializable {
         //  this.findAll();
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/menu/List?faces-redirect=true";
+        return "/menu/List";
 
     }
 

@@ -5,10 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="paraleloId" value="#{paraleloController.paraleloId}">
-            
+
         </f:viewParam>
     </f:metadata>
 
@@ -17,17 +17,17 @@
             <h:outputText value="#{bundle.EditParaleloTitle}"></h:outputText>
         </ui:define>
         <ui:define name="content">
-
+            #{loginController.accesoURL(true, "/faces/paralelo/Edit.xhtml")}
             <h:form id="formEditParalelo">
                 <p:panel header="#{paraleloController.paraleloId!=null ? bundle['header.editar']:bundle['header.nuevo']}" id="panelEditParalelos">
                     <p:panelGrid columns="2">
-                        
+
                         <h:outputLabel value="#{bundle.ListParaleloTitle_nombreParalelo}"/>
                         <p:inputText required="true" label="Nombre de Paralelo" value="#{paraleloController.current.nombreParalelo}"/>
-                        
+
                         <h:outputLabel value="#{bundle.ListParaleloTitle_numeroCupos}"/>
                         <p:spinner label="Número de cupos" required="true" value="#{paraleloController.current.numeroCupos}" min="0" max="50" />
-                        
+
                         <p:messages />
 
                         <f:facet name="footer">

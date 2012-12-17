@@ -7,102 +7,95 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
+        #{loginController.accesoURL(true, "/faces/menu/List.xhtml")}
+          <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+          <f:facet name="start">
+          <h:graphicImage library="img" name="ajaxloading.gif" />
+          </f:facet>
+          <f:facet name="complete">
+          <h:outputText value="" />
+          </f:facet>
+          </p:ajaxStatus>
 
-        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
-            <f:facet name="start">
-                <h:graphicImage library="img" name="ajaxloading.gif" />
-            </f:facet>
-            <f:facet name="complete">
-                <h:outputText value="" />
-            </f:facet>
-        </p:ajaxStatus>
-
-        <f:metadata>
-            <f:viewParam name="menuId" value="#{menuController.menuId}"/>
-        </f:metadata>
+          <f:metadata>
+          <f:viewParam name="menuId" value="#{menuController.menuId}"/>
+          </f:metadata>
 
 
-        <h:form id="formMenuList">
+          <h:form id="formMenuList">
 
-            <p:messages autoUpdate="true" closable="true"/>
+          <p:messages autoUpdate="true" closable="true"/>
 
-            <p:panel header="#{bundle['header.lista']}">
+          <p:panel header="#{bundle['header.lista']}">
 
-                <p:dataTable id="idTablaMenu" 
-                             var="_menu" value="#{menuController.listado}">
+          <p:dataTable id="idTablaMenu" 
+          var="_menu" value="#{menuController.listado}">
 
-                    <p:column headerText="#{bundle['menuController.nombre']}">
-                        <h:outputText  value="#{_menu.nombre}"/>
+          <p:column headerText="#{bundle['menuController.nombre']}">
+          <h:outputText  value="#{_menu.nombre}"/>
 
-                    </p:column>
+          </p:column>
 
-                    <p:column headerText="#{bundle['menuController.src']}">
-                        <h:outputText  value="#{_menu.src}"/>
+          <p:column headerText="#{bundle['menuController.src']}">
+          <h:outputText  value="#{_menu.src}"/>
 
-                    </p:column>
-                    <p:column headerText="#{bundle['menuController.raiz']}">
-                        <h:outputText  value="#{_menu.raiz}"/>
+          </p:column>
+          <p:column headerText="#{bundle['menuController.raiz']}">
+          <h:outputText  value="#{_menu.raiz}"/>
 
-                    </p:column>
-                    <p:column headerText="#{bundle['menuController.orden']}">
-                        <h:outputText  value="#{_menu.orden}"/>
-                    </p:column>
-                    <p:column headerText="#{bundle['menuController.creacion']}">
-                        <h:outputText  value="#{_menu.fechaCreacion}"/>
+          </p:column>
+          <p:column headerText="#{bundle['menuController.orden']}">
+          <h:outputText  value="#{_menu.orden}"/>
+          </p:column>
 
-                    </p:column>
-                    <p:column headerText="#{bundle['menuController.actualizacion']}">
-                        <h:outputText  value="#{_menu.fechaActualizacion}"/>
+          <p:column headerText="#{bundle['boton.acciones']}">
+          <p:button  value="#{bundle['boton.editar']}"
+          icon="#{bundle['icono.editar']}"
+          outcome="/menu/Edit?faces-redirect=true">
+          <f:param name="menuId" value="#{_menu.id}"/>
 
-                    </p:column>
-                    <p:column headerText="#{bundle['boton.acciones']}">
-                        <p:button  value="#{bundle['boton.editar']}"
-                                   icon="#{bundle['icono.editar']}"
-                                   outcome="/menu/Edit?faces-redirect=true">
-                            <f:param name="menuId" value="#{_menu.id}"/>
-
-                        </p:button>
-                        <p:commandButton value="#{bundle['boton.eliminar']}"
-                                         icon="#{bundle['icono.eliminar']}"
-                                         oncomplete="confirmacion.show()"
-                                         ajax="true"
-                                         process="@this"
-                                         update=":formMenuList:idConfirmDialog">
-                            <f:param name="menuId" value="#{_menu.id}" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
+          </p:button>
+          <p:commandButton value="#{bundle['boton.eliminar']}"
+          icon="#{bundle['icono.eliminar']}"
+          oncomplete="confirmacion.show()"
+          ajax="true"
+          process="@this"
+          update=":formMenuList:idConfirmDialog">
+          <f:param name="menuId" value="#{_menu.id}" />
+          </p:commandButton>
+          </p:column>
+          </p:dataTable>
 
 
 
-                <f:facet  name="footer">
+          <f:facet  name="footer">
 
-                    <p:button value="#{bundle['boton.nuevo']}"
-                              icon="#{bundle['icono.agregar']}"
-                              outcome="/menu/Edit?faces-redirect=true"/>
-                </f:facet>
+          <p:button value="#{bundle['boton.nuevo']}"
+          icon="#{bundle['icono.agregar']}"
+          outcome="/menu/Edit?faces-redirect=true"/>
+          </f:facet>
 
 
-            </p:panel>
+          </p:panel>
 
-            <p:confirmDialog  header="#{bundle['cabecera.eliminarRegistros']}"
-                              message="#{bundle['mensaje.confirmacion']}: #{menuController.current.nombre} ?"
-                              id="idConfirmDialog" 
-                              widgetVar="confirmacion"
-                              severity="alert">
+          <p:confirmDialog  header="#{bundle['cabecera.eliminarRegistros']}"
+          message="#{bundle['mensaje.confirmacion']}: #{menuController.current.nombre} ?"
+          id="idConfirmDialog" 
+          widgetVar="confirmacion"
+          severity="alert">
 
-                <p:commandButton action="#{menuController.delete()}"
-                                 value="#{bundle['boton.si']}"
-                                 update=":formMenuList:idTablaMenu"
-                                 oncomplete="confirmacion.hide()">
-                    <f:param name="menuId" value="#{menuController.current.id}"/>
-                </p:commandButton>
+          <p:commandButton action="#{menuController.delete()}"
+          value="#{bundle['boton.si']}"
+          update=":formMenuList:idTablaMenu"
+          oncomplete="confirmacion.hide()">
+          <f:param name="menuId" value="#{menuController.current.id}"/>
+          </p:commandButton>
 
-                <p:commandButton value="#{bundle['boton.no']}" 
-                                 action="#{menuController.cancelEdit()}"
-                                 oncomplete="confirmacion.hide()"/>
+          <p:commandButton value="#{bundle['boton.no']}" 
+          action="#{menuController.cancelEdit()}"
+          oncomplete="confirmacion.hide()"/>
 
-            </p:confirmDialog>
-        </h:form>
-    </ui:define>
-</ui:composition>
+          </p:confirmDialog>
+          </h:form>
+          </ui:define>
+          </ui:composition>

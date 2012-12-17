@@ -18,6 +18,7 @@ and open the template in the editor.
             <h:outputText value=""/>
         </ui:define>
         <ui:define name="content">
+           #{loginController.accesoURL(true, "/faces/usuario/List.xhtml")}
 
             <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
                 <f:facet name="start">
@@ -41,10 +42,10 @@ and open the template in the editor.
                                          ajax="true" icon="#{bundle['icono.buscar']}" 
                                          update="listaUsuarios">
                         </p:commandButton>
-
                     </h:panelGrid>
                     <p:dataTable id="listaUsuarios" value="#{usuarioController.resultlist}" 
                                  var="usuario" paginator="true" rows="10">
+
                         <p:column headerText="#{bundle['usuarioController.dni']}" >
                             <h:outputText value="#{usuario.dni}"/>
                         </p:column> 
@@ -57,14 +58,12 @@ and open the template in the editor.
                             <h:outputText value="#{usuario.apellidos}"/>
                         </p:column>   
 
-
-
-
                         <p:column headerText="#{bundle['usuarioController.sexo']}" >
                             <h:outputText value="#{usuario.sexo}"/>
                         </p:column> 
 
                         <p:column headerText="#{bundle['boton.acciones']}">
+
                             <p:button value="#{bundle['boton.editar']}" 
                                       outcome="/usuario/Create?faces-redirect=true" 
                                       icon="#{bundle['icono.editar']}">
@@ -78,6 +77,7 @@ and open the template in the editor.
                                              process="@this">
                                 <f:param name="usuarioId" value="#{usuario.id}"/>
                             </p:commandButton>
+
                             <p:button value="#{bundle['boton.matricular']}" 
                                       outcome="/matricula/Edit?faces-redirect=true" >
                                 <f:param name="usuarioId" value="#{usuario.id}"/>
@@ -85,6 +85,7 @@ and open the template in the editor.
                         </p:column>
 
                     </p:dataTable>
+
                     <p:confirmDialog id="idConfirmDialog" header="#{bundle['cabecera.eliminarRegistros']}"
                                      message="#{bundle['mensaje.confirmacion']}: 
                                      #{usuarioController.current.nombres} ?"  
@@ -100,12 +101,10 @@ and open the template in the editor.
                         <p:commandButton id="decline" value="#{bundle['boton.no']}" 
                                          oncomplete="confirmation.hide()" 
                                          action="#{usuarioController.cancelEdit()}" />
-
-
                     </p:confirmDialog> 
+
                     <p:button value="#{bundle['boton.nuevo']}" icon="#{bundle['icono.agregar']}" 
                               outcome="/usuario/Create?faces-redirect=true"> 
-
                         <f:param name="usuarioId" value=""/>
 
                     </p:button>
