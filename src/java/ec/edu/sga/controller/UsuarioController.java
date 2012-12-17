@@ -66,11 +66,7 @@ public class UsuarioController implements Serializable {
 //*********** GETTER AND SETTER***********//
 
     public Long getUsuarioId() {
-        if (this.current != null) {
-            return this.current.getId();
-        } else {
-            return null;
-        }
+        return usuarioId;
     }
 
     public void setUsuarioId(Long usuarioId) {
@@ -184,39 +180,9 @@ public class UsuarioController implements Serializable {
     }
 
 //******************Metodos del managed Bean************************//
-    public String index() {
-        return "/usuario/index";
-    } // Fin public String index
-
-    public List<Usuario> listado() {
+    public List<Usuario> getListado() {
         return ejbFacade.findAll();
     } // Fin public List<Usuario> listado
-
-    public String agregar() {
-        Date d = new Date();
-        current.setCreated(d);
-        current.setUpdated(d);
-        ejbFacade.create(current);
-        return "/usuario/index";
-    } // Fin public String agregar
-
-    public String edit(int codigo) {
-        current = ejbFacade.find(codigo);
-        return "/usuario/edit";
-    } // Fin public Tipousuario edit
-
-    public String guardar() {
-        Date d = new Date();
-        current.setUpdated(d);
-        ejbFacade.edit(current);
-        return "/usuario/index";
-    } // Fin public String guardar
-
-    public String eliminar(int codigo) {
-        current = ejbFacade.find(codigo);
-        ejbFacade.remove(current);
-        return "/usuario/index";
-    } // Fin public String eliminar
 
 //    public void renderTabs(ValueChangeEvent e) {
 //
@@ -275,35 +241,27 @@ public class UsuarioController implements Serializable {
             System.out.println(usuario);
 
         }
-        String summary = "Encontrado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        //puedo hacer retorjava.util.concurrent.Executorsnar a la pagina q se quiera
+        SessionUtil.agregarMensajeInformacion("mensaje.busqueda");
         return "/usuario/List";
 
-    }
-
-    public String createInstance() {
-        //return "/vehicle/Edit?faces-redirect=true";
-        System.out.println("========> INGRESO a Crear Instance usuario: " + current.getNombres());
-        this.current = new Usuario();
-        return "/usuario/Create?faces-redirect=true";
-        //return "/vehicle/BrandEdit";
     }
 
     public String persist() {
 
         System.out.println("========> INGRESO a Grabar nuevo Usuario: " + current.getNombres());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
-
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/index?faces-redirect=true";
+        return "/usuario/List?faces-redirect=true";
 
     }
 
     public String update() {
 
         System.out.println("========> INGRESO a Actualizar Usuario: " + current.getNombres());
+        current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");

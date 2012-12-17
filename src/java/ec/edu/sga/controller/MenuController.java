@@ -59,16 +59,14 @@ public class MenuController implements Serializable {
 
     public void setMenuId(Long menuId) {
 
-        System.out.println("========> Ingreso a fijar el id de un Menu: " + menuId);
+        System.out.println("========> Ingreso a fijar el id de Menu: " + menuId);
         this.beginConversation();
         if (menuId != null && menuId.longValue() > 0) {
-
+            current = ejbFacade.find(menuId);
             this.menuId = this.current.getId();
-
-
             System.out.println("========> INGRESO a Editar un Menu: " + current.getNombre());
         } else {
-            System.out.println("========> INGRESO a Crear un Menu: ");
+            System.out.println("========> INGRESO a Crear un Menu ");
             this.current = new Menu();
         }
 
@@ -90,10 +88,6 @@ public class MenuController implements Serializable {
         }
     }
     // ---------------------- Métodos del Managed Bean ----------------------
-
-    public String index() {
-        return "/menu/index";
-    }
 
     public List<Menu> getListado() {
         return ejbFacade.findAllOrderMenu();
@@ -122,14 +116,6 @@ public class MenuController implements Serializable {
     }
 
     //_______________________PERSISTIR OBJETOS________________________________//
-    public String createInstance() {
-
-        System.out.println("========> INGRESO a Crear una instancia de Menu: " + current.getNombre());
-        this.current = new Menu();
-        return "/index?faces-redirect=true";
-
-    }
-
     public String persist() {
 
         System.out.println("========> INGRESO a Grabar nuevo Menu: " + current.getNombre());
@@ -139,7 +125,7 @@ public class MenuController implements Serializable {
         this.endConversation();
 
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/index?faces-redirect=true";
+        return "/menu/List?faces-redirect=true";
 
 
     }
@@ -154,7 +140,7 @@ public class MenuController implements Serializable {
 
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
 
-        return "/index?faces-redirect=true";
+        return "/menu/List?faces-redirect=true";
 
     }
 
@@ -164,18 +150,15 @@ public class MenuController implements Serializable {
 
         //cambia este método por uno implementado con búsqueda por criteria
         //  this.findAll();
-
         this.endConversation();
-
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-
-        return "/index?faces-redirect=true";
+        return "/menu/List?faces-redirect=true";
 
     }
 
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-        return "/index?faces-redirect=true";
+        return "/menu/List?faces-redirect=true";
     }
 }

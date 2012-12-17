@@ -27,6 +27,7 @@ public class TipoUsuario implements Serializable {
     private Long id;
     @Size(min = 1, max = 100, message = "Debe ingresar el Nombre")
     private String nombre;
+    private String descripcion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,6 +57,15 @@ public class TipoUsuario implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
 
     public Date getFechaCreacion() {
         return fechaCreacion;

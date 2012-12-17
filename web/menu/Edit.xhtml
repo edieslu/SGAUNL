@@ -3,57 +3,66 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./../templates/plantilla.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
 
-        <h:form>
+        <f:metadata>
+            <f:viewParam name="menuId" value="#{menuController.menuId}"/>
 
-            <h2><h:outputText value="Opciones de Menú"/></h2>
-
-            <h4> <h:messages globalOnly="false" style="color: red" /> </h4>
-
+        </f:metadata>
 
 
-            <p:panelGrid columns="2">
+        <h:form id="formMenu">
+            <p:messages autoUpdate="true" closable="true"/>
 
+            <p:panel header="#{menuController.menuId!= null ? bundle['header.editar'] : bundle['header.nuevo']}">
 
-                <h:outputLabel value="Nombre :" for="nombre" />
-                <p:inputText id="nombre" value="#{menuController.current.nombre}" />
+                <p:panelGrid columns="2" >
 
-                <h:outputLabel value="Imagen :" for="imagen" />
-                <p:inputText id="imagen" value="#{menuController.current.imagen}" title="Imagen" />
+                    <h:outputLabel  value="#{bundle['menuController.nombre']}"/>
+                    <p:inputText value="#{menuController.current.nombre}" 
+                                 label="#{bundle['menuController.nombre']}"
+                                 required="true"/>
 
-                <h:outputLabel value="URL :" for="url" />
-                <p:inputText id="url" value="#{menuController.current.url}" title="Url" />
+                    <h:outputLabel  value="#{bundle['menuController.src']}"/>
+                    <p:inputText value="#{menuController.current.src}" 
+                                 label="#{bundle['menuController.src']}"
+                                 required="true"/>
 
-                <h:outputLabel value="Action :" for="action" />
-                <p:inputText id="action" value="#{menuController.current.actio}" title="Action" />
+                    <h:outputLabel  value="#{bundle['menuController.raiz']}"/>
+                    <p:inputText value="#{menuController.current.raiz}" 
+                                 label="#{bundle['menuController.raiz']}"
+                                 required="true"/>
 
-                <h:outputLabel value="Raiz :" for="raiz" />
-                <p:inputText id="raiz" value="#{menuController.current.raiz}" title="Raiz">
-                    <f:validateLongRange minimum="0" maximum="10" />
-                </p:inputText>
+                    <h:outputLabel  value="#{bundle['menuController.orden']}"/>
+                    <p:inputText value="#{menuController.current.orden}" 
+                                 label="#{bundle['menuController.orden']}"
+                                 required="true"/>
 
-                <h:outputLabel value="Orden:" for="orden" />
-                <p:inputText id="orden" value="#{menuController.current.orden}" title="Orden">
-                    <f:validateLongRange minimum="0" maximum="10" />
-                </p:inputText>
+                    <f:facet name="footer" >
+                        <p:commandButton value="#{bundle['boton.guardar']}"
+                                         icon="#{bundle['icono.guardar']}"
+                                         action="#{menuController.persist()}"
+                                         rendered="#{menuController.menuId==null}"/>
+                        <p:commandButton value="#{bundle['boton.actualizar']}"
+                                         icon="#{bundle['icono.actualizar']}"
+                                         action="#{menuController.update()}"
+                                         rendered="#{menuController.menuId!=null}"/>
 
-                <f:facet name="footer" >
+                        <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                         icon="#{bundle['icono.cancelar']}"
+                                         action="#{menuController.cancelEdit()}"
+                                         immediate="true"/>
+                    </f:facet>
 
-                    <p:commandButton value="#{bundle['boton.guardar']}" action="#{menuController.persist()}" />
-                    <p:commandButton value="#{bundle['boton.actualizar']}" action="#{menuController.update()}" />
-                    <p:commandButton value="#{bundle['boton.cancelar']}" action="#{menuController.cancelEdit()}" immediate="true" />
-                </f:facet>
+                </p:panelGrid>
 
-            </p:panelGrid>
-
-
+            </p:panel>
 
         </h:form>
-
 
     </ui:define>
 

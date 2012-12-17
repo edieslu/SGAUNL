@@ -10,41 +10,41 @@
     <ui:define name="content">
 
         <f:metadata>
-            <f:viewParam name="asignaturaId" value="#{asignaturaController.asignaturaId}"/>
+            <f:viewParam name="tipoUsuarioId" value="#{tipoUsuarioController.tipoUsuarioId}"/>
             
         </f:metadata>
         
         
-        <h:form id="formAsignatura">
+        <h:form id="formTipoUsuario">
             <p:messages autoUpdate="true" closable="true"/>
             
-            <p:panel header="#{asignaturaController.asignaturaId != null ? bundle['header.editar'] : bundle['header.nuevo']}">
+            <p:panel header="#{tipoUsuarioController.tipoUsuarioId!= null ? bundle['header.editar'] : bundle['header.nuevo']}">
 
                 <p:panelGrid columns="2" >
 
-                    <h:outputLabel  value="#{bundle['asignaturaController.nombre']}"/>
-                    <p:inputText value="#{asignaturaController.current.nombreAsignatura}" 
-                                 label="#{bundle['asignaturaController.nombre']}"
+                    <h:outputLabel  value="#{bundle['tipoUsuarioController.nombre']}"/>
+                    <p:inputText value="#{tipoUsuarioController.current.nombre}" 
+                                 label="#{bundle['tipoUsuarioController.nombre']}"
                                  required="true"/>
 
-                    <h:outputLabel  value="#{bundle['asignaturaController.tipo']}"/>
-                    <p:inputText value="#{asignaturaController.current.tipoAsignatura}" 
-                                 label="#{bundle['asignaturaController.tipo']}"
+                    <h:outputLabel  value="#{bundle['tipoUsuarioController.descripcion']}"/>
+                    <p:inputText value="#{tipoUsuarioController.current.descripcion}" 
+                                 label="#{bundle['tipoUsuarioController.descripcion']}"
                                  required="true"/>
 
                     <f:facet name="footer" >
                         <p:commandButton value="#{bundle['boton.guardar']}"
                                          icon="#{bundle['icono.guardar']}"
-                                         action="#{asignaturaController.persist()}"
-                                         rendered="#{asignaturaController.asignaturaId==null}"/>
+                                         action="#{tipoUsuarioController.persist()}"
+                                         rendered="#{tipoUsuarioController.tipoUsuarioId==null}"/>
                         <p:commandButton value="#{bundle['boton.actualizar']}"
                                          icon="#{bundle['icono.actualizar']}"
-                                         action="#{asignaturaController.update()}"
-                                         rendered="#{asignaturaController.asignaturaId!=null}"/>
+                                         action="#{tipoUsuarioController.update()}"
+                                         rendered="#{tipoUsuarioController.tipoUsuarioId!=null}"/>
 
                         <p:commandButton value="#{bundle['boton.cancelar']}" 
                                          icon="#{bundle['icono.cancelar']}"
-                                         action="#{asignaturaController.cancelEdit()}"
+                                         action="#{tipoUsuarioController.cancelEdit()}"
                                          immediate="true"/>
                     </f:facet>
 

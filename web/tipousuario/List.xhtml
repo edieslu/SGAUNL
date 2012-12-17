@@ -18,34 +18,41 @@
         </p:ajaxStatus>
 
         <f:metadata>
-            <f:viewParam name="asignaturaId" value="#{asignaturaController.asignaturaId}"/>
+            <f:viewParam name="tipoUsuarioId" value="#{tipoUsuarioController.tipoUsuarioId}"/>
         </f:metadata>
 
 
-        <h:form id="formAsignaturaList">
+        <h:form id="formTipoUsuarioList">
 
             <p:messages autoUpdate="true" closable="true"/>
 
             <p:panel header="#{bundle['header.lista']}">
 
-                <p:dataTable id="idTabla" 
-                             var="_asignatura" value="#{asignaturaController.findAll}">
+                <p:dataTable id="idTablaTipo" 
+                             var="_tipoUsuario" value="#{tipoUsuarioController.listado}">
 
-                    <p:column headerText="#{bundle['asignaturaController.nombre']}">
-                        <h:outputText  value="#{_asignatura.nombreAsignatura}"/>
-
-                    </p:column>
-
-                    <p:column headerText="#{bundle['asignaturaController.tipo']}">
-                        <h:outputText  value="#{_asignatura.tipoAsignatura}"/>
+                    <p:column headerText="#{bundle['tipoUsuarioController.nombre']}">
+                        <h:outputText  value="#{_tipoUsuario.nombre}"/>
 
                     </p:column>
 
+                    <p:column headerText="#{bundle['tipoUsuarioController.descripcion']}">
+                        <h:outputText  value="#{_tipoUsuario.descripcion}"/>
+
+                    </p:column>
+                    <p:column headerText="#{bundle['tipoUsuarioController.creacion']}">
+                        <h:outputText  value="#{_tipoUsuario.fechaCreacion}"/>
+
+                    </p:column>
+                    <p:column headerText="#{bundle['tipoUsuarioController.actualizacion']}">
+                        <h:outputText  value="#{_tipoUsuario.fechaActualizacion}"/>
+
+                    </p:column>
                     <p:column headerText="#{bundle['boton.acciones']}">
                         <p:button  value="#{bundle['boton.editar']}"
                                    icon="#{bundle['icono.editar']}"
-                                   outcome="#{asignaturaController.outcomeEdit}">
-                            <f:param name="asignaturaId" value="#{_asignatura.id}"/>
+                                   outcome="/tipousuario/Edit?faces-redirect=true">
+                            <f:param name="tipoUsuarioId" value="#{_tipoUsuario.id}"/>
 
                         </p:button>
                         <p:commandButton value="#{bundle['boton.eliminar']}"
@@ -53,8 +60,8 @@
                                          oncomplete="confirmacion.show()"
                                          ajax="true"
                                          process="@this"
-                                         update=":formAsignaturaList:idConfirmDialog">
-                            <f:param name="asignaturaId" value="#{_asignatura.id}" />
+                                         update=":formTipoUsuarioList:idConfirmDialog">
+                            <f:param name="tipoUsuarioId" value="#{_tipoUsuario.id}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
@@ -65,27 +72,27 @@
 
                     <p:button value="#{bundle['boton.nuevo']}"
                               icon="#{bundle['icono.agregar']}"
-                              outcome="#{asignaturaController.outcomeEdit}"/>
+                              outcome="/tipousuario/Edit?faces-redirect=true"/>
                 </f:facet>
 
 
             </p:panel>
 
             <p:confirmDialog  header="#{bundle['cabecera.eliminarRegistros']}"
-                              message="#{bundle['mensaje.confirmacion']}: #{asignaturaController.current.nombreAsignatura}"
+                              message="#{bundle['mensaje.confirmacion']}: #{tipoUsuarioController.current.nombre} ?"
                               id="idConfirmDialog" 
                               widgetVar="confirmacion"
                               severity="alert">
 
-                <p:commandButton action="#{asignaturaController.delete()}"
+                <p:commandButton action="#{tipoUsuarioController.delete()}"
                                  value="#{bundle['boton.si']}"
-                                 update=":formAsignaturaList:idTabla"
+                                 update=":formTipoUsuarioList:idTablaTipo"
                                  oncomplete="confirmacion.hide()">
-                    <f:param name="asignaturaId" value="#{asignaturaController.current.id}"/>
+                    <f:param name="tipoUsuarioId" value="#{tipoUsuarioController.current.id}"/>
                 </p:commandButton>
 
                 <p:commandButton value="#{bundle['boton.no']}" 
-                                 action="#{asignaturaController.cancelEdit()}"
+                                 action="#{tipoUsuarioController.cancelEdit()}"
                                  oncomplete="confirmacion.hide()"/>
 
             </p:confirmDialog>

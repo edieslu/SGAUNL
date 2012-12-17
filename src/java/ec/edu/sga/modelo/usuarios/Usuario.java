@@ -59,12 +59,10 @@ public class Usuario implements Serializable {
     private Long id;
     private String login;
     private String clave;
-    @Column(name = "CREATED")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "UPDATED")
+    private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updated;
+    private Date fechaActualizacion;
     private boolean estado;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaLogin;
@@ -86,7 +84,7 @@ public class Usuario implements Serializable {
     private ExpedienteAcademico expedienteAcademico;
     @OneToMany(mappedBy = "usuario", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @ManyToOne
-    private TipoUsuario tipousuarioId;
+    private TipoUsuario tipoUsuario;
 
     public Usuario() {
         matriculas = new ArrayList<Matricula>();
@@ -133,20 +131,20 @@ public class Usuario implements Serializable {
         this.fechaLogin = fechaLogin;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getUpdated() {
-        return updated;
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
     public String getDni() {
@@ -229,12 +227,12 @@ public class Usuario implements Serializable {
         this.expedienteAcademico = expedienteAcademico;
     }
 
-    public TipoUsuario getTipousuarioId() {
-        return tipousuarioId;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setTipousuarioId(TipoUsuario tipousuarioId) {
-        this.tipousuarioId = tipousuarioId;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     @Override

@@ -3,6 +3,7 @@ package ec.edu.sga.controller;
 import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.MenuTipoUsuarioFacade;
 import ec.edu.sga.modelo.usuarios.MenuTipoUsuario;
+import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +26,9 @@ public class MenuTipoUsuarioController implements Serializable {
     private MenuTipoUsuario current;
     @Inject
     private Conversation conversation;
-
+    private Long menuTipoUsuarioId;
     // ---------------------- Constructor de la Clase ----------------------
+
     public MenuTipoUsuarioController() {
         current = new MenuTipoUsuario();
     }
@@ -53,6 +55,27 @@ public class MenuTipoUsuarioController implements Serializable {
         this.ejbFacade = ejbFacade;
     }
 
+    public Long getMenuTipoUsuarioId() {
+        if (current == null) {
+            menuTipoUsuarioId = current.getId();
+        }
+        return menuTipoUsuarioId;
+    }
+
+    public void setMenuTipoUsuarioId(Long menuTipoUsuarioId) {
+        System.out.println("========> Ingreso a fijar el id de Menu Tipo Usuario: " + menuTipoUsuarioId);
+        this.beginConversation();
+        if (menuTipoUsuarioId != null && menuTipoUsuarioId.longValue() > 0) {
+            current = ejbFacade.find(menuTipoUsuarioId);
+            this.menuTipoUsuarioId = this.current.getId();
+            System.out.println("========> INGRESO a Editar un Menu Tipo Usuario: ");
+        } else {
+            System.out.println("========> INGRESO a Crear un Menu Tipo Usuario: ");
+            this.current = new MenuTipoUsuario();
+        }
+
+    }
+
     //________________MÉTODOS PARA INICIALIZAR Y FINALIZAR LA CONVERSACIÓN_________//
     public void beginConversation() {
         if (conversation.isTransient()) {
@@ -73,18 +96,11 @@ public class MenuTipoUsuarioController implements Serializable {
         return "/menu_tipousuario/index";
     } // Fin public String index
 
-    public List<MenuTipoUsuario> listado() {
+    public List<MenuTipoUsuario> getListado() {
         return ejbFacade.findAll();
     } // Fin public List<Usuario> listado
 
     //_______________________PERSISTIR OBJETOS________________________________//
-    public String createInstance() {
-        System.out.println("========> INGRESO a Crear una instancia de MenuTipo Usuario: " + current.getId());
-        this.current = new MenuTipoUsuario();
-        return "/index?faces-redirect=true";
-
-    }
-
     public String persist() {
         System.out.println("========> INGRESO a Grabar nuevo MenuTipoUsuario: " + current.getId());
         current.setFechaCreacion(new Date());
@@ -92,19 +108,19 @@ public class MenuTipoUsuarioController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/index?faces-redirect=true";
+        return "/menu_tipousuario/List?faces-redirect=true";
 
 
     }
 
     public String update() {
-        System.out.println("========> INGRESO a Actualizar al MenuTipoUsurio: " + current.getId());
+        System.out.println("========> INGRESO a Actualizar al MenuTipoUsuario: " + current.getId());
         current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/index?faces-redirect=true";
+        return "/menu_tipousuario/List?faces-redirect=true";
 
     }
 
@@ -113,12 +129,12 @@ public class MenuTipoUsuarioController implements Serializable {
         ejbFacade.remove(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/index?faces-redirect=true";
+        return "/menu_tipousuario/List?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-        return "/index?faces-redirect=true";
+        return "/menu_tipousuario/List?faces-redirect=true";
     }
 }

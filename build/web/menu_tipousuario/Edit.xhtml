@@ -3,52 +3,59 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="./../templates/plantilla.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
 
-        <h:form>
+        <f:metadata>
+            <f:viewParam name="menuTipoUsuarioId" value="#{menuTipoUsuarioController.menuTipoUsuarioId}"/>
 
-            <h2><h:outputText value="Control de Acceso"/></h2>
-
-            <h4> <h:messages globalOnly="false" style="color: red" /> </h4>
-
+        </f:metadata>
 
 
-            <p:panelGrid columns="2" >
-                <h:outputLabel value="Menu      :" for="menuId" />
-                <p:selectOneMenu id="menuId" 
-                                 value="#{menuTipousuarioController.current.menuId}" 
-                                 converter="genericConverter">
-                    <f:selectItems value="#{menuController.itemsAvailableSelectOne}"/>
-                </p:selectOneMenu>
+        <h:form id="formMenuTipoUsuario">
+            <p:messages autoUpdate="true" closable="true"/>
 
-                <h:outputLabel value="Tipo Usr. :" for="tipousuarioId" />
-                <p:selectOneMenu id="tipousuarioId" 
-                                 value="#{menuTipousuarioController.current.tipousuarioId}"
-                                 converter="genericConverter">
-                    <f:selectItems value="#{tipousuarioController.itemsAvailableSelectOne}"/>
-                </p:selectOneMenu>
+            <p:panel header="#{menuTipoUsuarioController.menuTipoUsuarioId!= null ? bundle['header.editar'] : bundle['header.nuevo']}">
 
-                <f:facet name="footer" >
-                    <p:commandButton value="#{bundle['boton.guardar']}" 
-                                     action="#{menuTipousuarioController.persist()}" 
-                                     icon="#{bundle['icono.guardar']}"/>
-                    <p:commandButton value="#{bundle['boton.actualizar']}" 
-                                     action="#{menuTipousuarioController.update()}" 
-                                     icon="#{bundle['icono.actualizar']}"/> 
-                    <p:commandButton value="#{bundle['boton.cancelar']}" 
-                                     action="#{menuTipousuarioController. cancelEdit()}" 
-                                     immediate="true" 
-                                     icon="#{bundle['icono.cancelar']}"/>
-                </f:facet>
+                <p:panelGrid columns="2" >
 
-            </p:panelGrid>
+                    <h:outputLabel  value="#{bundle['menuTipoUsuarioController.tipoUsuario']}"/>
+                    <p:selectOneMenu value="#{menuTipoUsuarioController.current.tipoUsuario}" required="true"
+                                     converter="genericConverter">
+                        <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
+                        <f:selectItems value="#{tipoUsuarioController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel  value="#{bundle['menuTipoUsuarioController.menu']}: "/>
+                    <p:selectOneMenu value="#{menuTipoUsuarioController.current.menu}" required="true"
+                                     converter="genericConverter">
+                        <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
+                        <f:selectItems value="#{menuController.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+
+                    <f:facet name="footer" >
+                        <p:commandButton value="#{bundle['boton.guardar']}"
+                                         icon="#{bundle['icono.guardar']}"
+                                         action="#{menuTipoUsuarioController.persist()}"
+                                         rendered="#{menuTipoUsuarioController.menuTipoUsuarioId==null}"/>
+                        <p:commandButton value="#{bundle['boton.actualizar']}"
+                                         icon="#{bundle['icono.actualizar']}"
+                                         action="#{menuTipoUsuarioController.update()}"
+                                         rendered="#{menuTipoUsuarioController.menuTipoUsuarioId!=null}"/>
+
+                        <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                         icon="#{bundle['icono.cancelar']}"
+                                         action="#{menuTipoUsuarioController.cancelEdit()}"
+                                         immediate="true"/>
+                    </f:facet>
+
+                </p:panelGrid>
+
+            </p:panel>
 
         </h:form>
-
-
 
     </ui:define>
 

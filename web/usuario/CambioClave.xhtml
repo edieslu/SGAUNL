@@ -3,31 +3,41 @@
 
 <html xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 
     <ui:composition template="/templates/plantilla.xhtml">
         <ui:define name="title">
             #{loginController.accesoURL(true, "")}
-            <h:outputText value="Cambio de Clave" />
+            <h:outputText value="" />
         </ui:define>
         <ui:define name="content">
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage library="img" name="ajaxloading.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
             <h:form id="idCambioCalve" prependId="false">
-                <p:panelGrid columns="2">
-
-                    <h:outputLabel value="Clave Actual  :" /> 
-                    <p:password id="idActual" value="#{loginController.claveAct}" />
-                    <h:outputLabel value="Clave Nueva   :" /> 
-                    <p:password id="idNueva" value="#{loginController.claveNew}" />
-                    <h:outputLabel value="Clave Repetida:" /> 
-                    <p:password id="idRepetir" value="#{loginController.claveRep}" /> 
-                </p:panelGrid>
-                <p:commandButton value="Aceptar" action="#{loginController.cambiarPWD()}" 
-                                 icon="#{bundle['icono.guardar']}" />
-                <p:commandButton value="Cancelar" action="#{loginController.index()}" 
-                                 immediate="true" icon="#{bundle['icono.cancelar']}"/>
-
+                <p:panel header="#{bundle['header.cambioClave']}">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="#{bundle['loginController.clave']}: " /> 
+                        <p:password id="idActual" value="#{loginController.claveAct}" />
+                        <h:outputLabel value="#{bundle['loginController.claveNueva']}: " /> 
+                        <p:password id="idNueva" value="#{loginController.claveNew}" />
+                        <h:outputLabel value="#{bundle['loginController.claveRepetir']}: " /> 
+                        <p:password id="idRepetir" value="#{loginController.claveRep}" /> 
+                    </h:panelGrid>
+                    <p:commandButton value="Aceptar" action="#{loginController.cambiarPWD()}" 
+                                     icon="#{bundle['icono.guardar']}" />
+                    <p:commandButton value="Cancelar" action="#{loginController.index()}" 
+                                     immediate="true" icon="#{bundle['icono.cancelar']}"/>
+                </p:panel>
             </h:form>
+
         </ui:define>
     </ui:composition>
 </html>

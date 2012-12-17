@@ -133,7 +133,8 @@ public class LoginController implements Serializable {
             return null;
         }
         sessionbean.setUsuarioLogeado(login);
-        return "/index";
+        sessionbean.getUsuarioLogeado().setFechaLogin(new Date());
+        return "/index?faces-redirect=true";
 
     } // Fin public Ingresar
 
@@ -232,7 +233,7 @@ public class LoginController implements Serializable {
         }
 
         // No debería pasar, pero si el tipo no existe, no hay acceso.
-        TipoUsuario tipo = ejbTipoUsuario.find(sessionbean.getUsuarioLogeado().getTipousuarioId().getId());
+        TipoUsuario tipo = ejbTipoUsuario.find(sessionbean.getUsuarioLogeado().getTipoUsuario().getId());
         if (tipo == null) {
             return false;
         }
