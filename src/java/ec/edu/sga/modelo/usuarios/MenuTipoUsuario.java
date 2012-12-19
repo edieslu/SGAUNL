@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
  *
  * @author edison
  */
+// select m.nombre from Menu m, MenuTipoUsuario mt 
+//where mt.menu_id=m.id and mt.menutipousuario_id = :param
 @Entity
 @TableGenerator(name = "MenuTipousuarioGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "MenuTipousuario", initialValue = 1, allocationSize = 1)

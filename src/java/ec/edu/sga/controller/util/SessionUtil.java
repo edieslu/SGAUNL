@@ -138,11 +138,12 @@ public class SessionUtil {
     public static void agregarMensajeInformacion(String mensajeBundle) {
         String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary);
-        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
          
     }
     
     public static void agregarMensajeInformacionOtraPagina(String mensajeBundle) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().clear();
         String summary = ResourceBundle.getBundle("/Bundle").getString(mensajeBundle);
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, summary);
         FacesContext.getCurrentInstance().addMessage(null, facesMsg);

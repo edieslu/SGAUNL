@@ -18,15 +18,15 @@
     <ui:composition template="/templates/plantilla.xhtml">
 
         <ui:define name="content">
-            #{loginController.accesoURL(true, "/faces/curso/List.xhtml")}
-
+           
+            
             <h:form id="formList" prependId="false">
-
+                
                 <p:messages autoUpdate="true" closable="true"/>
-
-
+                
+                
                 <p:panel header="#{bundle['header.lista']}">
-
+                    
                     <p:panelGrid columns="3" id="panelList">
 
                         <p:dataTable id="tableCursos" 
@@ -104,7 +104,7 @@
                                      oncomplete="conf.hide()"
                                      actionListener="#{cursoController.delete()}"
                                      update=":formList:tableCursos">
-
+                       
                         <f:param name="cursoId" value="#{cursoController.current.id}"/>
 
 

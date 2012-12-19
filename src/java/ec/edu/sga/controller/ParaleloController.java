@@ -5,6 +5,7 @@ import ec.edu.sga.facade.ParaleloFacade;
 import ec.edu.sga.modelo.matriculacion.Paralelo;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -71,11 +72,11 @@ public class ParaleloController implements Serializable {
     }
 
     public void setParaleloId(Long paraleloId) {
-        conversation.begin();
+        this.beginConversation();
         if (paraleloId != null && paraleloId.longValue() > 0) { //Verifica que el id no sea vacío
             this.current = ejbFacade.find(paraleloId);//BUsca un paralelo de acuerdo al ID y lo asigna a current
             this.paraleloId = current.getId();
-             System.out.println("Ingreso a editar paralelo: " +current.getNombreParalelo());
+            System.out.println("Ingreso a editar paralelo: " + current.getNombreParalelo());
 
         } else {
             System.out.println("Ingreso a crear un nuevo paralelo");
@@ -88,19 +89,22 @@ public class ParaleloController implements Serializable {
     //____________________________MÉTODOS_______________________________
     public String persist() {
         System.out.println("Ingreso a grabar el paralelo: " + current.getNombreParalelo());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
         this.endConversation();
-         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
         return "/index";
     }
 
     public String update() {
         System.out.println("Ingreso a actualizar: " + current.getNombreParalelo());
+        current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el paralelo: " + current.getNombreParalelo());
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/paralelo/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        return "/paralelo/List?faces-redirect=true";
     }
 
     public String delete() {
@@ -108,13 +112,14 @@ public class ParaleloController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el paralelo");
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/paralelo/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        return "/paralelo/List?faces-redirect=true";
     }
 
-    public void cancelEdit() {
+    public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
+        return "/paralelo/List?faces-redirect=true";
 
     }
 
@@ -134,18 +139,12 @@ public class ParaleloController implements Serializable {
 
     }
 
-    public String findAllParalelos() {
-       resultlist = ejbFacade.findAll();
-        for (Paralelo object : resultlist) {
-            System.out.println("paralelos: "+ object);
-            
-        }
-        String summary = "Encontrado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        return "paralelo/List";
+    public List<Paralelo> getFindAll() {
+        return ejbFacade.findAll();
+
     }
-    
-     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
+
+    // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
@@ -153,8 +152,13 @@ public class ParaleloController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
-    
-    
-    
-    
+
+    //Métodos para navegar entre distintas páginas
+    public String getOutcomeList() {
+        return "/paralelo/List?faces-redirect=true";
+    }
+
+    public String getOutcomeEdit() {
+        return "/paralelo/Edit?faces-redirect=true";
+    }
 }

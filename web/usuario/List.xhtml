@@ -30,17 +30,20 @@ and open the template in the editor.
             </p:ajaxStatus>
 
             <h:form id="formBuscarUsuario" prependId="false">
+                
+                <p:messages globalOnly="true" closable="true"/>
+                
                 <p:panel header="#{bundle['header.lista']}">
                     <h:panelGrid columns="3">
                         <h:outputText value="#{bundle['label.buscar']}:"/>
                         <p:inputText id="criterio" value="#{usuarioController.criterio}" 
                                      size="30" label="#{bundle['label.buscar']}" 
-                                     title="#{bundle['label.buscar']}" required="true">
+                                     title="#{bundle['label.buscar']}">
                         </p:inputText>
                         <p:commandButton value="#{bundle['label.buscar']}" 
                                          action="#{usuarioController.find}"
                                          ajax="true" icon="#{bundle['icono.buscar']}" 
-                                         update="listaUsuarios">
+                                         update="@form listaUsuarios">
                         </p:commandButton>
                     </h:panelGrid>
                     <p:dataTable id="listaUsuarios" value="#{usuarioController.resultlist}" 

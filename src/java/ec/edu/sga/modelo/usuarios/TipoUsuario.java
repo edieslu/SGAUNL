@@ -18,6 +18,7 @@ valueColumnName = "valor", pkColumnValue = "Tipousuario", initialValue = 1, allo
     @NamedQuery(name = "TipoUsuario.findByNombre", query = "SELECT t FROM TipoUsuario t WHERE t.nombre = :nombre"),
     @NamedQuery(name = "TipoUsuario.findByFechaCreacion", query = "SELECT t FROM TipoUsuario t WHERE t.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "TipoUsuario.findByFechaActualizacion", query = "SELECT t FROM TipoUsuario t WHERE t.fechaActualizacion = :fechaActualizacion")})
+
 public class TipoUsuario implements Serializable {
 
     private static final long serialVersionUID = 1L;

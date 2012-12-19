@@ -113,7 +113,7 @@ public class LoginController implements Serializable {
     //________________________________Métodos_____________________________________________//
     //--------- Metodos del Login Controller-----
     public String index() {
-        return "/faces/login/login.xhtml";
+        return "/faces/login/login?faces-redirect=true";
     } // Fin public String index
 
     public String acercaDe() {

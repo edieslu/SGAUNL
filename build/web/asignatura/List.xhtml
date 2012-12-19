@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
-        #{loginController.accesoURL(true, "/faces/asignatura/List.xhtml")}
+
         <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
             <f:facet name="start">
                 <h:graphicImage library="img" name="ajaxloading.gif" />
@@ -22,7 +22,7 @@
         </f:metadata>
 
 
-        <h:form id="formAsignaturaList">
+        <h:form id="formAsignaturaList" prependId="false">
 
             <p:messages autoUpdate="true" closable="true"/>
 
@@ -71,7 +71,7 @@
 
             </p:panel>
 
-            <p:confirmDialog  header="#{bundle['cabecera.eliminarRegistros']}"
+            <p:confirmDialog  header="#{bundle['header.eliminarRegistros']}"
                               message="#{bundle['mensaje.confirmacion']}: #{asignaturaController.current.nombreAsignatura}"
                               id="idConfirmDialog" 
                               widgetVar="confirmacion"

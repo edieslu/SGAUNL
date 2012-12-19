@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
  *
  * @author edison
  */
+// SELECT p FROM FidPersonaEmpresa p JOIN p.fidTrabajador t  WHERE
+//p.nombres like :nombres and p.id = t.fidPersonaEmpresaId
 @Entity
 @TableGenerator(name = "MenuGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "Menu", initialValue = 1, allocationSize = 1)
@@ -50,7 +52,7 @@ public class Menu implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
 
-    // -------------------------- Contructores de la Clase --------------------------
+    // -------------------------- Contructor de la Clase --------------------------
     public Menu() {
     }
 
@@ -139,7 +141,7 @@ public class Menu implements Serializable {
     public boolean isLengt() {
         return src.length() > 0;
 
-        }
+    }
 
     @Override
     public String toString() {

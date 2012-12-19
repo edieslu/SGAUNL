@@ -5,11 +5,14 @@
 package ec.edu.sga.modelo.academico;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -26,12 +29,23 @@ public class Supletorio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator="SupletorioGenerador")
     private Long id;
+    private String nombreSupletorio;
+    private String descripcionSupletorio;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
+    //------------------------------CONSTRUCTORES----------------------------//
 
-    
-    
-    
-    
-     //------------------------------CONSTRUCTORES----------------------------//
+    public Supletorio() {
+    }
+
+    public Supletorio(String nombreSupletorio, String descripcionSupletorio, Date fechaCreacion, Date fechaActualizacion) {
+        this.nombreSupletorio = nombreSupletorio;
+        this.descripcionSupletorio = descripcionSupletorio;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
+    }
     
     
     
@@ -43,6 +57,42 @@ public class Supletorio implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getNombreSupletorio() {
+        return nombreSupletorio;
+    }
+
+    public void setNombreSupletorio(String nombreSupletorio) {
+        this.nombreSupletorio = nombreSupletorio;
+    }
+
+    public String getDescripcionSupletorio() {
+        return descripcionSupletorio;
+    }
+
+    public void setDescripcionSupletorio(String descripcionSupletorio) {
+        this.descripcionSupletorio = descripcionSupletorio;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    
+    
+    
 
     
     

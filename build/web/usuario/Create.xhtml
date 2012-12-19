@@ -36,8 +36,6 @@ and open the template in the editor.
                 });
             </script>
 
-
-
             <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
                 <f:facet name="start">
                     <h:graphicImage library="img" name="ajaxloading.gif" />
@@ -47,10 +45,13 @@ and open the template in the editor.
                 </f:facet>
             </p:ajaxStatus>
             <h:form id="formUsuario" prependId="false">
+                
+                <p:messages closable="true" globalOnly="true"/>
                 <p:panel id="editPanelUsuario"
                          header="#{usuarioController.current.id != null ? bundle['header.editar'] : bundle['header.nuevo']}" >
-                    <p:messages closable="true"/>
-                    <p:accordionPanel dynamic="true" cache="true">  
+                    
+                    <p:accordionPanel id="idAcordion" dynamic="true" cache="true" >
+
                         <p:tab id="idTabLogin" title="Datos de Login de Usuario" >
                             <h:panelGrid columns="2">
                                 <h:outputLabel value="#{bundle['usuarioController.login']}:"/>
@@ -58,9 +59,8 @@ and open the template in the editor.
                                              label="#{bundle['usuarioController.login']}"
                                              title="#{bundle['usuarioController.login']}"/>
                                 <h:outputLabel value="#{bundle['usuarioController.clave']}:"/>
-                                <p:password value="#{usuarioController.current.clave}" feedback="true" 
-                                            promptLabel="Ingrese la contraseña" weakLabel="Baja" goodLabel="Media" 
-                                            strongLabel="Fuerte" title="#{bundle['usuarioController.clave']}"
+                                <p:password value="#{usuarioController.current.clave}" 
+                                            title="#{bundle['usuarioController.clave']}"
                                             label="#{bundle['usuarioController.clave']}">
                                 </p:password>
                                 <h:outputLabel value="#{bundle['usuarioController.estado']}:"/>
@@ -69,19 +69,18 @@ and open the template in the editor.
                                 <h:outputText value="#{bundle['usuarioController.tipoUsuario']}:*"/>
                                 <p:selectOneMenu value="#{usuarioController.current.tipoUsuario}" 
                                                  effect="fade" required="true"
-                                                 immediate="true" converter="genericConverter">
+                                                 immediate="true" converter="genericConverter"
+                                                 valueChangeListener="#{usuarioController.renderTabs}">
                                     <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
                                     <f:selectItems value="#{tipoUsuarioController.itemsAvailableSelectOne}"
                                                    />  
-
+                                    <p:ajax update="@form"/>
                                 </p:selectOneMenu>
                             </h:panelGrid>
                         </p:tab>
 
-                        <p:tab id="idTabPersonales" title="Datos Personales">  
-
-                            <h:panelGrid columns="4">
-
+                        <p:tab id="idTabPersonales" title="Datos Personales" rendered="false">  
+                           <h:panelGrid columns="4">
                                 <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="dni" />
                                 <p:inputText id="dni" value="#{usuarioController.current.dni}" 
                                              title="#{bundle['usuarioController.dni']}"
@@ -96,7 +95,8 @@ and open the template in the editor.
                                              title="#{bundle['usuarioController.libretaMilitar']}" 
                                              label="#{bundle['usuarioController.libretaMilitar']}"/>
 
-                                <h:outputLabel value="#{bundle['usuarioController.nombres']}:*" for="nombres" />
+                                <h:outputLabel value="#{bundle['usuarioController.nombres']}:*" 
+                                               for="nombres" />
                                 <p:inputText id="nombres" 
                                              value="#{usuarioController.current.nombres}"                                              
                                              title="#{bundle['usuarioController.nombres']}"
@@ -104,7 +104,8 @@ and open the template in the editor.
                                              required="true"
                                              label="#{bundle['usuarioController.nombres']}"/>
 
-                                <h:outputLabel value="#{bundle['usuarioController.apellidos']}:*" for="apellidos" />
+                                <h:outputLabel value="#{bundle['usuarioController.apellidos']}:*" 
+                                               for="apellidos" />
                                 <p:inputText id="apellidos" 
                                              value="#{usuarioController.current.apellidos}" 
                                              title="#{bundle['usuarioController.apellidos']}" 
@@ -201,12 +202,12 @@ and open the template in the editor.
                             </h:panelGrid>
                         </p:tab>
 
-                        <p:tab title="Datos Medicos">
+                        <p:tab id="idTabMedicos" title="Datos Medicos" rendered="false">
                             <h:panelGrid columns="4">
                                 <h:outputLabel value="#{bundle['usuarioController.tipoSangre']}:*" />
                                 <p:selectOneMenu id="_typeSangre" required="true" effect="fade"
                                                  value="#{usuarioController.current.ficha.fichaMedica.tipoSangre}">
-                                                  
+
                                     <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
                                     <f:selectItems value="#{typeListController.typeListSangre}" />  
                                 </p:selectOneMenu>
@@ -237,7 +238,7 @@ and open the template in the editor.
 
                             </h:panelGrid>
                         </p:tab>
-                        <p:tab title="Datos Socio-Economicos">
+                        <p:tab id="idTabEconomicos" title="Datos Socio-Economicos" rendered="false">
                             <h:panelGrid columns="4">
                                 <h:outputLabel value="#{bundle['usuarioController.internet']}:" for="internet" />
                                 <p:selectBooleanCheckbox id="internet" 

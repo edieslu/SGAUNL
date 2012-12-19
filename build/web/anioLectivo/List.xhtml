@@ -10,7 +10,7 @@
 
 
     <ui:define name="content">
-        #{loginController.accesoURL(true, "/faces/anioLectivo/List.xhtml")}
+
 
         <p:ajaxStatus> 
             <f:facet name="prestart">
@@ -21,22 +21,22 @@
             <f:facet name="error"> 
                 <h:outputText value="Error" />
             </f:facet>
-
+            
             <f:facet name="success"> 
                 <h:outputText value="Success" />
             </f:facet>
-
-
+            
+            
             <f:facet name="default"> 
                 <h:outputText value="No estoy haciendo ninguna petición ajax" />
             </f:facet>
-
-
+            
+            
             <f:facet name="start"> 
                 <h:outputText value="Please Wait" />
             </f:facet>
-
-
+            
+            
             <f:facet name="complete"> 
                 <h:outputText value="Soy el valor después de una peticón ajax" />
             </f:facet>

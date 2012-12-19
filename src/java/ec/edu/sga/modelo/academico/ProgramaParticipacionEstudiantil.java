@@ -5,11 +5,14 @@
 package ec.edu.sga.modelo.academico;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -31,6 +34,11 @@ public class ProgramaParticipacionEstudiantil implements Serializable {
     private int duracionPrograma; 
     private int notaPrograma;
     private Boolean estadoAprobacion;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCreacion;
+     @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaActualizacion;
     
     
      //------------------------------CONSTRUCTORES----------------------------//
@@ -85,9 +93,24 @@ public class ProgramaParticipacionEstudiantil implements Serializable {
     public void setEstadoAprobacion(Boolean estadoAprobacion) {
         this.estadoAprobacion = estadoAprobacion;
     }
-    
-    
 
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+  
     //--------------------------------METODOS----------------------------------//
     @Override
     public int hashCode() {
