@@ -4,8 +4,11 @@
  */
 package ec.edu.sga.controller.util;
 
+import ec.edu.sga.controller.SessionBean;
 import ec.edu.sga.facade.MenuFacade;
+import ec.edu.sga.facade.MenuTipoUsuarioFacade;
 import ec.edu.sga.modelo.usuarios.Menu;
+import ec.edu.sga.modelo.usuarios.MenuTipoUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ import javax.el.ExpressionFactory;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.Application;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
@@ -31,7 +35,10 @@ import org.primefaces.model.MenuModel;
 public class MenuDinamico implements Serializable {
 
     private MenuModel model;
+    private Menu menus;
     private MenuDinamico current;
+    @Inject
+    SessionBean session;
     @EJB
     private MenuFacade ejbFacadeMenu;
     private List<Menu> list = new ArrayList<Menu>();
@@ -41,6 +48,7 @@ public class MenuDinamico implements Serializable {
 ////    @Inject
 ////    private LoginController loginController;
     public MenuDinamico() {
+        
     }
 
     public MenuModel getModel() {
@@ -51,12 +59,21 @@ public class MenuDinamico implements Serializable {
         this.model = model;
     }
 
+    
     public MenuDinamico getCurrent() {
         return current;
     }
 
     public void setCurrent(MenuDinamico current) {
         this.current = current;
+    }
+
+    public SessionBean getSession() {
+        return session;
+    }
+
+    public void setSession(SessionBean session) {
+        this.session = session;
     }
 
     public List<Menu> getList() {
@@ -68,10 +85,6 @@ public class MenuDinamico implements Serializable {
         this.list = list;
     }
 
-    public void lista() {
-        this.list = ejbFacadeMenu.findAllOrderMenu();
-    }
-
     @SuppressWarnings("unused")
     @PostConstruct
     private void init() {
@@ -80,14 +93,14 @@ public class MenuDinamico implements Serializable {
         ExpressionFactory expressionFactory = application.getExpressionFactory();
         ELContext elContext = facesContext.getELContext();
         model = new DefaultMenuModel();
-        //  Submenu submenu = new Submenu();
+        //  Submenu submenu =Long.MIN_VALUE new Submenu();
 
         List<Menu> submenus = new ArrayList<Menu>();
         List<Menu> menuitems = new ArrayList<Menu>();
 
-        for (Menu menu : ejbFacadeMenu.findAllOrderMenu()) {
+        for (Menu menu :ejbFacadeMenu.findAllOrderMenu()){
             System.out.println(menu.getNombre());
-            if (menu.isLengt()) {
+            if (menu.getSrc().length()>0) {
                 menuitems.add(menu);
             } else {
                 submenus.add(menu);

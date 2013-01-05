@@ -16,6 +16,10 @@ import javax.validation.constraints.NotNull;
 valueColumnName = "valor", pkColumnValue = "MenuTipousuario", initialValue = 1, allocationSize = 1)
 @NamedQueries({
     @NamedQuery(name = "MenuTipoUsuario.findAll", query = "SELECT m FROM MenuTipoUsuario m"),
+    @NamedQuery(name="MenuTipoUsuario.findNameMenu",
+        query="select mtu.menu.id,mtu.menu.nombre,mtu.menu.src,mtu.menu.orden,mtu.menu.raiz,mtu.menu.fechaCreacion,mtu.menu.fechaActualizacion "
+        + "from MenuTipoUsuario mtu join mtu.menu m "
+        + "where mtu.menu= m.id and mtu.tipoUsuario=:tipo order by mtu.menu.raiz , mtu.menu.orden"),
     @NamedQuery(name = "MenuTipoUsuario.findById", query = "SELECT m FROM MenuTipoUsuario m WHERE m.id = :id"),
     @NamedQuery(name = "MenuTipoUsuario.findByMenuId", query = "SELECT m FROM MenuTipoUsuario m WHERE m.menu = :menu"),
     @NamedQuery(name = "MenuTipoUsuario.findByTipousuarioId", query = "SELECT m FROM MenuTipoUsuario m WHERE m.tipoUsuario = :tipoUsuario"),

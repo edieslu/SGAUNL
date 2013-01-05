@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 
@@ -20,12 +22,15 @@ import javax.persistence.Temporal;
 @Entity
 @TableGenerator(name = "TrabajoGradoGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "TrabajoGrado", initialValue = 1, allocationSize = 1)
+@NamedQueries(value = {
+    @NamedQuery(name = "TrabajoGrado.buscarPorNombre", 
+        query = "SELECT t FROM TrabajoGrado t WHERE t.nombreTrabajoGrado =:param")})
 public class TrabajoGrado implements Serializable {
-    
+
     //--------------------------------ATRIBUTOS-------------------------------//
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator="TrabajoGradoGenerador")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "TrabajoGradoGenerador")
     private Long id;
     private String nombreTrabajoGrado;
     private String tipoTrabajoGrado;
@@ -33,15 +38,9 @@ public class TrabajoGrado implements Serializable {
     private String descripcionTrabajo;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaEntrega;
-    
-    
-    
-     //------------------------------CONSTRUCTORES----------------------------//
-    
-    
-    
-    //----------------------------GETTERS AND SETTERS-------------------------//
 
+    //------------------------------CONSTRUCTORES----------------------------//
+    //----------------------------GETTERS AND SETTERS-------------------------//
     public Long getId() {
         return id;
     }
@@ -90,10 +89,6 @@ public class TrabajoGrado implements Serializable {
         this.fechaEntrega = fechaEntrega;
     }
 
-    
-    
-    
-    
     //------------------------------MÉTODOS-----------------------------------//
     @Override
     public int hashCode() {
@@ -117,7 +112,6 @@ public class TrabajoGrado implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.edu.sga.otras.TrabajoGrado[ id=" + id + " ]";
+        return this.nombreTrabajoGrado;
     }
-    
 }

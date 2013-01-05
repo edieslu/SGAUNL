@@ -3,7 +3,6 @@ package ec.edu.sga.controller;
 import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.MenuTipoUsuarioFacade;
 import ec.edu.sga.modelo.usuarios.MenuTipoUsuario;
-import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

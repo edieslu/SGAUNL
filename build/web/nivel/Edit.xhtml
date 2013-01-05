@@ -48,8 +48,6 @@
                                          required="true" 
                                          value="#{nivelController.current.descripcionNivel}" />
 
-
-
                         <f:facet name="footer">
                             <p:commandButton value="#{bundle['boton.guardar']}" 
                                              action="#{nivelController.persist()}"
@@ -64,18 +62,10 @@
                                              action="#{nivelController.cancelEdit()}" 
                                              immediate="true" 
                                              icon="#{bundle['icono.cancelar']}"/>
-
                         </f:facet>
-
                     </p:panelGrid>
-
-
-
                 </p:panel>
-
             </h:form>
-
         </ui:define>
     </ui:composition>
-
 </html>

@@ -7,6 +7,7 @@ package ec.edu.sga.facade;
 import ec.edu.sga.modelo.usuarios.Menu;
 import ec.edu.sga.modelo.usuarios.MenuTipoUsuario;
 import ec.edu.sga.modelo.usuarios.TipoUsuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,5 +41,15 @@ public class MenuTipoUsuarioFacade extends AbstractFacade<MenuTipoUsuario> {
         }
         catch (Exception e) { return false; }
     } // Fin public Boolean findByMenuAndTipousuario
+    
+     public List<Menu> findNameMenus(Long tipo) {
+        try {
+            Query query = em.createNamedQuery("MenuTipoUsuario.findNameMenu");
+            query.setParameter("tipo",tipo);
+            return query.getResultList();
+            
+        }
+        catch (Exception e) { return null; }
+    }  
     
 }

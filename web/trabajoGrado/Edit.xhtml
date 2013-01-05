@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:metadata>
+        <f:viewParam name="trabajoGradoId" value="#{trabajoGradoController.trabajoGradoId}">
+        </f:viewParam>
+    </f:metadata>
+
+    <ui:composition template="/templates/plantilla.xhtml">
+        <ui:define name="title">
+            #{loginController.accesoURL(true, "/faces/trabajoGrado/Edit.xhtml")}
+
+        </ui:define>
+        <ui:define name="content">
+            <p:messages autoUpdate="true" closable="true" />
+            <h:form id="formEditTrabajoGrado">
+                <p:panel header="#{trabajoGradoController.trabajoGradoId !=null ? bundle['boton.editar'] : bundle['boton.nuevo']}" 
+                         id="panelEditTrabajoGrado">
+
+                    <p:panelGrid columns="2">
+
+                        <h:outputLabel value="#{bundle['trabajoGradoController.nombre']}:"/>
+                        <p:inputText required="true" 
+                                     label="#{bundle['trabajoGradoController.nombre']}" 
+                                     value="#{trabajoGradoController.current.nombreTrabajoGrado}"/>
+
+
+                        <h:outputLabel value="#{bundle['trabajoGradoController.tipo']}:"/>
+                        <p:inputText label="#{bundle['trabajoGradoController.tipo']}"                                   
+                                     required="true" 
+                                     value="#{trabajoGradoController.current.tipoTrabajoGrado}">
+
+                        </p:inputText>
+
+                        <h:outputLabel value="#{bundle['trabajoGradoController.director']}:"/>
+                        <p:inputText label="#{bundle['trabajoGradoController.director']}"                                   
+                                     required="true" 
+                                     value="#{trabajoGradoController.current.nombreDirectorTrabajo}">
+
+                        </p:inputText>
+                        <h:outputLabel value="#{bundle['trabajoGradoController.fechaEntrega']}:"/>
+                        <p:calendar label="#{bundle['trabajoGradoController.fechaEntrega']}"                                   
+                                    required="true" 
+                                    value="#{trabajoGradoController.current.fechaEntrega}">
+
+                        </p:calendar>
+
+                        <h:outputLabel value="#{bundle['trabajoGradoController.descripcion']}:"/>
+                        <p:inputTextarea label="#{bundle['trabajoGradoController.descripcion']}" 
+                                         required="true" 
+                                         value="#{trabajoGradoController.current.descripcionTrabajo}"/>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.guardar']}" 
+                                             action="#{trabajoGradoController.persist()}"
+                                             update="panelEditTrabajoGrado"
+                                             icon="#{bundle['icono.guardar']}"/>
+
+                            <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             action="#{trabajoGradoController.update()}"
+                                             icon="#{bundle['icono.actualizar']}"/>
+
+                            <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                             action="#{trabajoGradoController.cancelEdit()}" 
+                                             immediate="true" 
+                                             icon="#{bundle['icono.cancelar']}"/>
+                        </f:facet>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

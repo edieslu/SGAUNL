@@ -31,10 +31,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     }
 
     public List<Usuario> buscarPorClave(String clave) {
-
         Query query = em.createNamedQuery("Usuario.buscarPorClave");
         query.setParameter("clave", clave);
-
         return query.getResultList();
     }
 

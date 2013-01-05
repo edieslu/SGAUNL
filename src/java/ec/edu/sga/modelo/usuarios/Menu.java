@@ -25,6 +25,7 @@ valueColumnName = "valor", pkColumnValue = "Menu", initialValue = 1, allocationS
     @NamedQuery(name = "Menu.findByOrden", query = "SELECT m FROM Menu m WHERE m.orden = :orden"),
     @NamedQuery(name = "Menu.findByFechaCreacion", query = "SELECT m FROM Menu m WHERE m.fechaCreacion = :fechaCreacion"),
     @NamedQuery(name = "Menu.findByFechaActualizacion", query = "SELECT m FROM Menu m WHERE m.fechaActualizacion = :fechaActualizacion")})
+
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -145,6 +146,6 @@ public class Menu implements Serializable {
 
     @Override
     public String toString() {
-        return nombre;
+        return this.nombre;
     }
 }

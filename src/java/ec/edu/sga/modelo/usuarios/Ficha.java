@@ -26,20 +26,24 @@ public class Ficha implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator="FichaGenerador")
-    
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "FichaGenerador")
     private Long id;
     @OneToOne
     private Usuario usuario;
-    
-    
-    @OneToOne(mappedBy="ficha",cascade= CascadeType.ALL,orphanRemoval=true, fetch= FetchType.EAGER)
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private FichaPersonal fichaPersonal;
-    @OneToOne(mappedBy="ficha",cascade= CascadeType.ALL,orphanRemoval=true)
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
     private FichaMedica fichaMedica;
-    @OneToOne(mappedBy="ficha",cascade= CascadeType.ALL,orphanRemoval=true)
-    @JoinColumn
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
     private FichaSocioeconomica fichaSocio;
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FichaPadre fichaPadre;
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FichaMadre fichaMadre;
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FichaRepresentante fichaRepresentante;
+    @OneToOne(mappedBy = "ficha", cascade = CascadeType.ALL, orphanRemoval = true)
+    private FichaProfesional fichaProfesional;
 
     public Ficha() {
 //        this.usuario= new Usuario();
@@ -58,7 +62,7 @@ public class Ficha implements Serializable {
     }
 
     public Usuario getUsuario() {
-        
+
         return usuario;
     }
 
@@ -89,10 +93,42 @@ public class Ficha implements Serializable {
     public void setFichaSocio(FichaSocioeconomica fichaSocio) {
         this.fichaSocio = fichaSocio;
     }
-    
+
+    public FichaPadre getFichaPadre() {
+        return fichaPadre;
+    }
+
+    public void setFichaPadre(FichaPadre fichaPadre) {
+        this.fichaPadre = fichaPadre;
+    }
+
+    public FichaMadre getFichaMadre() {
+        return fichaMadre;
+    }
+
+    public void setFichaMadre(FichaMadre fichaMadre) {
+        this.fichaMadre = fichaMadre;
+    }
+
+    public FichaRepresentante getFichaRepresentante() {
+        return fichaRepresentante;
+    }
+
+    public void setFichaRepresentante(FichaRepresentante fichaRepresentante) {
+        this.fichaRepresentante = fichaRepresentante;
+    }
+
+    public FichaProfesional getFichaProfesional() {
+        return fichaProfesional;
+    }
+
+    public void setFichaProfesional(FichaProfesional fichaProfesional) {
+        this.fichaProfesional = fichaProfesional;
+    }
+
     public void add(FichaPersonal fichaPersonal) {
         if (!fichaPersonal.equals(fichaPersonal)) {
-            this.fichaPersonal=fichaPersonal;
+            this.fichaPersonal = fichaPersonal;
             fichaPersonal.setFicha(this);
         }
     }

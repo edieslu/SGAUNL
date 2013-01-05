@@ -105,7 +105,7 @@ public class TipoUsuarioController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "tipousuario/List?faces-redirect=true";
+        return "/tipousuario/List?faces-redirect=true";
 
 
     }
@@ -118,7 +118,7 @@ public class TipoUsuarioController implements Serializable {
         System.out.println("ya modifique");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "tipousuario/List?faces-redirect=true";
+        return "/tipousuario/List?faces-redirect=true";
 
     }
 
@@ -133,14 +133,14 @@ public class TipoUsuarioController implements Serializable {
 
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
 
-        return "tipousuario/List?faces-redirect=true";
+        return "/tipousuario/List?faces-redirect=true";
 
     }
 
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-       return "tipousuario/List?faces-redirect=true";
+       return "/tipousuario/List?faces-redirect=true";
     }
     // --------------------- Métodos de Ayuda para acceder al Bean por otras Clases ---------------------
 
