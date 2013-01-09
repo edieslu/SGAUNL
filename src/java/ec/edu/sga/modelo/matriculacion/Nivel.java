@@ -47,7 +47,7 @@ public class Nivel implements Serializable {
     private String nombreNivel;
     private String descripcionNivel;
     @Enumerated(EnumType.STRING)
-    private TipoNivel tipoNivel = TipoNivel.INICIAL;
+    private TipoNivel tipoNivel;
     @OneToMany(mappedBy = "nivel")
     private List<Curso> cursos;
     @OneToMany(mappedBy = "nivel", cascade= CascadeType.ALL, orphanRemoval=true)

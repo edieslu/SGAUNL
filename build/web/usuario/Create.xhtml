@@ -466,6 +466,68 @@ and open the template in the editor.
                             </h:panelGrid>
 
                         </p:tab>
+                        <p:tab id="idTabAsignacion" title="Asignacion de Materias y Cursos">
+                            <p:tabView id="idTabMaterias">
+                                <p:tab title="Asignacion Materias">
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="#{bundle['matriculaController.nivel']}"/>
+                                        <p:selectOneMenu id="idNivel" 
+                                                         converter="genericConverter" 
+                                                         label="#{bundle['matriculaController.nivel']}" 
+                                                         required="true" 
+                                                         value="#{matriculaController.nivel}"
+                                                         valueChangeListener="#{matriculaController.prueba1}"
+                                                         immediate="true">
+
+                                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                            <f:selectItems value="#{matriculaController.itemsNiveles}"/>  
+                                            <p:ajax update="idEspecialidad idCurso idParalelo @form"/>
+                                        </p:selectOneMenu>
+
+                                        <h:outputLabel value="#{bundle['matriculaController.especialidad']}" 
+                                                       id="idLabelEspecialidad" rendered="false"/>
+                                        <p:selectOneMenu rendered="false" id="idEspecialidad" 
+                                                         converter="genericConverter" 
+                                                         label="#{bundle['matriculaController.especialidad']}" 
+                                                         required="true" 
+                                                         value="#{matriculaController.especialidad}"
+                                                         valueChangeListener="#{matriculaController.prueba2}"
+                                                         immediate="true">
+
+                                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                            <f:selectItems value="#{matriculaController.itemsEspecialidadesByNivelId}"/>  
+                                            <p:ajax update="idCurso idParalelo @form"/>
+                                        </p:selectOneMenu> 
+
+                                        <h:outputLabel value="#{bundle['matriculaController.curso']}"/>
+                                        <p:selectOneMenu id="idCurso" 
+                                                         converter="genericConverter" 
+                                                         label="#{bundle['matriculaController.curso']}" 
+                                                         required="true" 
+                                                         value="#{matriculaController.curso}"
+                                                         valueChangeListener="#{matriculaController.prueba3}"
+                                                         immediate="true">>
+
+                                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                            <f:selectItems value="#{matriculaController.itemsCursosByNivelIdOrEspecialidadId}"/> 
+                                            <p:ajax update="idParalelo @form"/>
+                                        </p:selectOneMenu> 
+
+
+                                        <h:outputLabel value="#{bundle['matriculaController.paralelo']}"/>
+                                        <p:selectOneMenu id="idParalelo" 
+                                                         converter="genericConverter" 
+                                                         label="#{bundle['matriculaController.paralelo']}" 
+                                                         required="true" 
+                                                         value="#{matriculaController.paralelo}">
+
+                                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                            <f:selectItems value="#{matriculaController.itemsParalelosByCursoId}"/>  
+                                        </p:selectOneMenu>  
+                                    </h:panelGrid>
+                                </p:tab>
+                            </p:tabView>
+                        </p:tab>
                     </p:accordionPanel>
                 </p:panel>
 
