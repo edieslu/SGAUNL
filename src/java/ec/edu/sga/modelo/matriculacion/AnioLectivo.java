@@ -40,6 +40,11 @@ public class AnioLectivo implements Serializable {
     private Date fechaInicio;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaFin;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date periodoMatriculas;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date periodoFinMatriculas;
     @OneToMany(mappedBy = "anioLectivo")
     private List<Matricula> matriculas;
     private Long duracion;
@@ -123,6 +128,22 @@ public class AnioLectivo implements Serializable {
 
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public Date getPeriodoMatriculas() {
+        return periodoMatriculas;
+    }
+
+    public void setPeriodoMatriculas(Date periodoMatriculas) {
+        this.periodoMatriculas = periodoMatriculas;
+    }
+
+    public Date getPeriodoFinMatriculas() {
+        return periodoFinMatriculas;
+    }
+
+    public void setPeriodoFinMatriculas(Date periodoFinMatriculas) {
+        this.periodoFinMatriculas = periodoFinMatriculas;
     }
 
     
