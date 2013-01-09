@@ -14,7 +14,7 @@
     <ui:composition template="/templates/plantilla.xhtml">
 
         <ui:define name="content">
-            #{loginController.accesoURL(true, "/faces/anioLectivo/Edit.xhtml")}
+        <!--    #{loginController.accesoURL(true, "/faces/anioLectivo/Edit.xhtml")}-->
 
             <h:form id="formEdit">
                 
@@ -47,6 +47,20 @@
                         <p:selectBooleanButton value="#{anioLectivoController.current.estado}" 
                                                onLabel="#{bundle['boton.si']}" offLabel="#{bundle['boton.no']}"/>
 
+                        <h:outputLabel value="#{bundle['anioController.periodoMatriculas']}"/>
+                        <p:calendar label="#{bundle['anioController.periodoMatriculas']}" 
+                                    value="#{anioLectivoController.current.periodoMatriculas}" 
+                                    navigator="true" 
+                                    showOn="button"
+                                    required="true"/>
+                        
+                        <h:outputLabel value="#{bundle['anioController.periodoFinMatriculas']}"/>
+                        <p:calendar label="#{bundle['anioController.periodoFinMatriculas']}" 
+                                    value="#{anioLectivoController.current.periodoFinMatriculas}" 
+                                    navigator="true" 
+                                    showOn="button"
+                                    required="true"/>
+                        
 
                         <f:facet name="footer">
                             <p:commandButton value="#{bundle['boton.actualizar']}" 
