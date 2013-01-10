@@ -15,7 +15,7 @@
 
         <ui:define name="content">
 
-            
+
             <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
                 <f:facet name="start">
                     <h:graphicImage library="img" name="ajaxloading.gif" />
@@ -26,7 +26,7 @@
             </p:ajaxStatus>
 
 
-           <h:form id="formCursoEdit" prependId="false">
+            <h:form id="formCursoEdit" prependId="false">
                 <p:panel header="#{cursoController.cursoId!=null  ? bundle['header.editar'] : bundle['header.nuevo']}" 
                          id="panelEditCurso"
                          styleClass = "myPanelStyle myPanelStyleTitle">
@@ -40,7 +40,15 @@
                                      value="#{cursoController.current.nombreCurso}" 
                                      validatorMessage="No ha ingresado un nombre para el curso"
                                      styleClass="letras">
-                            <p:ajax/>
+                        </p:inputText>
+
+
+                        <h:outputLabel value="#{bundle['cursoController.orden']}"/>
+                        <p:inputText id="idOrden" label="#{bundle['cursoController.orden']}"
+                                     required="true"
+                                     value="#{cursoController.current.orden}" 
+                                     validatorMessage="No ha ingresado un orden para el curso"
+                                     styleClass="numeros">
                         </p:inputText>
 
 
@@ -66,7 +74,7 @@
                                          label="#{bundle['cursoController.especialidad']}"
                                          converter="genericConverter"
                                          value="#{cursoController.current.especialidad}"
-                                        validatorMessage="Escoja una especialidad">
+                                         validatorMessage="Escoja una especialidad">
                             <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
                             <f:selectItems 
                                 value="#{especialidadController.itemsAvailableSelectOne}"/>
@@ -113,8 +121,8 @@
                                          icon="#{bundle['icono.agregar']}"/>
 
                     </f:facet>
-                    
-                    
+
+
                     <p:dataTable id="tableAddParalelos" 
                                  var="_paralelos" 
                                  value="#{cursoController.current.paralelos}" 
@@ -143,7 +151,7 @@
                                       icon="#{bundle['icono.editar']}"/>
                             <p:commandButton value="#{bundle['boton.eliminar']}"
                                              icon="#{bundle['icono.eliminar']}"/>
-                            
+
                         </p:column>
                     </p:dataTable>
                 </p:panel>

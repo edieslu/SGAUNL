@@ -130,6 +130,12 @@ public class EspecialidadController implements Serializable {
 
     }
 
+    
+    public List<Especialidad> getFindAll() {
+        return ejbFacade.findAll();
+    }
+    
+    
     public String findAllEspecialidad() {
         resultlist = ejbFacade.findAll();
         for (Especialidad object : resultlist) {
