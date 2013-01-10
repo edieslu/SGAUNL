@@ -85,10 +85,6 @@
                             <p:ajax update="idEspecialidad idCurso idParalelo @form"/>
                         </p:selectOneMenu>
 
-
-
-
-
                         <h:outputLabel value="#{bundle['matriculaController.especialidad']}" 
                                        id="idLabelEspecialidad" rendered="false"/>
                         <p:selectOneMenu rendered="false" id="idEspecialidad" 
@@ -103,10 +99,6 @@
                             <f:selectItems value="#{matriculaController.itemsEspecialidadesByNivelId}"/>  
                             <p:ajax update="idCurso idParalelo @form"/>
                         </p:selectOneMenu> 
-
-
-
-
 
                         <h:outputLabel value="#{bundle['matriculaController.curso']}"/>
                         <p:selectOneMenu id="idCurso" 

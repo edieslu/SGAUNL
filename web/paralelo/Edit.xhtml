@@ -5,12 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="paraleloId" value="#{paraleloController.paraleloId}"/>
-            
-          </f:metadata>
-
+    </f:metadata>
     <ui:composition template="/templates/plantilla.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.EditParaleloTitle}"></h:outputText>
@@ -18,24 +16,21 @@
         <ui:define name="content">
 
             <h:form id="formEditParalelo"> 
-                
+
                 <p:messages autoUpdate="true" globalOnly="true"/>
-                
+
                 <p:panel header="#{paraleloController.paraleloId!=null ? bundle['header.editar']:bundle['header.nuevo']}" id="panelEditParalelos">
                     <p:panelGrid columns="2">
-                        
+
                         <h:outputLabel value="#{bundle['paraleloController.nombre']}"/>
                         <p:inputText required="true" 
                                      label="#{bundle['paraleloController.nombre']}" 
                                      value="#{paraleloController.current.nombreParalelo}"/>
-                        
+
                         <h:outputLabel value="#{bundle['paraleloController.cupos']}"/>
                         <p:spinner label="#{bundle['paraleloController.cupos']}" 
                                    required="true" 
                                    value="#{paraleloController.current.numeroCupos}" min="0" max="50" />
-                        
-                       
-
                         <f:facet name="footer">
                             <p:commandButton value="#{bundle['boton.guardar']}" 
                                              action="#{paraleloController.persist()}"

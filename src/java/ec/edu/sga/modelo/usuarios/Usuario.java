@@ -4,6 +4,7 @@
  */
 package ec.edu.sga.modelo.usuarios;
 
+import ec.edu.sga.modelo.academico.Asignatura;
 import ec.edu.sga.modelo.academico.ExpedienteAcademico;
 import ec.edu.sga.modelo.academico.RegistroCalificaciones;
 import ec.edu.sga.modelo.matriculacion.Matricula;
@@ -45,7 +46,9 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
     + "or"
     + " lower(u.nombres) like lower(concat('%',:clave,'%')) "
     + "or"
-    + " lower(u.apellidos) like lower(concat('%',:clave,'%'))"
+    + " lower(u.apellidos) like lower(concat('%',:clave,'%')) "
+    + "or("
+    + " lower(u.nombres) like lower(concat('%',:clave,'%')) and lower(u.apellidos) like lower(concat('%',:clave,'%')))"
     + "order by u.nombres"),
     @NamedQuery(name = "Usuario.buscarPorId",
     query = "select distinct u from Usuario u left join fetch u.ficha where"
@@ -85,6 +88,9 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @ManyToOne
     private TipoUsuario tipoUsuario;
+    @OneToMany(mappedBy="usuario")
+    private List<Asignatura> asignaturas;
+    
 
     public Usuario() {
         matriculas = new ArrayList<Matricula>();
@@ -233,6 +239,14 @@ public class Usuario implements Serializable {
 
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     @Override

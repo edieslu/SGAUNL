@@ -5,6 +5,7 @@
 package ec.edu.sga.modelo.academico;
 
 import ec.edu.sga.modelo.horarios.CargaHoraria;
+import ec.edu.sga.modelo.usuarios.Usuario;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -32,25 +33,22 @@ public class Asignatura implements Serializable {
     //-----------------------ATRIBUTOS----------------------------------//
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator="AsignaturaGenerador")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "AsignaturaGenerador")
     private Long id;
     private String nombreAsignatura;
     private String tipoAsignatura; //obligatoria, optativa, a discreción del centro educativo
-    @ManyToOne
-    private CargaHoraria cargaHoraria;
-   
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
-    
-    
-    //----------------------------CONSTRUCTORES---------------------------//
+    @ManyToOne
+    private CargaHoraria cargaHoraria;
+    @ManyToOne
+    private Usuario usuario;
 
+    //----------------------------CONSTRUCTORES---------------------------//
     public Asignatura() {
     }
-    
-    
 
     public Asignatura(MallaCurricular mallaCurricular, Docente docente, String nombreAsignatura, String tipoAsignatura, CargaHoraria cargaHoraria, Date fechaCreacion, Date fechaActualizacion) {
         this.mallaCurricular = mallaCurricular;
@@ -61,9 +59,7 @@ public class Asignatura implements Serializable {
         this.fechaCreacion = fechaCreacion;
         this.fechaActualizacion = fechaActualizacion;
     }
-    
-    
-    
+
     //------------------------GETTERS AND SETTERS-------------------------//
     public Long getId() {
         return id;
@@ -111,7 +107,7 @@ public class Asignatura implements Serializable {
 
     public void setMallaCurricular(MallaCurricular mallaCurricular) {
         this.mallaCurricular = mallaCurricular;
-     }
+    }
 
     public Date getFechaCreacion() {
         return fechaCreacion;
@@ -129,8 +125,14 @@ public class Asignatura implements Serializable {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    
-    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     //-------------------------METODOS------------------------------------//
     @Override
     public int hashCode() {

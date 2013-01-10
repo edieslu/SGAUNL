@@ -6,12 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-
-
-
     <ui:define name="content">
-
-
         <p:ajaxStatus> 
             <f:facet name="prestart">
                 <h:outputText value="Starting..." /> 
@@ -21,22 +16,22 @@
             <f:facet name="error"> 
                 <h:outputText value="Error" />
             </f:facet>
-            
+
             <f:facet name="success"> 
                 <h:outputText value="Success" />
             </f:facet>
-            
-            
+
+
             <f:facet name="default"> 
                 <h:outputText value="No estoy haciendo ninguna petición ajax" />
             </f:facet>
-            
-            
+
+
             <f:facet name="start"> 
                 <h:outputText value="Please Wait" />
             </f:facet>
-            
-            
+
+
             <f:facet name="complete"> 
                 <h:outputText value="Soy el valor después de una peticón ajax" />
             </f:facet>
@@ -56,13 +51,10 @@
             <f:event listener="#{anioLectivoController.findAll}" type="preRenderView" />
             <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
         </f:metadata>
-
-
-
-        <h:form id="formAnioList"
+       <h:form id="formAnioList"
                 prependId="false">
 
-            <p:messages closable="true" globalOnly="true"/>
+           <p:messages closable="true" globalOnly="true"/>
 
 
             <!--
