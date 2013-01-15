@@ -129,7 +129,7 @@ public class LoginController implements Serializable {
         Usuario login = ejbUsuario.getLogin(usuario, clave);
         // Si el login no es correcto, se queda en la página actual.
         if (login == null) {
-            SessionUtil.addErrorMessage("Usuario o Claves incorrectos");
+            SessionUtil.agregarMensajeInformacion("mensaje.usuarioClaveIncorrecto");
             return null;
         }
         sessionbean.setUsuarioLogeado(login);

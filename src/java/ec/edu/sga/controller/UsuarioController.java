@@ -31,6 +31,7 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.accordionpanel.AccordionPanel;
+import org.primefaces.component.panel.Panel;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.context.RequestContext;
 
@@ -262,37 +263,33 @@ public class UsuarioController implements Serializable {
         System.out.println("Valor de idRol: " + tipo);
         System.out.println("Inicio de IF");
         RequestContext context = RequestContext.getCurrentInstance();
-      //  context.execute("alert('Prueba')");
+        //  context.execute("alert('Prueba')");
         if (tipo.getNombre().equalsIgnoreCase("estudiante")) {
 
-            AccordionPanel acordion = (AccordionPanel) uiViewRoot.findComponent("formUsuario:idAcordion");
-            acordion.setRendered(true);
-            Tab tabPersonales = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabPersonales");
-            tabPersonales.setRendered(true);
-            Tab tabFamilia = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabFamilia");
-            tabFamilia.setRendered(true);
-            Tab tabMedicos = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabMedicos");
-            tabMedicos.setRendered(true);
-            Tab tabEconomicos = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabEconomicos");
-            tabEconomicos.setRendered(true);
-            Tab tabProfesional = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabProfesional");
-            tabProfesional.setRendered(false);
+            Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
+            panelPersonales.setRendered(true);
+            Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
+            panelDatosFamilia.setRendered(true);
+            Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
+            panelMedicos.setRendered(true);
+            Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
+            panelEconomicos.setRendered(true);
+            Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
+            panelProfesional.setRendered(false);
         } else {
 
             if (tipo.getNombre().equalsIgnoreCase("Secretaria") || (tipo.getNombre().equalsIgnoreCase("Docente"))) {
                 //context.execute("alert('PruebaAcord Tab 2')");
-                AccordionPanel acordion = (AccordionPanel) uiViewRoot.findComponent("formUsuario:idAcordion");
-                acordion.setRendered(true);
-                Tab tabProfesional = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabProfesional");
-                tabProfesional.setRendered(true);
-                Tab tabPersonales = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabPersonales");
-                tabPersonales.setRendered(true);
-                Tab tabFamilia = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabFamilia");
-                tabFamilia.setRendered(false);
-                Tab tabMedicos = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabMedicos");
-                tabMedicos.setRendered(false);
-                Tab tabEconomicos = (Tab) uiViewRoot.findComponent("formUsuario:idAcordion:idTabEconomicos");
-                tabEconomicos.setRendered(false);
+                Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
+                panelPersonales.setRendered(true);
+                Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
+                panelDatosFamilia.setRendered(false);
+                Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
+                panelMedicos.setRendered(false);
+                Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
+                panelEconomicos.setRendered(false);
+                Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
+                panelProfesional.setRendered(true);
             }
         }
     }

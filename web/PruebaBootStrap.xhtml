@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <h:panelGroup >
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('login\\:usuario').attr("placeholder", "username");
+                                $('login\\:password').attr("placeholder", "password");
+                            });
+                        </script>
+
+                        <h:form id="login" prependId="false" styleClass="navbar-form pull-right">
+                            <h:outputText value=" " />
+                            <h:inputText styleClass="span2" value="#{loginController.usuario}" id="usuario" 
+                                         required="true"/>
+                            <h:outputText value=" " />
+                            <h:inputSecret styleClass="span2" value="#{loginController.clave}" id="password"
+                                           required="true" />
+                            <h:outputText value=" " />
+                            <h:commandButton styleClass="btn" value="Ingresar" 
+                                             action="#{loginController.ingresar()}"/>
+                        </h:form>
+
+                    </h:panelGroup>
+                    <!-- Be sure to leave the brand out there if you want it shown -->
+                    <a class="brand" href="#">SGA-UEAUNL</a>
+
+                    <!-- Everything you want hidden at 940px or less, place within here -->
+                    <div class="nav-collapse collapse">
+                        <!-- .nav, .navbar-search, .navbar-form, etc -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <h1>Unidad Educativa Anexa a la UNL</h1>
+                <p>La unidad se consolidó en el 2012</p>
+
+            </div>
+
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="span4">
+                    <h2>Autoridades</h2>
+                    <p>Rector: Dr. Rolando Elizalde</p>
+
+                </div>
+                <div class="span4">
+                    <h2>Mision</h2>
+                    <p>Constribuir con los conocimientos</p>
+
+                </div>
+                <div class="span4">
+                    <h2>Vision</h2>
+                    <p>Formar estudiantes con capacidades de 
+                        soluconar problemas</p>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
