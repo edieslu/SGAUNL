@@ -5,10 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <f:metadata>
         <f:viewParam name="especialidadId" value="#{especialidadController.especialidadId}">
-            
+
         </f:viewParam>
     </f:metadata>
 
@@ -18,46 +18,53 @@
         </ui:define>
         <ui:define name="content">
 
-            
-               <p:messages autoUpdate="true" closable="true"/>
-            
-            
+
+            <p:messages autoUpdate="true" closable="true"/>
+
+
             <h:form id="formEditEspecialidad">
                 <p:panel header="#{especialidadController.especialidadId!=null ? bundle['header.editar']:bundle['header.nuevo']}" id="panelEditEspecialidad">
                     <p:panelGrid columns="2">
-                        
+
                         <h:outputLabel value="#{bundle['especialidadController.nombre']}"/>
                         <p:inputText required="true" 
                                      label="#{bundle['especialidadController.nombre']}" 
                                      value="#{especialidadController.current.nombreEspecialidad}"/>
-                        
+
                         <h:outputLabel value="#{bundle['especialidadController.descripción']}"/>
                         <p:inputTextarea label="#{bundle['especialidadController.descripción']}" 
                                          required="true" 
                                          value="#{especialidadController.current.descripcionEspecialidad}"/>
-                        
-                        
+
+
                         <h:outputLabel value="#{bundle['especialidadController.nivel']}"/>
                         <p:selectOneMenu label="#{bundle['especialidadController.nivel']}"
                                          value="#{especialidadController.current.nivel}"
                                          converter="genericConverter">
                             <f:selectItem itemLabel="#{bundle.item}"/>
                             <f:selectItems value="#{nivelController.itemsAvailableSelectOne}" />
-                            
+
                         </p:selectOneMenu>
-                        
-                        
-                     
+
+
+
 
                         <f:facet name="footer">
                             <p:commandButton value="#{bundle['boton.guardar']}" 
+                                             rendered="#{cursoController.cursoId == null}"
                                              action="#{especialidadController.persist()}"
                                              update="panelEditEspecialidad"
                                              icon="#{bundle['icono.guardar']}"/>
+
                             <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             rendered="#{especialidadController.especialidadId!=null}"
+                                             action="#{especialidadController.update()}"
+                                             update="panelEditEspecialidad"
                                              icon="#{bundle['icono.actualizar']}"/>
+
                             <p:commandButton value="#{bundle['boton.cancelar']}" 
                                              action="#{especialidadController.cancelEdit()}" 
+                                             immediate="true" 
                                              icon="#{bundle['icono.cancelar']}"/>
 
                         </f:facet>

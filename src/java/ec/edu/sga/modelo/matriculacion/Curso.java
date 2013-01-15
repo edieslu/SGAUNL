@@ -61,12 +61,14 @@ public class Curso implements Serializable {
     private List<Matricula> matriculas;
     @OneToOne(mappedBy = "curso")
     private MallaCurricular mallaCurricular;
+    private Integer orden;
     @OneToMany(mappedBy = "curso", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Paralelo> paralelos;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
+    
 
     //----------------------constructores--------------------------------------//
     public Curso() {
@@ -134,6 +136,16 @@ public class Curso implements Serializable {
         this.mallaCurricular = mallaCurricular;
     }
 
+    public Integer getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Integer orden) {
+        this.orden = orden;
+    }
+
+    
+    
     public List<Paralelo> getParalelos() {
         return paralelos;
     }
