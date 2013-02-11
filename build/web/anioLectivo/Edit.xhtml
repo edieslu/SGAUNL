@@ -75,6 +75,13 @@
                                              action="#{anioLectivoController.persist()}"
                                              update="panelEditAnio"
                                              icon="#{bundle['icono.guardar']}"/>
+                            
+                            <p:commandButton value="#{bundle['boton.guardar.agregar']}" 
+                                             rendered="#{anioLectivoController.anioLectivoId == null}"
+                                             action="#{anioLectivoController.persistOther()}"
+                                             update="panelEditAnio"
+                                             icon="#{bundle['icono.guardar']}"/>
+
 
 
                             <p:commandButton value="#{bundle['boton.cancelar']}" 

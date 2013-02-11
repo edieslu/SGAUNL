@@ -93,6 +93,17 @@ public class AnioLectivoController implements Serializable {
          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
          return "/anioLectivo/List?faces-redirect=true";
     }
+    
+    
+    public String persistOther() {
+        System.out.println("Ingreso a grabar el Año Lectivo: " + current.getFechaInicio());
+        current.setFechaCreacion(new Date());
+        current.setFechaActualizacion(new Date());
+        ejbFacade.create(current);
+        this.endConversation();
+         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+         return "/anioLectivo/Edit?faces-redirect=true";
+    }
 
     public String update() {
         System.out.println("Ingreso a actualizar: " + current.getFechaInicio());
