@@ -223,7 +223,7 @@ public class MatriculaController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé la matrícula: " + current.getTipoMatricula());
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
         return "/matricula/List";
     }
 
@@ -232,7 +232,7 @@ public class MatriculaController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé la matrícula");
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/matricula/List";
     }
 
@@ -313,14 +313,30 @@ public class MatriculaController implements Serializable {
         this.itemsParalelosByCursoId = itemsParalelosByCursoId;
     }
 
-
     public void prueba1(ValueChangeEvent e) {
         FacesContext fc = FacesContext.getCurrentInstance();
         UIViewRoot uiViewRoot = fc.getViewRoot();
         Nivel n = (Nivel) e.getNewValue();
         UIOutput labelEspecialidadInputText = (UIOutput) uiViewRoot.findComponent("formEditMatricula:idLabelEspecialidad");
+        UIInput especialidadInputText = (UIInput) uiViewRoot.findComponent("formEditMatricula::idEspecialidad");
 
-        UIInput especialidadInputText = (UIInput) uiViewRoot.findComponent("formEditMatricula:idEspecialidad");
+        if (n.getTipoNivel().equals(TipoNivel.BACHILLERATO)) {
+            labelEspecialidadInputText.setRendered(true);
+            especialidadInputText.setRendered(true);
+            itemsEspecialidadesByNivelId = SessionUtil.getSelectItems(ejbFacadeEspecialidad.findEspecialidadesByNivelId(n.getId()), false);
+        } else {
+            labelEspecialidadInputText.setRendered(false);
+            especialidadInputText.setRendered(false);
+            itemsCursosByNivelIdOrEspecialidadId = SessionUtil.getSelectItems(ejbFacadeCurso.findAllCursosbyNivelId(n.getId()), false);
+        }
+    }
+
+    public void pruebaRender(ValueChangeEvent e) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        UIViewRoot uiViewRoot = fc.getViewRoot();
+        Nivel n = (Nivel) e.getNewValue();
+        UIOutput labelEspecialidadInputText = (UIOutput) uiViewRoot.findComponent("formUsuario:idAcordion:idTabAsignacion:idTabMaterias:idTabAsignacion1:idLabelEspecialidad");
+        UIInput especialidadInputText = (UIInput) uiViewRoot.findComponent("formUsuario:idAcordion:idTabAsignacion:idTabMaterias:idTabAsignacion1:idLabelEspecialidad");
 
         if (n.getTipoNivel().equals(TipoNivel.BACHILLERATO)) {
             labelEspecialidadInputText.setRendered(true);
