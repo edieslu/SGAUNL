@@ -1,6 +1,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.modelo.matriculacion.Curso;
 import ec.edu.sga.modelo.matriculacion.Nivel;
 import ec.edu.sga.modelo.matriculacion.Paralelo;
@@ -29,6 +30,8 @@ public class CursoController implements Serializable {
     private List<Curso> resultlist;
     @EJB
     private ec.edu.sga.facade.CursoFacade ejbFacade;
+    @EJB
+    private AnioLectivoFacade ejbFacadeAnio;
     private Long cursoId;
     @Inject
     Conversation conversation;
@@ -98,9 +101,9 @@ public class CursoController implements Serializable {
     }
 
     //--------------------------------------MÉTODOS--------------------------------//
-    //Encuentra todos los cursos y los presenta en una tabla
+    //Encuentra todos los cursosByAnioActivo y los presenta en una tabla
     public String findAll() {
-        resultlist = ejbFacade.findAll();
+        resultlist = ejbFacade.findAllbyAnio();
         return "curso/List";
     }
 
@@ -144,6 +147,7 @@ public class CursoController implements Serializable {
         System.out.println("========> INGRESO a Grabar nuevo Curso: " + current.getNombreCurso());
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.create(current);
         this.endConversation();
 
@@ -156,6 +160,7 @@ public class CursoController implements Serializable {
     public String update() {
         System.out.println("========> INGRESO a Actualizar al Curso: " + current.getNombreCurso());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.edit(current);
         System.out.println("ya modifique");
         this.endConversation();
@@ -200,4 +205,8 @@ public class CursoController implements Serializable {
         }
 
     }
+    
+     public Long getCursosbyAnioActivo(){
+       return ejbFacade.cursos();
+   }
 }

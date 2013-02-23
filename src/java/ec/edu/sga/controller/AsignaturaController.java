@@ -1,6 +1,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.facade.AsignaturaFacade;
 import ec.edu.sga.modelo.academico.Asignatura;
 import java.io.Serializable;
@@ -23,6 +24,9 @@ public class AsignaturaController implements Serializable {
     private Conversation conversation;
     @EJB
     private AsignaturaFacade ejbFacade;
+    
+    @EJB
+    private AnioLectivoFacade ejbFacadeAnio;
 
     //_________________________________Constructores_________________________________________//
     public AsignaturaController() {
@@ -87,6 +91,7 @@ public class AsignaturaController implements Serializable {
         System.out.println("Antes de crear la asignatura: " + current.getNombreAsignatura());
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.create(current);
         this.endConversation();
         System.out.println("Después de crear la asignatura: " + current.getNombreAsignatura());
@@ -97,6 +102,7 @@ public class AsignaturaController implements Serializable {
     public String update() {
         System.out.println("Antes de actualizar la asignatura: " + current.getNombreAsignatura());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.edit(current);
         System.out.println("Después de actualizar la asignatura: " + current.getNombreAsignatura());
         this.endConversation();
@@ -129,7 +135,7 @@ public class AsignaturaController implements Serializable {
 
     //Método que muestra una lista de todas las asignaturas
     public List<Asignatura> getFindAll() {
-        return ejbFacade.findAll();
+        return ejbFacade.findAllbyAnio();
     }
 
     //Métodos para navegar entre distintas páginas

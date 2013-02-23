@@ -5,9 +5,12 @@
 package ec.edu.sga.facade;
 
 import ec.edu.sga.modelo.academico.Asignatura;
+import ec.edu.sga.modelo.matriculacion.Curso;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +29,10 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
     public AsignaturaFacade() {
         super(Asignatura.class);
     }
+    
+    public List<Asignatura> findAllbyAnio(){
+            Query query = em.createNamedQuery("Asignatura.findAllbyAnio");
+            return query.getResultList();
+        }
     
 }

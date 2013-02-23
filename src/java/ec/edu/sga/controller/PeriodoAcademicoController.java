@@ -3,6 +3,7 @@ package ec.edu.sga.controller;
 import ec.edu.sga.modelo.academico.PeriodoAcademico;
 import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.controller.util.PaginationHelper;
+import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.facade.PeriodoAcademicoFacade;
 
 import java.io.Serializable;
@@ -26,6 +27,8 @@ public class PeriodoAcademicoController implements Serializable {
     private DataModel items = null;
     @EJB
     private ec.edu.sga.facade.PeriodoAcademicoFacade ejbFacade;
+    @EJB
+    private AnioLectivoFacade ejbFacadeAnio;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 

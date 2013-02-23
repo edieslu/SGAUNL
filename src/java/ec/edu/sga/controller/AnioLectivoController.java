@@ -1,4 +1,5 @@
 package ec.edu.sga.controller;
+
 import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.modelo.matriculacion.AnioLectivo;
@@ -42,7 +43,7 @@ public class AnioLectivoController implements Serializable {
         this.resultlist = resultlist;
     }
 
-     public Date getCriterio() {
+    public Date getCriterio() {
         return criterio;
     }
 
@@ -60,8 +61,6 @@ public class AnioLectivoController implements Serializable {
         this.current = current;
     }
 
-    
-    
     public Long getAnioLectivoId() {
         if (current != null) {
             this.anioLectivoId = current.getId();
@@ -88,26 +87,28 @@ public class AnioLectivoController implements Serializable {
         System.out.println("Ingreso a grabar el Año Lectivo: " + current.getFechaInicio());
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
+        activarAnioActual();
         ejbFacade.create(current);
         this.endConversation();
-         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-         return "/anioLectivo/List?faces-redirect=true";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        return "/anioLectivo/List?faces-redirect=true";
     }
-    
-    
+
     public String persistOther() {
         System.out.println("Ingreso a grabar el Año Lectivo: " + current.getFechaInicio());
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
+        activarAnioActual();
         ejbFacade.create(current);
         this.endConversation();
-         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-         return "/anioLectivo/Edit?faces-redirect=true";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        return "/anioLectivo/Edit?faces-redirect=true";
     }
 
     public String update() {
         System.out.println("Ingreso a actualizar: " + current.getFechaInicio());
         current.setFechaActualizacion(new Date());
+        activarAnioActual();
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el año lectivo: " + current.getFechaInicio());
         this.endConversation();
@@ -120,7 +121,7 @@ public class AnioLectivoController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el año lectivo");
         this.endConversation();
-         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
         return "/anioLectivo/List?faces-redirect=true";
     }
 
@@ -152,6 +153,46 @@ public class AnioLectivoController implements Serializable {
         return "anioLectivo/List";
     }
 
+    //método que activa el año que se está creando y desactiva el año activo
+    public void activarAnioActual() {
+
+        if (current.getEstado()) {
+            
+            try {
+                
+                 AnioLectivo a = ejbFacade.find(ejbFacade.findAnioActive().getId());
+            if (a != null) {
+                System.out.println("el año activo es" + a);
+                a.setEstado(false);
+                ejbFacade.edit(a);
+            }
+                
+            } catch (Exception e) {
+                
+                System.out.println("no hay año");
+            }
+           
+        }
+    }
+    
+    
+   public Long getCursosbyAnioActivo(){
+       return ejbFacade.cursosByAnioActivo();
+   }
+   
+   public Long getAsignaturasbyAnioActivo(){
+       return ejbFacade.asignaturasByAnioActivo();
+   }
+   
+   
+   public Long getPeriodosbyAnioActivo(){
+       return ejbFacade.asignaturasByAnioActivo();
+   }
+   
+   public AnioLectivo getAnioActivo(){
+       return ejbFacade.findAnioActive();
+   }
+
     //Método que encuentra todos los años de acuerdo a un criterio(metodo que si funciona)
 //    public String findAllAniosByCriterio() {
 //        System.out.println("criterio inicio: " + criterio);
@@ -168,7 +209,6 @@ public class AnioLectivoController implements Serializable {
 //
 //        return "/anioLectivo/List";
 //    }
-
     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE AÑOS LECTIVOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
@@ -180,7 +220,6 @@ public class AnioLectivoController implements Serializable {
 
     //Método que retorna el año que está actualmente activo
     public SelectItem[] getItemAnioActivate() {
-        return SessionUtil.getSelectItem(ejbFacade.findAnioActivate(Boolean.TRUE));
+        return SessionUtil.getSelectItem(ejbFacade.isAnioActivate(Boolean.TRUE));
     }
- 
 }

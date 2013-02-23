@@ -4,6 +4,8 @@
  */
 package ec.edu.sga.modelo.matriculacion;
 
+import ec.edu.sga.modelo.academico.Asignatura;
+import ec.edu.sga.modelo.academico.PeriodoAcademico;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +29,14 @@ import javax.persistence.TemporalType;
 @Entity
 @TableGenerator(name = "AnioLectivoGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "AnioLectivo", initialValue = 1, allocationSize = 1)
-@NamedQueries(value={@NamedQuery(name="AnioLectivo.findAnioActivo",query="select a from AnioLectivo a where a.estado=:parameter"),
-@NamedQuery(name="AnioLectivo.findByCriterio", query="SELECT a FROM AnioLectivo a WHERE a.fechaInicio=:criterio")
+@NamedQueries(value={
+@NamedQuery(name="AnioLectivo.findAnioActivo",query="select a from AnioLectivo a where a.estado=:parameter"),
+@NamedQuery(name="AnioLectivo.findAnioActivate", query="SELECT a FROM AnioLectivo a WHERE a.estado = 'true'"),
+@NamedQuery(name="AnioLectivo.findByCriterio", query="SELECT a FROM AnioLectivo a WHERE a.fechaInicio=:criterio"),
+@NamedQuery(name="AnioLectivo.countCursos",query="SELECT count(c) FROM Curso c WHERE c.anioLectivo.estado='true'"),
+@NamedQuery(name="AnioLectivo.countAsignaturas",query="SELECT count(c) FROM Asignatura c WHERE c.anioLectivo.estado='true'"),
+@NamedQuery(name="AnioLectivo.countPeriodos",query="SELECT count(p) FROM PeriodoAcademico p WHERE p.anioLectivo.estado='true'")
+
 })
 public class AnioLectivo implements Serializable {
 
@@ -50,10 +58,19 @@ public class AnioLectivo implements Serializable {
     private Long duracion;
     private Boolean estado;
     
+    
+    @OneToMany(mappedBy = "anioLectivo")
+    private List<Curso> cursos;
+    
+    @OneToMany(mappedBy = "anioLectivo")
+    private List<Asignatura> asignaturas;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
+    @OneToMany(mappedBy = "anioLectivo")
+    private List<PeriodoAcademico> periodosAcademicos;
 
     
 
@@ -63,6 +80,9 @@ public class AnioLectivo implements Serializable {
 //        fechaInicio = new Date();
 //        fechaFin = new Date();
         matriculas = new ArrayList<Matricula>();
+        cursos = new ArrayList<Curso>();
+        asignaturas = new ArrayList<Asignatura>();
+        periodosAcademicos = new ArrayList<PeriodoAcademico>();
     }
 
     //----------------------------GETERS AND SETERS--------------------//
@@ -146,6 +166,32 @@ public class AnioLectivo implements Serializable {
         this.periodoFinMatriculas = periodoFinMatriculas;
     }
 
+    public List<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+        this.cursos = cursos;
+    }
+
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
+    }
+
+    public List<PeriodoAcademico> getPeriodosAcademicos() {
+        return periodosAcademicos;
+    }
+
+    public void setPeriodosAcademicos(List<PeriodoAcademico> periodosAcademicos) {
+        this.periodosAcademicos = periodosAcademicos;
+    }
+
+    
+    
     
     
 

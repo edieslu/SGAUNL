@@ -4,12 +4,14 @@
  */
 package ec.edu.sga.modelo.academico;
 
+import ec.edu.sga.modelo.matriculacion.AnioLectivo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -37,6 +39,9 @@ public class PeriodoAcademico implements Serializable {
     private Date fechaFin;
     @OneToOne
     private RegistroCalificaciones registroCalificaciones;
+    @ManyToOne
+    private AnioLectivo anioLectivo;
+    
 
     //------------------------------CONSTRUCTORES----------------------------//
     //----------------------------GETTERS AND SETTERS-------------------------//
@@ -88,6 +93,16 @@ public class PeriodoAcademico implements Serializable {
         this.fechaFin = fechaFin;
     }
 
+    public AnioLectivo getAnioLectivo() {
+        return anioLectivo;
+    }
+
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
+        this.anioLectivo = anioLectivo;
+    }
+
+    
+    
     
 
     //--------------------------------MÉTODOS---------------------------------//

@@ -5,6 +5,7 @@
 package ec.edu.sga.modelo.academico;
 
 import ec.edu.sga.modelo.horarios.CargaHoraria;
+import ec.edu.sga.modelo.matriculacion.AnioLectivo;
 import ec.edu.sga.modelo.usuarios.Usuario;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,6 +27,10 @@ import javax.persistence.TemporalType;
 @Entity
 @TableGenerator(name = "AsignaturaGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "Asignatura", initialValue = 1, allocationSize = 1)
+@NamedQueries(value={
+@NamedQuery(name = "Asignatura.findAllbyAnio", query = "select a from Asignatura a WHERE a.anioLectivo.estado = 'true' "),
+   
+})
 public class Asignatura implements Serializable {
 
     @ManyToOne
@@ -45,6 +52,8 @@ public class Asignatura implements Serializable {
     private CargaHoraria cargaHoraria;
     @ManyToOne
     private Usuario usuario;
+    @ManyToOne
+    private AnioLectivo anioLectivo;
 
     //----------------------------CONSTRUCTORES---------------------------//
     public Asignatura() {
@@ -132,6 +141,16 @@ public class Asignatura implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public AnioLectivo getAnioLectivo() {
+        return anioLectivo;
+    }
+
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
+        this.anioLectivo = anioLectivo;
+    }
+    
+    
 
     //-------------------------METODOS------------------------------------//
     @Override

@@ -270,7 +270,7 @@ public class MatriculaController implements Serializable {
 
     //Method that return the Anio that are activate == true
     public SelectItem[] getItemAnioActivo() {
-        return SessionUtil.getSelectItem(ejbFacadeAnioLectivo.findAnioActivate(Boolean.TRUE));
+        return SessionUtil.getSelectItem(ejbFacadeAnioLectivo.isAnioActivate(Boolean.TRUE));
     }
 
     public SelectItem[] getItemsNiveles() {

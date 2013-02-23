@@ -37,6 +37,12 @@ public class CursoFacade extends AbstractFacade<Curso> {
             return query.getResultList();
         }
         
+        
+         public List<Curso> findAllbyAnio(){
+            Query query = em.createNamedQuery("Curso.findAllbyAnio");
+            return query.getResultList();
+        }
+        
         public Curso findCursoByCursoId(Long id){
             Query query = em.createNamedQuery("findCursosAndParalelos");
             query.setParameter("id", id);
@@ -71,5 +77,12 @@ public class CursoFacade extends AbstractFacade<Curso> {
         query.setParameter("id",id);
         return query.getResultList();
     }
+    
+    
+    public Long cursos(){
+         Query query = em.createNamedQuery("Curso.countCursos");
+         Long countResult=(Long) query.getSingleResult();
+       return countResult;
+     }
     
 }

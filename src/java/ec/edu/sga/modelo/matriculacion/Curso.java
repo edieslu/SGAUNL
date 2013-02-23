@@ -35,11 +35,13 @@ import javax.validation.constraints.Size;
 valueColumnName = "valor", pkColumnValue = "Curso", initialValue = 1, allocationSize = 1)
 @NamedQueries(value = {
     @NamedQuery(name = "Curso.findAll", query = "select c from Curso c"),
+    @NamedQuery(name = "Curso.findAllbyAnio", query = "select c from Curso c WHERE c.anioLectivo.estado = 'true' "),
     @NamedQuery(name = "findCursosAndParalelos",
     query = "select distinct e from Curso e left join fetch"
     + " e.paralelos where e.id = :id"),
     @NamedQuery(name = "Curso.findAllCursosbyNivelId",
     query = "select c from Curso c where c.nivel.id =:id"),
+    @NamedQuery(name="Curso.countCursos",query="SELECT count(c) FROM Curso c join c.anioLectivo p WHERE p.estado='true'"),
     @NamedQuery(name = "Curso.findCursosByEspecialidadId", query = "SELECT c FROM Curso c WHERE c.especialidad.id=:id ")
 })
 public class Curso implements Serializable {
@@ -68,6 +70,8 @@ public class Curso implements Serializable {
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
+    @ManyToOne
+    private AnioLectivo anioLectivo;
     
 
     //----------------------constructores--------------------------------------//
@@ -170,7 +174,15 @@ public class Curso implements Serializable {
         this.fechaActualizacion = fechaActualizacion;
     }
 
+    public AnioLectivo getAnioLectivo() {
+        return anioLectivo;
+    }
 
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
+        this.anioLectivo = anioLectivo;
+    }
+
+    
     
 
     

@@ -18,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class AnioLectivoFacade extends AbstractFacade<AnioLectivo> {
+
     @PersistenceContext(unitName = "SGAUNLPU")
     private EntityManager em;
 
@@ -29,26 +30,58 @@ public class AnioLectivoFacade extends AbstractFacade<AnioLectivo> {
     public AnioLectivoFacade() {
         super(AnioLectivo.class);
     }
-    
+
     //método para encontrar el año activo
-    public AnioLectivo findAnioActivate(Boolean parameter){
+    public AnioLectivo isAnioActivate(Boolean parameter) {
         try {
-            Query query=em.createNamedQuery("AnioLectivo.findAnioActivo");
-        query.setParameter("parameter", parameter);
-        return (AnioLectivo) query.getSingleResult();
+            Query query = em.createNamedQuery("AnioLectivo.findAnioActivo");
+            query.setParameter("parameter", parameter);
+            return (AnioLectivo) query.getSingleResult();
         } catch (Exception e) {
             return null;
         }
-        
+
     }
     
+    
+    public AnioLectivo findAnioActive() {
+        try {
+            Query query = em.createNamedQuery("AnioLectivo.findAnioActivate");
+            return (AnioLectivo) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+    
+    
+    
+
     //Enceuntra todos los años de acuerdo a un criterio de búsqueda
-    public List<AnioLectivo> findAllByCriterio(Date criterio){
+    public List<AnioLectivo> findAllByCriterio(Date criterio) {
         Query query = em.createNamedQuery("AnioLectivo.findByCriterio");
         query.setParameter("criterio", criterio);
         return query.getResultList();
     }
     
-    
+     public Long cursosByAnioActivo(){
+         Query query = em.createNamedQuery("AnioLectivo.countCursos");
+         return (Long) query.getSingleResult();
+       
+     }
+     
+     
+     public Long asignaturasByAnioActivo(){
+         Query query = em.createNamedQuery("AnioLectivo.countAsignaturas");
+         return (Long) query.getSingleResult();
+       
+     }
+     
+     
+     public Long periodosByAnioActivo(){
+         Query query = em.createNamedQuery("AnioLectivo.countPeriodos");
+         return (Long) query.getSingleResult();
+       
+     }
     
 }
