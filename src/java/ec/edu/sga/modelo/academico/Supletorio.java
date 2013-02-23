@@ -4,12 +4,16 @@
  */
 package ec.edu.sga.modelo.academico;
 
+import ec.edu.sga.modelo.matriculacion.AnioLectivo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,6 +25,9 @@ import javax.persistence.TemporalType;
 @Entity
 @TableGenerator(name = "SupletorioGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "Supletorio", initialValue = 1, allocationSize = 1)
+@NamedQueries(value = {
+    @NamedQuery(name = "Supletorio.findAllbyAnio", query = "select s from Supletorio s WHERE s.anioLectivo.estado = 'true' ")
+})
 public class Supletorio implements Serializable {
     
     
@@ -36,6 +43,8 @@ public class Supletorio implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
     //------------------------------CONSTRUCTORES----------------------------//
+    @ManyToOne
+    private AnioLectivo anioLectivo;
 
     public Supletorio() {
     }
@@ -88,6 +97,14 @@ public class Supletorio implements Serializable {
 
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public AnioLectivo getAnioLectivo() {
+        return anioLectivo;
+    }
+
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
+        this.anioLectivo = anioLectivo;
     }
 
     

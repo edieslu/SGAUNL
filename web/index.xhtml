@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:composition template="/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+
+            <h:form>
+                <p:messages closable="true" autoUpdate="true"/>
+            </h:form>
+
+            <c:if test="#{empty anioLectivoController.anioActivo}">
+
+
+                <h1> No existen años activos, cree o ative un año en
+                    <a href="#{request.contextPath}/faces/anioLectivo/List.xhtml"> Años Lectivos</a>
+                </h1>
+
+            </c:if>
+
+            <c:if test="#{not empty anioLectivoController.anioActivo}">
+
+
+                <p:panel id="anio" header="Año Lectivo" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> Año Lectivo #{anioLectivoController.anioActivo} </h1>
+                </p:panel>
+
+                <p:panel id="nivel" header="Nivel" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> Nivel actual Ej Básica</h1>
+                </p:panel>
+
+                <h1> Especialidades</h1>
+
+                <p:panel id="curso" header="Cursos" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> <a href="#{request.contextPath}/faces/curso/List.xhtml">Cursos</a></h1>
+                    <p>Existen #{anioLectivoController.cursosbyAnioActivo} cursos para el año #{anioLectivoController.anioActivo}</p>
+                </p:panel>
+
+                <p:panel id="asignatura" header="Asignatura" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> <a href="#{request.contextPath}/faces/asignatura/List.xhtml">Asignaturas</a> </h1>
+
+                    <p>Existen #{anioLectivoController.asignaturasbyAnioActivo} asignaturas para el año #{anioLectivoController.anioActivo}</p>
+
+                </p:panel>
+
+                <h1> Estudiantes</h1>
+
+
+                <p:panel id="periodo" header="Periodos" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> Periodos</h1>
+                    <p>Existen #{anioLectivoController.periodosbyAnioActivo} periodos</p>
+                </p:panel>
+
+
+                <p:panel id="supletorio" header="Supletorio" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> <a href="#{request.contextPath}/faces/supletorio/List.xhtml">Supletorios</a> </h1>
+
+                    <p>Existen #{anioLectivoController.supletoriosbyAnioActivo} supletorios</p>
+
+                    <p:dataTable id="tabla" 
+                                 var="_supletorio" value="#{supletorioController.findAllbyAnio}">
+
+                        <p:column headerText="#{bundle['supletorioController.id']}">
+                            <h:outputText  value="#{_supletorio.id}"/>
+
+                        </p:column>
+
+                        <p:column headerText="#{bundle['supletorioController.nombre']}">
+                            <h:outputText  value="#{_supletorio.nombreSupletorio}"/>
+
+                        </p:column>
+
+                        <p:column headerText="#{bundle['supletorioController.descripcion']}">
+                            <h:outputText  value="#{_supletorio.descripcionSupletorio}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+
+            </c:if>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>
+

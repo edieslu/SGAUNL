@@ -189,6 +189,11 @@ public class AnioLectivoController implements Serializable {
        return ejbFacade.asignaturasByAnioActivo();
    }
    
+   
+    public Long getSupletoriosbyAnioActivo(){
+       return ejbFacade.supletoriosByAnioActivo();
+   }
+   
    public AnioLectivo getAnioActivo(){
        return ejbFacade.findAnioActive();
    }

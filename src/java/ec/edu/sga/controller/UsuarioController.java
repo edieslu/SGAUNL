@@ -373,4 +373,16 @@ public class UsuarioController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+
+    public List<Usuario> getDocentes() {
+        return resultlist = ejbFacade.findbyRol("docente");
+    }
+
+    public List<Usuario> getEstudiantes() {
+        return resultlist = ejbFacade.findbyRol("estudiante");
+    }
+
+    public List<Usuario> getAdmin() {
+        return resultlist = ejbFacade.findbyRol("admin");
+    }
 }

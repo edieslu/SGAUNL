@@ -6,6 +6,7 @@ package ec.edu.sga.modelo.matriculacion;
 
 import ec.edu.sga.modelo.academico.Asignatura;
 import ec.edu.sga.modelo.academico.PeriodoAcademico;
+import ec.edu.sga.modelo.academico.Supletorio;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ valueColumnName = "valor", pkColumnValue = "AnioLectivo", initialValue = 1, allo
 @NamedQuery(name="AnioLectivo.findByCriterio", query="SELECT a FROM AnioLectivo a WHERE a.fechaInicio=:criterio"),
 @NamedQuery(name="AnioLectivo.countCursos",query="SELECT count(c) FROM Curso c WHERE c.anioLectivo.estado='true'"),
 @NamedQuery(name="AnioLectivo.countAsignaturas",query="SELECT count(c) FROM Asignatura c WHERE c.anioLectivo.estado='true'"),
+@NamedQuery(name="AnioLectivo.countSupletorios",query="SELECT count(c) FROM Supletorio c WHERE c.anioLectivo.estado='true'"),
 @NamedQuery(name="AnioLectivo.countPeriodos",query="SELECT count(p) FROM PeriodoAcademico p WHERE p.anioLectivo.estado='true'")
 
 })
@@ -71,6 +73,9 @@ public class AnioLectivo implements Serializable {
     private Date fechaActualizacion;
     @OneToMany(mappedBy = "anioLectivo")
     private List<PeriodoAcademico> periodosAcademicos;
+    
+    @OneToMany(mappedBy = "anioLectivo")
+    private List<Supletorio> supletorios;
 
     
 
@@ -83,6 +88,7 @@ public class AnioLectivo implements Serializable {
         cursos = new ArrayList<Curso>();
         asignaturas = new ArrayList<Asignatura>();
         periodosAcademicos = new ArrayList<PeriodoAcademico>();
+        supletorios = new ArrayList<Supletorio>();
     }
 
     //----------------------------GETERS AND SETERS--------------------//
@@ -190,6 +196,15 @@ public class AnioLectivo implements Serializable {
         this.periodosAcademicos = periodosAcademicos;
     }
 
+    public List<Supletorio> getSupletorios() {
+        return supletorios;
+    }
+
+    public void setSupletorios(List<Supletorio> supletorios) {
+        this.supletorios = supletorios;
+    }
+
+    
     
     
     

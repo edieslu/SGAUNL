@@ -40,6 +40,7 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
 @NamedQueries({
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login AND u.clave = :clave"),
+    @NamedQuery(name = "Usuario.findbyRol", query = "SELECT u FROM Usuario u join u.tipoUsuario t  WHERE t.nombre=:nombreusuario"),
     @NamedQuery(name = "Usuario.buscarPorClave",
     query = "select u from Usuario u where"
     + " lower(u.dni) like lower(concat('%',:clave,'%'))"

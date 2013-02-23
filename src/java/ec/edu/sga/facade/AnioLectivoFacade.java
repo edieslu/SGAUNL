@@ -78,6 +78,13 @@ public class AnioLectivoFacade extends AbstractFacade<AnioLectivo> {
      }
      
      
+     public Long supletoriosByAnioActivo(){
+         Query query = em.createNamedQuery("AnioLectivo.countSupletorios");
+         return (Long) query.getSingleResult();
+       
+     }
+     
+     
      public Long periodosByAnioActivo(){
          Query query = em.createNamedQuery("AnioLectivo.countPeriodos");
          return (Long) query.getSingleResult();

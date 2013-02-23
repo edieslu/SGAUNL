@@ -1,6 +1,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.facade.SupletorioFacade;
 import ec.edu.sga.modelo.academico.Supletorio;
 import java.io.Serializable;
@@ -23,6 +24,8 @@ public class SupletorioController implements Serializable {
     private Conversation conversation;
     @EJB
     private SupletorioFacade ejbFacade;
+    @EJB
+    private AnioLectivoFacade ejbFacadeAnio;
 
     //_________________________________Constructores_________________________________________//
     public SupletorioController() {
@@ -87,6 +90,7 @@ public class SupletorioController implements Serializable {
         System.out.println("Antes de crear un supletorio: " + current.getNombreSupletorio());
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.create(current);
         this.endConversation();
         System.out.println("Después de crear un supletorio: " + current.getNombreSupletorio());
@@ -97,6 +101,7 @@ public class SupletorioController implements Serializable {
     public String update() {
         System.out.println("Antes de actualizar un supletorio: " + current.getNombreSupletorio());
         current.setFechaActualizacion(new Date());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.edit(current);
         System.out.println("Después de actualizar un supletorio: " + current.getNombreSupletorio());
         this.endConversation();
@@ -128,8 +133,8 @@ public class SupletorioController implements Serializable {
     }
 
     //Método que muestra una lista de todas las asignaturas
-    public List<Supletorio> getFindAll() {
-        return ejbFacade.findAll();
+    public List<Supletorio> getFindAllbyAnio() {
+        return ejbFacade.findAllbyAnio();
     }
 
     //Métodos para navegar entre distintas páginas
@@ -140,4 +145,6 @@ public class SupletorioController implements Serializable {
     public String getOutcomeEdit() {
         return "/supletorio/Edit?faces-redirect=true";
     }
+    
+    
 }

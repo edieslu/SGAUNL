@@ -54,4 +54,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
+    
+    public List<Usuario> findbyRol(String nombreusuario){
+        Query query = em.createNamedQuery("Usuario.findbyRol");
+        query.setParameter("nombreusuario", nombreusuario);
+        return query.getResultList();
+    }
 }
