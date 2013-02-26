@@ -35,7 +35,6 @@ public class NivelController implements Serializable {
     }
 
     //______________________________get and set________________________________
-
     public List<Nivel> getResultlist() {
         return resultlist;
     }
@@ -43,9 +42,6 @@ public class NivelController implements Serializable {
     public void setResultlist(List<Nivel> resultlist) {
         this.resultlist = resultlist;
     }
-    
-    
-    
 
     public Nivel getCurrent() {
         return current;
@@ -66,11 +62,11 @@ public class NivelController implements Serializable {
     }
 
     public void setNivelId(Long nivelId) {
-        conversation.begin();
+        this.beginConversation();
         if (nivelId != null && nivelId.longValue() > 0) { //Verifica que el id no sea vacío
             this.current = ejbFacade.find(nivelId);//BUsca un paralelo de acuerdo al ID y lo asigna a current
             this.nivelId = current.getId();
-             System.out.println("Ingreso a editar niveles: " +current.getNombreNivel());
+            System.out.println("Ingreso a editar niveles: " + current.getNombreNivel());
 
         } else {
             System.out.println("Ingreso a crear un nuevo nivel");
@@ -85,8 +81,8 @@ public class NivelController implements Serializable {
         System.out.println("Ingreso a grabar el nivel: " + current.getNombreNivel());
         ejbFacade.create(current);
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion"); 
-        return "/index";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
+        return "/nivel/List.xhtml";
     }
 
     public String update() {
@@ -94,8 +90,8 @@ public class NivelController implements Serializable {
         ejbFacade.edit(current);
         System.out.println("Ya actualicé el nivel: " + current.getNombreNivel());
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/nivel/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        return "/nivel/List.xhtml";
     }
 
     public String delete() {
@@ -103,14 +99,14 @@ public class NivelController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé el nivel");
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/nivel/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        return "/nivel/List.xhtml";
     }
 
-    public void cancelEdit() {
+    public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
-
+        return "/nivel/List.xhtml";
     }
 
     public void beginConversation() {
@@ -139,8 +135,7 @@ public class NivelController implements Serializable {
 //        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
 //        return "nivel/List";
 //    }
-    
-     // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
+    // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
@@ -148,8 +143,9 @@ public class NivelController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
-    
-    
-    
-    
+
+    //__________________________MÉTODOS DE BÚSQUEDA_____________________________________-//
+    public List<Nivel> getFindAll() {
+        return ejbFacade.findAll();
+    }
 }

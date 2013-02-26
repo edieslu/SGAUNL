@@ -49,14 +49,17 @@
                                          value="#{nivelController.current.descripcionNivel}" />
 
                         <f:facet name="footer">
-                            <p:commandButton value="#{bundle['boton.guardar']}" 
+                            <p:commandButton value="#{bundle['boton.guardar']}"
+                                             rendered="#{empty nivelController.current.id}"
                                              action="#{nivelController.persist()}"
                                              update="panelEditNiveles"
                                              icon="#{bundle['icono.guardar']}"/>
 
                             <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             rendered="#{not empty nivelController.current.id}"
                                              action="#{nivelController.update()}"
-                                             icon="#{bundle['icono.actualizar']}"/>
+                                             icon="#{bundle['icono.actualizar']}"
+                                             update="panelEditNiveles"/>
 
                             <p:commandButton value="#{bundle['boton.cancelar']}" 
                                              action="#{nivelController.cancelEdit()}" 

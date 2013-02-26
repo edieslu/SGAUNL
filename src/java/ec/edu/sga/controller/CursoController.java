@@ -75,9 +75,6 @@ public class CursoController implements Serializable {
         System.out.println("========> Ingreso a fijar el id de un Curso: " + cursoId);
         this.beginConversation();
         if (cursoId != null && cursoId.longValue() > 0) {
-
-
-
             //Metodo que permite llevar los datos de un curso desde una ventana y editarlos en otra ventana
             this.current = ejbFacade.findCursoByCursoId(cursoId);
             this.cursoId = this.current.getId();
