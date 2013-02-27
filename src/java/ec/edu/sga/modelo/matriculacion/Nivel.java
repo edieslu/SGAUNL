@@ -50,7 +50,7 @@ public class Nivel implements Serializable {
     private TipoNivel tipoNivel;
     @OneToMany(mappedBy = "nivel")
     private List<Curso> cursos;
-    @OneToMany(mappedBy = "nivel", cascade= CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "nivel")
     private List<Especialidad> especialidades;
     
     

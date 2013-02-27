@@ -51,7 +51,7 @@
 
                         <f:facet name="footer">
                             <p:commandButton value="#{bundle['boton.guardar']}" 
-                                             rendered="#{cursoController.cursoId == null}"
+                                             rendered="#{empty especialidadController.especialidadId}"
                                              action="#{especialidadController.persist()}"
                                              update="panelEditEspecialidad"
                                              icon="#{bundle['icono.guardar']}"/>

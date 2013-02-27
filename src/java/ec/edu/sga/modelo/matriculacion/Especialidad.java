@@ -27,9 +27,11 @@ import javax.persistence.TemporalType;
 @Entity
 @TableGenerator(name = "EspecialidadGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "Especialidad", initialValue = 1, allocationSize = 1)
-@NamedQueries(value={
-    @NamedQuery(name="Especialidad.findEspecialidadesByNivelId", 
-        query="SELECT e FROM Especialidad e WHERE e.nivel.id =:id")
+@NamedQueries(value = {
+    @NamedQuery(name = "Especialidad.findEspecialidadesByNivelId", query = "SELECT e FROM Especialidad e WHERE e.nivel.id =:id"),
+    @NamedQuery(name = "Especialidad.countEspecialidades", query = "SELECT count(e) FROM Especialidad e join e.anioLectivo a WHERE a.estado='true'"),
+    @NamedQuery(name = "Especialidad.findAllbyAnio", query = "select e from Especialidad e WHERE e.anioLectivo.estado = 'true' ")
+   
 })
 public class Especialidad implements Serializable {
 
@@ -43,14 +45,14 @@ public class Especialidad implements Serializable {
     private List<Curso> cursos;
     @ManyToOne
     private Nivel nivel;
-    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaActualizacion;
+    @ManyToOne
+    private AnioLectivo anioLectivo;
 
     //-------------------------------CONSTRUCTORES----------------------//
-
     public Especialidad() {
     }
 
@@ -59,8 +61,7 @@ public class Especialidad implements Serializable {
         this.descripcionEspecialidad = descripcionEspecialidad;
         this.cursos = cursos;
     }
-    
-    
+
     //----------------------GETERS AND SETTERS-----------------------//
     public Long getId() {
         return id;
@@ -118,9 +119,14 @@ public class Especialidad implements Serializable {
     public void setFechaActualizacion(Date fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
-    
-    
-    
+
+    public AnioLectivo getAnioLectivo() {
+        return anioLectivo;
+    }
+
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
+        this.anioLectivo = anioLectivo;
+    }
 
     //--------------------------METODOS----------------------------------//
     @Override

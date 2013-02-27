@@ -1,18 +1,16 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.facade.EspecialidadFacade;
 import ec.edu.sga.modelo.matriculacion.Especialidad;
 import ec.edu.sga.modelo.matriculacion.Nivel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +22,8 @@ public class EspecialidadController implements Serializable {
     private List<Especialidad> resultlist;
     @EJB
     private EspecialidadFacade ejbFacade;
+    @EJB
+    private AnioLectivoFacade ejbFacadeAnio;
     private Especialidad current;
     private Long especialidadId;
     private Nivel nivel;
@@ -67,7 +67,7 @@ public class EspecialidadController implements Serializable {
     }
 
     public void setEspecialidadId(Long especialidadId) {
-        conversation.begin();
+        this.beginConversation();
         if (especialidadId != null && especialidadId.longValue() > 0) { //Verifica que el id no sea vacío
             this.current = ejbFacade.find(especialidadId);//BUsca un paralelo de acuerdo al ID y lo asigna a current
             this.especialidadId = current.getId();
@@ -84,19 +84,21 @@ public class EspecialidadController implements Serializable {
     //____________________________MÉTODOS_______________________________
     public String persist() {
         System.out.println("Ingreso a grabar el paralelo: " + current.getNombreEspecialidad());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/index";
+        return "/especialidad/List.xhtml";
     }
 
     public String update() {
         System.out.println("Ingreso a actualizar: " + current.getNombreEspecialidad());
+        current.setAnioLectivo(ejbFacadeAnio.findAnioActive());
         ejbFacade.edit(current);
         System.out.println("Ya actualicé la especialidad: " + current.getNombreEspecialidad());
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/especialidad/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
+        return "/especialidad/List.xhtml";
     }
 
     public String delete() {
@@ -104,14 +106,14 @@ public class EspecialidadController implements Serializable {
         ejbFacade.remove(current);
         System.out.println("ya eliminé la especialidad");
         this.endConversation();
-          SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/especialidad/List";
+        SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
+        return "/especialidad/List?faces-redirect=true";
     }
 
-    public void cancelEdit() {
+    public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
-
+        return "/especialidad/List.xhtml";
     }
 
     public void beginConversation() {
@@ -130,24 +132,13 @@ public class EspecialidadController implements Serializable {
 
     }
 
-    
     public List<Especialidad> getFindAll() {
-        return ejbFacade.findAll();
-    }
-    
-    
-    public String findAllEspecialidad() {
-        resultlist = ejbFacade.findAll();
-        for (Especialidad object : resultlist) {
-            System.out.println("especialidades: " + object);
-
-        }
-        String summary = "Encontrado Correctamente!";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null));
-        return "especialidad/List";
+        return ejbFacade.findAllbyAnio();
     }
 
-    // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE CURSOS_______________________//
+    
+
+    // ______________________MÉTODOS PARA DEVOLVER UNA LISTA DE ESPECIALIDADES_______________________//
     public SelectItem[] getItemsAvailableSelectMany() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
@@ -155,4 +146,10 @@ public class EspecialidadController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return SessionUtil.getSelectItems(ejbFacade.findAll(), false);
     }
+    
+   public Long getEspecialidadesbyAnioActivo(){
+       return ejbFacade.especialidades();
+   }
+    
+    
 }

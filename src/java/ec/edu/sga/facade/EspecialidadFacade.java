@@ -17,6 +17,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class EspecialidadFacade extends AbstractFacade<Especialidad> {
+
     @PersistenceContext(unitName = "SGAUNLPU")
     private EntityManager em;
 
@@ -28,12 +29,22 @@ public class EspecialidadFacade extends AbstractFacade<Especialidad> {
     public EspecialidadFacade() {
         super(Especialidad.class);
     }
-    
-    
-    
-    public List<Especialidad> findEspecialidadesByNivelId(Long id){
-        Query query= em.createNamedQuery("Especialidad.findEspecialidadesByNivelId");
+
+    public List<Especialidad> findEspecialidadesByNivelId(Long id) {
+        Query query = em.createNamedQuery("Especialidad.findEspecialidadesByNivelId");
         query.setParameter("id", id);
         return query.getResultList();
     }
+
+    public Long especialidades() {
+        Query query = em.createNamedQuery("Especialidad.countEspecialidades");
+        Long countResult = (Long) query.getSingleResult();
+        return countResult;
+    }
+    
+    
+     public List<Especialidad> findAllbyAnio(){
+            Query query = em.createNamedQuery("Especialidad.findAllbyAnio");
+            return query.getResultList();
+        }
 }

@@ -186,7 +186,11 @@ public class AnioLectivoController implements Serializable {
    
    
    public Long getPeriodosbyAnioActivo(){
-       return ejbFacade.asignaturasByAnioActivo();
+       return ejbFacade.periodosByAnioActivo();
+   }
+   
+   public Long getEspecialidadesbyAnioActivo(){
+       return ejbFacade.especialidadesByAnioActivo();
    }
    
    

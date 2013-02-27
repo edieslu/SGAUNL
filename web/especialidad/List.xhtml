@@ -39,7 +39,6 @@
 
                             <p:column headerText="#{bundle['especialidadController.nivel']}">
                                 <h:outputText value="#{_especialidad.nivel}"/>
-
                             </p:column>
 
                             <p:column headerText="#{bundle['boton.acciones']}">
@@ -52,13 +51,13 @@
                                 <p:commandButton value="#{bundle['boton.eliminar']}" 
                                                  oncomplete="conf.show()"
                                                  ajax="true"
-                                                 update=":formList:dialogConfirmation"
+                                                 update="#{not empty especialidadController.current.cursos?':formList:dialogConfirmation':':formList:dialogDelete'}"
                                                  process="@this"
                                                  icon="#{bundle['icono.eliminar']}">
                                     <f:param name="especialidadId" value="#{_especialidad.id}" />
 
                                 </p:commandButton>
-
+                                   
                             </p:column>
                         </p:dataTable>
 
@@ -76,18 +75,18 @@
 
 
                 <p:confirmDialog id="dialogConfirmation" 
+                                 header="#{bundle['header.eliminarRegistros']}" 
                                  message="#{bundle['mensaje.confirmacion']}: #{especialidadController.current.nombreEspecialidad}"
                                  widgetVar="conf" 
-                                 header="#{bundle['header.eliminarRegistros']}" 
                                  severity="alert">
 
                     <p:commandButton id="confirm" 
                                      value="#{bundle['boton.si']}" 
                                      oncomplete="conf.hide()"
-                                     actionListener="#{especialidadController.delete()}"
+                                     action="#{especialidadController.delete()}"
                                      update=":formList:table">
 
-                        <f:param name="especialidadId" value="#{especialidadController.current.id}"/>
+                        <f:param name="especialidadId" value="#{especialidadController.especialidadId}"/>
 
 
                     </p:commandButton>
@@ -98,6 +97,14 @@
                                      action="#{especialidadController.endConversation()}">
                     </p:commandButton>
                 </p:confirmDialog>
+                
+                 <p:confirmDialog id="dialogDelete" 
+                                 header="#{bundle['header.eliminarRegistros']}" 
+                                 message="No se puede eliminar la especialidad por que tiene cursos asociados"
+                                 widgetVar="conf" 
+                                 severity="alert"/>
+                
+                
 
             </h:form>
         </ui:define>

@@ -37,7 +37,9 @@ valueColumnName = "valor", pkColumnValue = "AnioLectivo", initialValue = 1, allo
 @NamedQuery(name="AnioLectivo.countCursos",query="SELECT count(c) FROM Curso c WHERE c.anioLectivo.estado='true'"),
 @NamedQuery(name="AnioLectivo.countAsignaturas",query="SELECT count(c) FROM Asignatura c WHERE c.anioLectivo.estado='true'"),
 @NamedQuery(name="AnioLectivo.countSupletorios",query="SELECT count(c) FROM Supletorio c WHERE c.anioLectivo.estado='true'"),
-@NamedQuery(name="AnioLectivo.countPeriodos",query="SELECT count(p) FROM PeriodoAcademico p WHERE p.anioLectivo.estado='true'")
+@NamedQuery(name="AnioLectivo.countPeriodos",query="SELECT count(p) FROM PeriodoAcademico p WHERE p.anioLectivo.estado='true'"),
+@NamedQuery(name="AnioLectivo.countEspecialidades",query="SELECT count(e) FROM Especialidad e WHERE e.anioLectivo.estado='true'")
+
 
 })
 public class AnioLectivo implements Serializable {
@@ -76,6 +78,9 @@ public class AnioLectivo implements Serializable {
     
     @OneToMany(mappedBy = "anioLectivo")
     private List<Supletorio> supletorios;
+    
+    @OneToMany(mappedBy = "anioLectivo")
+    private List<Especialidad> especialidades;
 
     
 
@@ -89,6 +94,7 @@ public class AnioLectivo implements Serializable {
         asignaturas = new ArrayList<Asignatura>();
         periodosAcademicos = new ArrayList<PeriodoAcademico>();
         supletorios = new ArrayList<Supletorio>();
+        especialidades = new ArrayList<Especialidad>();
     }
 
     //----------------------------GETERS AND SETERS--------------------//
@@ -202,6 +208,14 @@ public class AnioLectivo implements Serializable {
 
     public void setSupletorios(List<Supletorio> supletorios) {
         this.supletorios = supletorios;
+    }
+
+    public List<Especialidad> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(List<Especialidad> especialidades) {
+        this.especialidades = especialidades;
     }
 
     

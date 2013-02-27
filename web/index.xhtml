@@ -38,7 +38,12 @@
                     <h1> Nivel actual Ej Básica</h1>
                 </p:panel>
 
-                <h1> Especialidades</h1>
+                <p:panel id="especialidad" header="Especialidad" rendered="true"
+                         toggleOrientation="vertical" toggleable="true">  
+                    <h1> <a href="#{request.contextPath}/faces/especialidad/List.xhtml">Especialidades</a></h1>
+                    <p>Existen #{anioLectivoController.especialidadesbyAnioActivo} especialidades para el año #{anioLectivoController.anioActivo}</p>
+                </p:panel>
+                
 
                 <p:panel id="curso" header="Cursos" rendered="true"
                          toggleOrientation="vertical" toggleable="true">  

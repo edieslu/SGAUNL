@@ -51,29 +51,11 @@
             <f:event listener="#{anioLectivoController.findAll}" type="preRenderView" />
             <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
         </f:metadata>
-       <h:form id="formAnioList"
-                prependId="false">
+        
+       <h:form id="formAnioList" prependId="false">
 
            <p:messages closable="true" globalOnly="true"/>
 
-
-            <!--
-            <h:panelGrid  columns="3">
-
-                <h:outputLabel value="#{bundle['label.buscar']}" />
-                <p:inputText label="#{bundle['label.buscar']}" value="#{anioLectivoController.criterio}" >
-
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </p:inputText>
-                <p:commandButton value="#{bundle['boton.buscar']}"
-                                 action="#{anioLectivoController.findAllAniosByCriterio()}"
-                                 icon="#{bundle['icono.buscar']}"
-                                 update="idAnioTable"
-                                 ajax="true"/>
-
-            </h:panelGrid>
-
-            -->
 
             <p:panel header="#{bundle['header.lista']}">
 

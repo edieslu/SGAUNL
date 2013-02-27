@@ -90,5 +90,11 @@ public class AnioLectivoFacade extends AbstractFacade<AnioLectivo> {
          return (Long) query.getSingleResult();
        
      }
+     
+     public Long especialidadesByAnioActivo(){
+         Query query = em.createNamedQuery("AnioLectivo.countEspecialidades");
+         return (Long) query.getSingleResult();
+       
+     }
     
 }
