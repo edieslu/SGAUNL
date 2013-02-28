@@ -22,36 +22,42 @@
 
             <h:form id="form" prependId="false">
 
-                <p:panelGrid columns="2">
+                <p:panel header="#{empty periodoController.periodoId?bundle['header.nuevo']:bundle['header.editar']}">
+                    <p:panelGrid columns="2" >
 
-                    <h:outputLabel value="#{bundle['periodoController.nombre']}" for="idNombre"/>
-                    <p:inputText id="idNombre" value="#{periodoController.current.nombre}"/>
+                        <h:outputLabel value="#{bundle['periodoController.nombre']}" for="idNombre"/>
+                        <p:inputText id="idNombre" value="#{periodoController.current.nombre}"/>
 
-                    <h:outputLabel value="#{bundle['periodoController.fecha.inicio']}"/>
-                    <p:calendar value="#{periodoController.current.fechaInicio}" navigator="true"/>
+                        <h:outputLabel value="#{bundle['periodoController.fecha.inicio']}"/>
+                        <p:calendar value="#{periodoController.current.fechaInicio}" navigator="true"/>
 
-                    <h:outputLabel value ="#{bundle['periodoController.fecha.fin']}"/>
-                    <p:calendar value="#{periodoController.current.fechaFin}" navigator="true"/>
+                        <h:outputLabel value ="#{bundle['periodoController.fecha.fin']}"/>
+                        <p:calendar value="#{periodoController.current.fechaFin}" navigator="true"/>
 
-                    <h:outputLabel value="#{bundle['periodoController.estado']}" />
-                    <p:selectBooleanCheckbox value="#{periodoController.current.estado}" />
+                        <h:outputLabel value="#{bundle['periodoController.estado']}" />
+                        <p:selectBooleanCheckbox value="#{periodoController.current.estado}" />
 
-                </p:panelGrid>
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.guardar']}"
+                                             icon="#{bundle['icono.guardar']}"
+                                             action="#{periodoController.persist()}"
+                                             rendered="#{empty periodoController.periodoId}"/>
 
-                <p:commandButton value="#{bundle['boton.guardar']}"
-                                 icon="#{bundle['icono.guardar']}"
-                                 action="#{periodoController.persist()}"
-                                 rendered="#{empty periodoController.periodoId}"/>
+                            <p:commandButton value="#{bundle['boton.cancelar']}"
+                                             icon="#{bundle['icono.cancelar']}"
+                                             action="#{periodoController.cancel()}"/>
 
-                <p:commandButton value="#{bundle['boton.cancelar']}"
-                                 icon="#{bundle['icono.cancelar']}"
-                                 action="#{periodoController.cancel()}"/>
+                            <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             icon="#{bundle['icono.actualizar']}"
+                                             action="#{periodoController.update()}"
+                                             rendered="#{not empty periodoController.periodoId}"/>
 
-                <p:commandButton value="#{bundle['boton.actualizar']}"
-                                 icon="#{bundle['icono.actualizar']}"
-                                 action="#{periodoController.update()}"
-                                 rendered="#{not empty periodoController.periodoId}"/>
+                        </f:facet>
 
+
+                    </p:panelGrid>
+
+                </p:panel>
 
             </h:form>
 

@@ -5,9 +5,11 @@
 package ec.edu.sga.facade;
 
 import ec.edu.sga.modelo.academico.PeriodoAcademico;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +27,11 @@ public class PeriodoAcademicoFacade extends AbstractFacade<PeriodoAcademico> {
 
     public PeriodoAcademicoFacade() {
         super(PeriodoAcademico.class);
+    }
+    
+    public List<PeriodoAcademico> findPeriodosByAnioActivo(){
+        Query query = em.createNamedQuery("Periodo.findAllByAnioActivo");
+        return query.getResultList();
     }
     
 }

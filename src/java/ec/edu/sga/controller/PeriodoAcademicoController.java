@@ -46,7 +46,7 @@ public class PeriodoAcademicoController implements Serializable {
     }
 
     public void setPeriodoId(Long periodoId) {
-        //this.beginConversation();
+        this.beginConversation();
         current = ejbFacade.find(periodoId);
         this.periodoId = periodoId;
         
@@ -105,6 +105,10 @@ public class PeriodoAcademicoController implements Serializable {
         return "/periodo/List?faces-redirect=true";
     }
     
+    //___________________---Métodos para realizar búsquedas_____________________
     
+    public List<PeriodoAcademico> getFindAll(){
+        return ejbFacade.findAll();
+    }
     
 }

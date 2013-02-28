@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -24,6 +26,9 @@ import javax.persistence.TemporalType;
 @Entity
 @TableGenerator(name = "PeriodoAcademicoGenerador", table = "GeneradorIdentificador", pkColumnName = "nombre",
 valueColumnName = "valor", pkColumnValue = "PeriodoAcademico", initialValue = 1, allocationSize = 1)
+@NamedQueries(value={
+    @NamedQuery(name="Periodo.findAllByAnioActivo", query="SELECT p FROM PeriodoAcademico p WHERE p.anioLectivo.estado='true'")
+})
 public class PeriodoAcademico implements Serializable {
     //--------------------------------ATRIBUTOS--------------------------------//
 
