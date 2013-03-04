@@ -1,0 +1,37 @@
+.ui-selectonemenu {
+    width: 200px !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+    width: 200px !important;
+}
+
+.ui-panel-titlebar {
+    background:#68727B;
+}
+
+.ui-panel-content {
+    background:red;
+}
+
+.ui-panel-title{
+     background:#68727B;
+    color:white;
+    font-weight:bold;
+    font-family: verdana;
+}
+
+
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+border: 1px solid #68727B;
+background: #68727B;
+font-weight: normal;
+color: #ffffff;
+}
+
+.ui-inputfield.ui-state-error,
+.ui-state-error .ui-inputfield {
+    background-color: #F43939;
+}
+
