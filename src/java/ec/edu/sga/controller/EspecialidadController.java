@@ -88,7 +88,7 @@ public class EspecialidadController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/especialidad/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public String update() {
@@ -98,7 +98,7 @@ public class EspecialidadController implements Serializable {
         System.out.println("Ya actualicé la especialidad: " + current.getNombreEspecialidad());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/especialidad/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public String delete() {
@@ -107,13 +107,13 @@ public class EspecialidadController implements Serializable {
         System.out.println("ya eliminé la especialidad");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/especialidad/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
-        return "/especialidad/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public void beginConversation() {

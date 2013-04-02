@@ -95,7 +95,7 @@ public class SupletorioController implements Serializable {
         this.endConversation();
         System.out.println("Después de crear un supletorio: " + current.getNombreSupletorio());
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/supletorio/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } //Fin del método persist
 
     public String update() {
@@ -106,7 +106,7 @@ public class SupletorioController implements Serializable {
         System.out.println("Después de actualizar un supletorio: " + current.getNombreSupletorio());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/supletorio/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método Update
 
     public String delete() {
@@ -115,12 +115,12 @@ public class SupletorioController implements Serializable {
         System.out.println("Después de eliminar un supletorio");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/supletorio/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método delete
 
     public String cancelEdit() {
         this.endConversation();
-        return "/supletorio/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }  // Fin del método Cancel Edit
 
     //___________________Métodos que devuelven una lista de items de tipo Supletorio___________________//
@@ -139,7 +139,7 @@ public class SupletorioController implements Serializable {
 
     //Métodos para navegar entre distintas páginas
     public String getOutcomeList() {
-        return "/supletorio/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String getOutcomeEdit() {

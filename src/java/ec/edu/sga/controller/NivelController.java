@@ -82,7 +82,7 @@ public class NivelController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/nivel/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public String update() {
@@ -91,7 +91,7 @@ public class NivelController implements Serializable {
         System.out.println("Ya actualicé el nivel: " + current.getNombreNivel());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/nivel/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public String delete() {
@@ -100,13 +100,13 @@ public class NivelController implements Serializable {
         System.out.println("ya eliminé el nivel");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/nivel/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
-        return "/nivel/List.xhtml";
+        return "list?faces-redirect=true";
     }
 
     public void beginConversation() {

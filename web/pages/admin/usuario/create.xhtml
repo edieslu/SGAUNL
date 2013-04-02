@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="usuarioId" value="#{usuarioController.usuarioId}"/>
+    </f:metadata>
+    <ui:composition template="/WEB-INF/templates/plantilla.xhtml">
+        <ui:define name="title">
+            <h:outputText value=""/>
+        </ui:define>
+        <ui:define name="content">
+
+
+            <script type="text/javascript">        
+                
+                $j(document).ready(function(){
+                    $j('.numeros').numeric();
+                    $j('.letras').alpha({allow:" "});
+                    $j('.mayusculas').val().toUpperCase();
+                    $j('.email').alphanumeric({allow:"._-@"});
+                    
+                });
+                
+                $j(document).ready(function(){
+                    $j('.mayúsculas').val().toUpperCase();
+                    
+                });
+            </script>
+
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage library="img" name="ajaxloading.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+            <h:form id="formUsuario" prependId="false">
+
+                <p:messages closable="true" globalOnly="true"/>
+                <p:panel id="editPanelUsuario"
+                         header="#{usuarioController.current.id != null ? bundle['header.editar'] : bundle['header.nuevo']}" 
+                         >
+
+                    <p:panel id="idDatosLogin" toggleable="true" toggleOrientation="vertical"
+                             header="Datos de Login">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="#{bundle['usuarioController.login']}:"/>
+                            <p:inputText value="#{usuarioController.current.login}"
+                                         label="#{bundle['usuarioController.login']}"
+                                         title="#{bundle['usuarioController.login']}"/>
+                            <h:outputLabel value="#{bundle['usuarioController.clave']}:"/>
+                            <p:password value="#{usuarioController.current.clave}" 
+                                        title="#{bundle['usuarioController.clave']}"
+                                        label="#{bundle['usuarioController.clave']}">
+                            </p:password>
+                            <h:outputLabel value="#{bundle['usuarioController.estado']}:"/>
+                            <p:selectBooleanCheckbox value="#{usuarioController.current.estado}"
+                                                     label="#{bundle['usuarioController.estado']}"/>
+                            <h:outputText value="#{bundle['usuarioController.tipoUsuario']}:*"/>
+                            <p:selectOneMenu value="#{usuarioController.current.tipoUsuario}" 
+                                             effect="fade" required="true"
+                                             immediate="true" converter="genericConverter"
+                                             valueChangeListener="#{usuarioController.renderTabs}">
+                                <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
+                                <f:selectItems value="#{tipoUsuarioController.itemsAvailableSelectOne}"
+                                               />  
+                                <p:ajax update="@form"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel id="idDatosPersonales" header="Datos Personales" rendered="false"
+                             toggleOrientation="vertical" toggleable="true">  
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="dni" />
+                            <p:inputText id="dni" value="#{usuarioController.current.dni}" 
+                                         title="#{bundle['usuarioController.dni']}"
+                                         styleClass="numeros"
+                                         label="#{bundle['usuarioController.dni']}" maxlength="10"
+                                         validator="#{validadorController.validaNumeroCedula}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.libretaMilitar']}:" 
+                                           for="libretaMilitar" />
+                            <p:inputText id="libretaMilitar" 
+                                         value="#{usuarioController.current.libretaMilitar}"
+                                         title="#{bundle['usuarioController.libretaMilitar']}" 
+                                         label="#{bundle['usuarioController.libretaMilitar']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.nombres']}:*" 
+                                           for="nombres" />
+                            <p:inputText id="nombres" 
+                                         value="#{usuarioController.current.nombres}"                                              
+                                         title="#{bundle['usuarioController.nombres']}"
+                                         styleClass="letras"
+                                         required="true"
+                                         label="#{bundle['usuarioController.nombres']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.apellidos']}:*" 
+                                           for="apellidos" />
+                            <p:inputText id="apellidos" 
+                                         value="#{usuarioController.current.apellidos}" 
+                                         title="#{bundle['usuarioController.apellidos']}" 
+                                         label="#{bundle['usuarioController.apellidos']}"
+                                         styleClass="letras"
+                                         required="true"/>
+
+                            <h:outputLabel id="sexo" value="#{bundle['usuarioController.sexo']}:*"/>
+                            <p:selectOneMenu id="_typeSexo" 
+                                             value="#{usuarioController.current.sexo}" 
+                                             effect="fade" 
+                                             label="#{bundle['usuarioController.sexo']}"
+                                             required="true">
+                                <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
+                                <f:selectItems value="#{typeListController.typeListSexo}"/>  
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="#{bundle['usuarioController.fechaNacimiento']}:*" for="fechaNacimiento" />
+                            <p:calendar id="fechaNacimiento" 
+                                        value="#{usuarioController.current.fechaNacimiento}" 
+                                        navigator="true" showOn="button" required="true"
+                                        label="#{bundle['usuarioController.fechaNacimiento']}"
+                                        title="#{bundle['usuarioController.fechaNacimiento']}" 
+                                        pattern="dd/MM/yyyy" 
+                                        validator="#{validadorController.validarFecha}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.ciudadNacimiento']}:" for="ciudadNacimiento" />
+                            <p:inputText id="ciudadNacimiento" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.ciudadNacimiento}" 
+                                         title="#{bundle['usuarioController.ciudadNacimiento']}" 
+                                         styleClass="letras" 
+                                         label="#{bundle['usuarioController.ciudadNacimiento']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.cantonNacimiento']}:" for="cantonNacimiento" />
+                            <p:inputText id="cantonNacimiento" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.cantonNaciemiento}" 
+                                         title="#{bundle['usuarioController.cantonNacimiento']}" 
+                                         styleClass="letras"
+                                         label="#{bundle['usuarioController.cantonNacimiento']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.provinciaNacimiento']}:" for="provinciaNacimiento" />
+                            <p:inputText id="provinciaNacimiento" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.provinciaNacimiento}" 
+                                         title="#{bundle['usuarioController.provinciaNacimiento']}" 
+                                         styleClass="letras"
+                                         label="#{
+                                         bundle['usuarioController.provinciaNacimiento']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.direccion']}:" for="direccion" />
+                            <p:inputText id="direccion" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.direccion}" 
+                                         title="#{bundle['usuarioController.direccion']}" 
+                                         styleClass="letras"
+                                         label="#{bundle['usuarioController.direccion']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.telefono']}:" for="telefono" />
+                            <p:inputText id="telefono" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.telefono}" 
+                                         title="#{bundle['usuarioController.telefono']}" 
+                                         label="#{bundle['usuarioController.telefono']}"
+                                         styleClass="numeros"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="celular" />
+                            <p:inputText id="celular" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.celular}" 
+                                         title="#{bundle['usuarioController.celular']}" 
+                                         label="#{bundle['usuarioController.celular']}"
+                                         styleClass="numeros"
+                                         maxlength="10"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.email']}:" for="email" />
+                            <p:inputText id="email" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.email}" 
+                                         label="#{bundle['usuarioController.email']}"
+                                         title="#{bundle['usuarioController.email']}" 
+                                         validatorMessage="El email ingresado no es válido"
+                                         styleClass="email">
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+
+                            </p:inputText>
+
+                            <h:outputLabel value="#{bundle['usuarioController.nacionalidad']}:" for="nacionalidad" />
+                            <p:inputText id="nacionalidad" 
+                                         value="#{usuarioController.current.ficha.fichaPersonal.nacionalidad}" 
+                                         title="#{bundle['usuarioController.nacionalidad']}" 
+                                         styleClass="letras" 
+                                         label="#{bundle['usuarioController.nacionalidad']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.foto']}:" for="foto" />
+                            <p:inputText id="foto" value="#{usuarioController.current.ficha.fichaPersonal.foto}" 
+                                         title="#{bundle['usuarioController.foto']}" 
+                                         label="#{bundle['usuarioController.foto']}"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel  id="idDatosFamilia" header="Datos Familiares" rendered="false"
+                              toggleOrientation="vertical" toggleable="true">
+                        <p:tabView id="idTabPadre">
+                            <p:tab title="Datos del Padre">
+                                <h:panelGrid columns="4">
+                                    <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDni" />
+                                    <p:inputText id="idDni" 
+                                                 label="#{bundle['usuarioController.dni']}" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.dni}"
+                                                 /> 
+                                    <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombrePapa" />
+                                    <p:inputText id="idNombrePapa" 
+                                                 label="#{bundle['usuarioController.nombres']}" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.nombres}"
+                                                 /> 
+
+                                    <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosPapa" />
+                                    <p:inputText id="idApellidosPapa" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.apellidos}" 
+                                                 title="#{bundle['usuarioController.apellidos']}" 
+                                                 label="#{bundle['usuarioController.apellidos']}"/>
+                                    <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesion" />
+
+                                    <p:inputText id="idProfesion" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.profesion}" 
+                                                 title="#{bundle['usuarioController.profesion']}" 
+                                                 label="#{bundle['usuarioController.profesion']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.lugarTrabajo']}:" for="idLugarTrabajo" />
+                                    <p:inputText id="idLugarTrabajo" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.lugarTrabajo}" 
+                                                 title="#{bundle['usuarioController.lugarTrabajo']}" 
+                                                 label="#{bundle['usuarioController.lugarTrabajo']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.telefonoTrabajo']}:" for="idTelPapa" />
+                                    <p:inputText id="idTelPapa" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.telefonoTrabajo}" 
+                                                 title="#{bundle['usuarioController.telefonoTrabajo']}" 
+                                                 label="#{bundle['usuarioController.telefonoTrabajo']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelPapa" />
+                                    <p:inputText id="idCelPapa" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.celular}" 
+                                                 title="#{bundle['usuarioController.celular']}" 
+                                                 label="#{bundle['usuarioController.celular']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmail" />
+                                    <p:inputText id="idEmail" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.email}" 
+                                                 title="#{bundle['usuarioController.email']}" 
+                                                 label="#{bundle['usuarioController.email']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.nacionalidad']}:" for="idNacionalidadPapa" />
+                                    <p:inputText id="idNacionalidadPapa" 
+                                                 value="#{usuarioController.current.ficha.fichaPadre.nacionalidad}" 
+                                                 title="#{bundle['usuarioController.nacionalidad']}" 
+                                                 label="#{bundle['usuarioController.nacionalidad']}"/>
+                                </h:panelGrid>
+                            </p:tab>
+
+                            <p:tab title="Datos de la Madre">
+                                <h:panelGrid columns="4">
+                                    <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDniMama" />
+                                    <p:inputText id="idDniMama" 
+                                                 label="#{bundle['usuarioController.dni']}" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.dni}"
+                                                 /> 
+
+                                    <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombreMama" />
+                                    <p:inputText id="idNombreMama" 
+                                                 label="#{bundle['usuarioController.nombres']}" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.nombres}"
+                                                 /> 
+
+                                    <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosMama" />
+                                    <p:inputText id="idApellidosMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.apellidos}" 
+                                                 title="#{bundle['usuarioController.apellidos']}" 
+                                                 label="#{bundle['usuarioController.apellidos']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesionMama" />
+
+                                    <p:inputText id="idProfesionMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.profesion}" 
+                                                 title="#{bundle['usuarioController.profesion']}" 
+                                                 label="#{bundle['usuarioController.profesion']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.lugarTrabajo']}:" for="idLugarTrabajoMama" />
+                                    <p:inputText id="idLugarTrabajoMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.lugarTrabajo}" 
+                                                 title="#{bundle['usuarioController.lugarTrabajo']}" 
+                                                 label="#{bundle['usuarioController.lugarTrabajo']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.telefonoTrabajo']}:" for="idTelTrabajoMama" />
+                                    <p:inputText id="idTelTrabajo" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.telefonoTrabajo}" 
+                                                 title="#{bundle['usuarioController.telefonoTrabajo']}" 
+                                                 label="#{bundle['usuarioController.telefonoTrabajo']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelMama" />
+                                    <p:inputText id="idCelMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.celular}" 
+                                                 title="#{bundle['usuarioController.celular']}" 
+                                                 label="#{bundle['usuarioController.celular']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmailMama" />
+                                    <p:inputText id="idEmailMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.email}" 
+                                                 title="#{bundle['usuarioController.email']}" 
+                                                 label="#{bundle['usuarioController.email']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.nacionalidad']}:" for="idNacionalidadMama" />
+                                    <p:inputText id="idNacionalidadMama" 
+                                                 value="#{usuarioController.current.ficha.fichaMadre.nacionalidad}" 
+                                                 title="#{bundle['usuarioController.nacionalidad']}" 
+                                                 label="#{bundle['usuarioController.nacionalidad']}"/>
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Datos del Representante">
+                                <h:panelGrid columns="4">
+                                    <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDniRepre" />
+                                    <p:inputText id="idDniRepre" 
+                                                 label="#{bundle['usuarioController.dni']}" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.dni}"
+                                                 /> 
+
+                                    <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombreRepre" />
+                                    <p:inputText id="idNombreRepre" 
+                                                 label="#{bundle['usuarioController.nombres']}" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.nombres}"
+                                                 /> 
+
+                                    <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosRepre" />
+                                    <p:inputText id="idApellidosRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.apellidos}" 
+                                                 title="#{bundle['usuarioController.apellidos']}" 
+                                                 label="#{bundle['usuarioController.apellidos']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesionRepre" />
+                                    <p:inputText id="idProfesionRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.profesion}" 
+                                                 title="#{bundle['usuarioController.profesion']}" 
+                                                 label="#{bundle['usuarioController.profesion']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.direccion']}:" for="idDireccionRepre" />
+                                    <p:inputText id="idDireccionRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.domicilio}" 
+                                                 title="#{bundle['usuarioController.direccion']}" 
+                                                 label="#{bundle['usuarioController.direccion']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.telefono']}:" for="idTelefonoRepre" />
+                                    <p:inputText id="idTelefonoRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.telefono}" 
+                                                 title="#{bundle['usuarioController.telefono']}" 
+                                                 label="#{bundle['usuarioController.telefono']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelRepre" />
+                                    <p:inputText id="idCelRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.celular}" 
+                                                 title="#{bundle['usuarioController.celular']}" 
+                                                 label="#{bundle['usuarioController.celular']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmailRepre" />
+                                    <p:inputText id="idEmailRepre" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.email}" 
+                                                 title="#{bundle['usuarioController.email']}" 
+                                                 label="#{bundle['usuarioController.email']}"/>
+
+                                    <h:outputLabel value="#{bundle['usuarioController.parentezco']}:" for="idParentezco" />
+                                    <p:inputText id="idParentezco" 
+                                                 value="#{usuarioController.current.ficha.fichaRepresentante.parentezco}" 
+                                                 title="#{bundle['usuarioController.parentezco']}" 
+                                                 label="#{bundle['usuarioController.parentezco']}"/>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+                    </p:panel>
+
+                    <p:panel id="idDatosMedicos" header="Datos Medicos" rendered="false"
+                             toggleOrientation="vertical" toggleable="true">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="#{bundle['usuarioController.tipoSangre']}:*" />
+                            <p:selectOneMenu id="_typeSangre" required="true" effect="fade"
+                                             value="#{usuarioController.current.ficha.fichaMedica.tipoSangre}">
+
+                                <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
+                                <f:selectItems value="#{typeListController.typeListSangre}" />  
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="#{bundle['usuarioController.alergias']}:" for="alergias" />
+                            <p:inputText id="alergias" 
+                                         value="#{usuarioController.current.ficha.fichaMedica.alergias}" 
+                                         title="#{bundle['usuarioController.alergias']}" 
+                                         label="#{bundle['usuarioController.alergias']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.hospital']}:" for="hospital" />
+                            <p:inputText id="hospital" 
+                                         value="#{usuarioController.current.ficha.fichaMedica.hospital}" 
+                                         title="#{bundle['usuarioController.hospital']}" 
+                                         label="#{bundle['usuarioController.hospital']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.telefonoHospital']}:" for="telefonoHosp" />
+                            <p:inputText id="telefonoHosp" 
+                                         value="#{usuarioController.current.ficha.fichaMedica.telefonoHospital}" 
+                                         title="#{bundle['usuarioController.telefonoHospital']}" 
+                                         label="#{bundle['usuarioController.telefonoHospital']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.observaciones']}:" for="observaciones" />
+                            <p:inputTextarea id="observaciones" 
+                                             value="#{usuarioController.current.ficha.fichaMedica.observaciones}" 
+                                             title="#{bundle['usuarioController.observaciones']}"
+                                             label="#{bundle['usuarioController.observaciones']}"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel id="idDatosEconomicos" header="Datos Socio-Economicos" rendered="false"
+                             toggleOrientation="vertical" toggleable="true">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="#{bundle['usuarioController.internet']}:" for="internet" />
+                            <p:selectBooleanCheckbox id="internet" 
+                                                     label="#{bundle['usuarioController.internet']}" 
+                                                     value="#{usuarioController.current.ficha.fichaSocio.internet}"
+                                                     /> 
+
+                            <h:outputLabel value="#{bundle['usuarioController.viveCon']}:" for="viveCon" />
+                            <p:inputText id="viveCon" 
+                                         value="#{usuarioController.current.ficha.fichaSocio.viveCon}" 
+                                         title="#{bundle['usuarioController.viveCon']}" 
+                                         label="#{bundle['usuarioController.viveCon']}"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel id="idDatosProfesional" header="Datos Profesionales" rendered="false"
+                             toggleOrientation="vertical" toggleable="true">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="#{bundle['usuarioController.titulo']}:"/>
+                            <p:inputText id="idTitulo" 
+                                         value="#{usuarioController.current.ficha.fichaProfesional.titulo}"
+                                         title="#{bundle['usuarioController.titulo']}"
+                                         label="#{bundle['usuarioController.titulo']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.especializacion']}:"/>
+                            <p:inputText id="idEspecializacion" 
+                                         value="#{usuarioController.current.ficha.fichaProfesional.especializacion}"
+                                         title="#{bundle['usuarioController.especializacion']}"
+                                         label="#{bundle['usuarioController.especializacion']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.instruccion']}:"/>
+                            <p:inputText id="idInstruccion" 
+                                         value="#{usuarioController.current.ficha.fichaProfesional.nivelInstruccion}"
+                                         title="#{bundle['usuarioController.instruccion']}"
+                                         label="#{bundle['usuarioController.instruccion']}"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.fechaMagisterio']}:"/>
+                            <p:calendar id="idFechaMagisterio" navigator="true" showOn="button"
+                                        value="#{usuarioController.current.ficha.fichaProfesional.fechaIngresoMagisterio}"
+                                        title="#{bundle['usuarioController.fechaMagisterio']}"
+                                        label="#{bundle['usuarioController.fechaMagisterio']}"
+                                        pattern="dd/mm/yyyy"/>
+
+                            <h:outputLabel value="#{bundle['usuarioController.fechaUnidad']}:"/>
+                            <p:calendar id="idFechaUnidad" navigator="true" showOn="button"
+                                        value="#{usuarioController.current.ficha.fichaProfesional.fechaIngresoUnidad}"
+                                        title="#{bundle['usuarioController.fechaUnidad']}"
+                                        label="#{bundle['usuarioController.fechaUnidad']}"
+                                        pattern="dd/mm/yyyy"/>
+                        </h:panelGrid>
+
+                    </p:panel>
+                    <p:panel id="idDatosAsignacion" header="Asignacion de Materias y Cursos" rendered="false"
+                             toggleOrientation="vertical" toggleable="true">
+                        <p:tabView id="idTabMaterias">
+                            <p:tab id="idTabAsignacion1" title="Asignacion Materias">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="#{bundle['matriculaController.nivel']}"/>
+                                    <p:selectOneMenu id="idNivel" 
+                                                     converter="genericConverter" 
+                                                     label="#{bundle['matriculaController.nivel']}" 
+                                                     required="true" 
+                                                     value="#{matriculaController.nivel}"
+                                                     valueChangeListener="#{matriculaController.pruebaRender}"
+                                                     immediate="true">
+
+                                        <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                        <f:selectItems value="#{matriculaController.itemsNiveles}"/>  
+                                        <p:ajax update="idEspecialidad idCurso idParalelo @form"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel value="#{bundle['matriculaController.especialidad']}" 
+                                                   id="idLabelEspecialidad" rendered="false"/>
+                                    <p:selectOneMenu rendered="false" id="idEspecialidad" 
+                                                     converter="genericConverter" 
+                                                     label="#{bundle['matriculaController.especialidad']}" 
+                                                     required="true" 
+                                                     value="#{matriculaController.especialidad}"
+                                                     valueChangeListener="#{matriculaController.prueba2}"
+                                                     immediate="true">
+
+                                        <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                        <f:selectItems value="#{matriculaController.itemsEspecialidadesByNivelId}"/>  
+                                        <p:ajax update="idCurso idParalelo @form"/>
+                                    </p:selectOneMenu> 
+
+                                    <h:outputLabel value="#{bundle['matriculaController.curso']}"/>
+                                    <p:selectOneMenu id="idCurso" 
+                                                     converter="genericConverter" 
+                                                     label="#{bundle['matriculaController.curso']}" 
+                                                     required="true" 
+                                                     value="#{matriculaController.curso}"
+                                                     valueChangeListener="#{matriculaController.prueba3}"
+                                                     immediate="true">>
+
+                                        <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                        <f:selectItems value="#{matriculaController.itemsCursosByNivelIdOrEspecialidadId}"/> 
+                                        <p:ajax update="idParalelo @form"/>
+                                    </p:selectOneMenu> 
+
+
+                                    <h:outputLabel value="#{bundle['matriculaController.paralelo']}"/>
+                                    <p:selectOneMenu id="idParalelo" 
+                                                     converter="genericConverter" 
+                                                     label="#{bundle['matriculaController.paralelo']}" 
+                                                     required="true" 
+                                                     value="#{matriculaController.paralelo}">
+
+                                        <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                                        <f:selectItems value="#{matriculaController.itemsParalelosByCursoId}"/>  
+                                    </p:selectOneMenu>  
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:tabView>
+                    </p:panel>
+
+
+
+                    <p:commandButton id="idguardar" value="#{bundle['boton.guardar']}"
+                                     action="#{usuarioController.persist()}" 
+                                     rendered="#{usuarioController.current.id == null}" 
+                                     update="editPanelUsuario" icon="#{bundle['icono.guardar']}"/>
+
+                    <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                     action="#{usuarioController.update()}" 
+                                     rendered="#{usuarioController.current.id != null}" 
+                                     update="editPanelUsuario" 
+                                     icon="#{bundle['icono.actualizar']}"
+                                     />
+                    <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                     action="#{usuarioController.cancelEdit()}" 
+                                     immediate="true" icon="#{bundle['icono.cancelar']}"/>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

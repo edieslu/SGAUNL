@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:metadata>
+        <f:viewParam name="cursoId" value="#{cursoController.cursoId}"/>
+    </f:metadata>
+
+    <ui:composition template="/WEB-INF/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+
+
+            <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+                <f:facet name="start">
+                    <h:graphicImage library="img" name="ajaxloading.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+
+
+            <h:form id="formCursoEdit" prependId="false">
+                <p:panel header="#{cursoController.cursoId!=null  ? bundle['header.editar'] : bundle['header.nuevo']}" 
+                         id="panelEditCurso"
+                         styleClass = "myPanelStyle myPanelStyleTitle">
+
+                    <p:messages  closable="true"/>
+
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="#{bundle['cursoController.nombre']}"/>
+                        <p:inputText id="idNombre" label="#{bundle['cursoController.nombre']}"
+                                     required="true"
+                                     value="#{cursoController.current.nombreCurso}" 
+                                     validatorMessage="No ha ingresado un nombre para el curso"
+                                     styleClass="letras">
+                        </p:inputText>
+
+
+                        <h:outputLabel value="#{bundle['cursoController.orden']}"/>
+                        <p:inputText id="idOrden" label="#{bundle['cursoController.orden']}"
+                                     required="true"
+                                     value="#{cursoController.current.orden}" 
+                                     validatorMessage="No ha ingresado un orden para el curso"
+                                     styleClass="numeros">
+                        </p:inputText>
+
+
+                        <h:outputLabel value="#{bundle['cursoController.nivel']}"/>
+                        <p:selectOneMenu id="idNivel" 
+                                         converter="genericConverter"
+                                         value="#{cursoController.current.nivel}"
+                                         validatorMessage="Escoja un nivel"
+                                         label="#{bundle['cursoController.nivel']}"
+                                         valueChangeListener="#{cursoController.mostrarEspecialidad}"
+                                         immediate="true">
+
+                            <f:selectItem itemLabel="#{bundle.item}" itemValue="" />  
+                            <f:selectItems value="#{nivelController.itemsAvailableSelectOne}"/>
+                            <p:ajax update="@form idEspecialidad"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle['cursoController.especialidad']}" 
+                                       id="idLabelEspecialidad"
+                                       rendered="false"/>
+                        <p:selectOneMenu id="idEspecialidad"
+                                         rendered="false"
+                                         label="#{bundle['cursoController.especialidad']}"
+                                         converter="genericConverter"
+                                         value="#{cursoController.current.especialidad}"
+                                         validatorMessage="Escoja una especialidad">
+                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                            <f:selectItems 
+                                value="#{especialidadController.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+
+
+
+
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                             rendered="#{cursoController.cursoId!=null}"
+                                             action="#{cursoController.update()}"
+                                             update="panelEditCurso"
+                                             icon="#{bundle['icono.actualizar']}"/>
+
+
+                            <p:commandButton value="#{bundle['boton.guardar']}" 
+                                             rendered="#{cursoController.cursoId == null}"
+                                             action="#{cursoController.persist()}"
+                                             update="panelEditCurso"
+                                             icon="#{bundle['icono.guardar']}"/>
+
+
+                            <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                             action="#{cursoController.cancelEdit()}"
+                                             immediate="true" 
+                                             icon="#{bundle['icono.cancelar']}"/>
+
+
+                        </f:facet> 
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel header="#{bundle['boton.agregar.paralelo']}">
+
+
+                    <f:facet name="header">
+                        <p:commandButton value="#{bundle['boton.agregar.paralelo']}" 
+                                         action="#{cursoController.addParalelos()}" 
+                                         ajax="true" 
+                                         update="tableAddParalelos" 
+                                         process="@this"
+                                         icon="#{bundle['icono.agregar']}"/>
+
+                    </f:facet>
+
+
+                    <p:dataTable id="tableAddParalelos" 
+                                 var="_paralelos" 
+                                 value="#{cursoController.current.paralelos}" 
+                                 rows="10" 
+                                 paginator="true">
+
+                        <p:column headerText="#{bundle['paraleloController.nombre']}" >
+                            <p:inputText label="#{bundle['paraleloController.nombre']}" 
+                                         required="true" 
+                                         value="#{_paralelos.nombreParalelo}"
+                                         styleClass="mayusculas">
+                                <p:ajax partialSubmit="true"/>
+                            </p:inputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle['paraleloController.cupos']}">
+                            <p:inputText label="#{bundle['paraleloController.cupos']}" 
+                                         required="true" value="#{_paralelos.numeroCupos}" 
+                                         styleClass="numeros">
+                                <p:ajax partialSubmit="true"/>
+                            </p:inputText>
+                        </p:column>
+
+                        <p:column headerText="#{bundle['boton.acciones']}">
+                            <p:button value="#{bundle['boton.editar']}"
+                                      icon="#{bundle['icono.editar']}"/>
+                            <p:commandButton value="#{bundle['boton.eliminar']}"
+                                             icon="#{bundle['icono.eliminar']}"/>
+
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

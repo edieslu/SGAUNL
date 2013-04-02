@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="supletorioId" value="#{supletorioController.supletorioId}"/>
+            
+        </f:metadata>
+        
+        
+        <h:form id="form">
+            <p:messages autoUpdate="true" closable="true"/>
+            
+            <p:panel header="#{supletorioController.supletorioId != null ? bundle['header.nuevo'] : bundle['header.editar']}">
+
+                <p:panelGrid columns="2" >
+
+                    <h:outputLabel  value="#{bundle['supletorioController.nombre']}"/>
+                    <p:inputText value="#{supletorioController.current.nombreSupletorio}" 
+                                 label="#{bundle['supletorioController.nombre']}"
+                                 required="true"/>
+
+                    <h:outputLabel  value="#{bundle['supletorioController.descripcion']}"/>
+                    <p:inputText value="#{supletorioController.current.descripcionSupletorio}" 
+                                 label="#{bundle['supletorioController.descripcion']}"
+                                 required="true"/>
+
+                    <f:facet name="footer" >
+                        <p:commandButton value="#{bundle['boton.guardar']}"
+                                         icon="#{bundle['icono.guardar']}"
+                                         action="#{supletorioController.persist()}"
+                                         rendered="#{supletorioController.supletorioId==null}"/>
+                        <p:commandButton value="#{bundle['boton.actualizar']}"
+                                         icon="#{bundle['icono.actualizar']}"
+                                         action="#{supletorioController.update()}"
+                                         rendered="#{supletorioController.supletorioId!=null}"/>
+
+                        <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                         icon="#{bundle['icono.cancelar']}"
+                                         action="#{supletorioController.cancelEdit()}"
+                                         immediate="true"/>
+                    </f:facet>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

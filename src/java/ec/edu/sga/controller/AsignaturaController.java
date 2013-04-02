@@ -96,7 +96,7 @@ public class AsignaturaController implements Serializable {
         this.endConversation();
         System.out.println("Después de crear la asignatura: " + current.getNombreAsignatura());
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/asignatura/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } //Fin del método persist
 
     public String update() {
@@ -107,7 +107,7 @@ public class AsignaturaController implements Serializable {
         System.out.println("Después de actualizar la asignatura: " + current.getNombreAsignatura());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/asignatura/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método Update
 
     public String delete() {
@@ -116,12 +116,12 @@ public class AsignaturaController implements Serializable {
         System.out.println("Después de eliminar la asignatura");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/asignatura/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método delete
 
     public String cancelEdit() {
         this.endConversation();
-        return "/asignatura/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }  // Fin del método Cancel Edit
 
     //___________________Métodos que devuelven una lista de items de tipo Asignatura___________________//
@@ -137,14 +137,6 @@ public class AsignaturaController implements Serializable {
     public List<Asignatura> getFindAll() {
         return ejbFacade.findAllbyAnio();
     }
-
-    //Métodos para navegar entre distintas páginas
-    public String getOutcomeList() {
-        return "/asignatura/List?faces-redirect=true";
-    }
-
-    public String getOutcomeEdit() {
-        return "/asignatura/Edit?faces-redirect=true";
-    }
+   
 }//Fin de la clase Asignatura Controller
 

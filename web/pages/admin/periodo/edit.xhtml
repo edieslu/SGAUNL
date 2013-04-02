@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <f:metadata>
+        <f:viewParam name="periodoId" value="#{periodoController.periodoId}"/>
+    </f:metadata>
+
+    <ui:composition template="/WEB-INF/templates/plantilla.xhtml">
+
+
+
+
+        <ui:define name="content">
+
+            <p:messages closable="true" globalOnly="true"/>
+
+            <h:form id="form" prependId="false">
+
+                <p:panel header="#{empty periodoController.periodoId?bundle['header.nuevo']:bundle['header.editar']}">
+                    <p:panelGrid columns="2" >
+
+                        <h:outputLabel value="#{bundle['periodoController.nombre']}" for="idNombre"/>
+                        <p:inputText id="idNombre" value="#{periodoController.current.nombre}"/>
+
+                        <h:outputLabel value="#{bundle['periodoController.fecha.inicio']}"/>
+                        <p:calendar value="#{periodoController.current.fechaInicio}" navigator="true"/>
+
+                        <h:outputLabel value ="#{bundle['periodoController.fecha.fin']}"/>
+                        <p:calendar value="#{periodoController.current.fechaFin}" navigator="true"/>
+
+                        <h:outputLabel value="#{bundle['periodoController.estado']}" />
+                        <p:selectBooleanCheckbox value="#{periodoController.current.estado}" />
+
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle['boton.guardar']}"
+                                             icon="#{bundle['icono.guardar']}"
+                                             action="#{periodoController.persist()}"
+                                             rendered="#{empty periodoController.periodoId}"/>
+
+                            <p:commandButton value="#{bundle['boton.cancelar']}"
+                                             icon="#{bundle['icono.cancelar']}"
+                                             action="#{periodoController.cancel()}"/>
+
+                            <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             icon="#{bundle['icono.actualizar']}"
+                                             action="#{periodoController.update()}"
+                                             rendered="#{not empty periodoController.periodoId}"/>
+
+                        </f:facet>
+
+
+                    </p:panelGrid>
+
+                </p:panel>
+
+            </h:form>
+
+
+        </ui:define>
+
+
+
+
+    </ui:composition>
+
+
+</html>
+

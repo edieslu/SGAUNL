@@ -91,7 +91,7 @@ public class ProgramaParticipacionEstudiantilController implements Serializable 
         this.endConversation();
         System.out.println("Después de crear un Programa: " + current.getNombrePrograma());
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/programa/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } //Fin del método persist
 
     public String update() {
@@ -101,7 +101,7 @@ public class ProgramaParticipacionEstudiantilController implements Serializable 
         System.out.println("Después de actualizar un Programa: " + current.getNombrePrograma());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/programa/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método Update
 
     public String delete() {
@@ -110,12 +110,12 @@ public class ProgramaParticipacionEstudiantilController implements Serializable 
         System.out.println("Después de eliminar un Programa");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/programa/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     } // Fin del método delete
 
     public String cancelEdit() {
         this.endConversation();
-        return "/programa/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }  // Fin del método Cancel Edit
 
     //___________________Métodos que devuelven una lista de items de tipo Programa___________________//
@@ -134,7 +134,7 @@ public class ProgramaParticipacionEstudiantilController implements Serializable 
 
     //Métodos para navegar entre distintas páginas
     public String getOutcomeList() {
-        return "/programa/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String getOutcomeEdit() {

@@ -83,26 +83,26 @@ public class PeriodoAcademicoController implements Serializable {
     public String persist(){
         ejbFacade.create(current);
         this.endConversation();
-        return "/periodo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
     
     
     public String update(){
         ejbFacade.edit(current);
         this.endConversation();
-        return "/periodo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
     
     
     public String delete(){
         ejbFacade.remove(current);
         this.endConversation();
-        return "/periodo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
     
     public String cancel(){
         this.endConversation();
-        return "/periodo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
     
     //___________________---Métodos para realizar búsquedas_____________________

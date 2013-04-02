@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/templates/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+        <p:ajaxStatus> 
+            <f:facet name="prestart">
+                <h:outputText value="Starting..." /> 
+                <h:graphicImage library="img" name="ajaxloading.gif" /> 
+            </f:facet>
+
+            <f:facet name="error"> 
+                <h:outputText value="Error" />
+            </f:facet>
+
+            <f:facet name="success"> 
+                <h:outputText value="Success" />
+            </f:facet>
+
+
+            <f:facet name="default"> 
+                <h:outputText value="No estoy haciendo ninguna petición ajax" />
+            </f:facet>
+
+
+            <f:facet name="start"> 
+                <h:outputText value="Please Wait" />
+            </f:facet>
+
+
+            <f:facet name="complete"> 
+                <h:outputText value="Soy el valor después de una peticón ajax" />
+            </f:facet>
+
+        </p:ajaxStatus>
+
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="img" name="ajaxloading.gif" />
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <f:metadata>
+            <f:event listener="#{anioLectivoController.findAll}" type="preRenderView" />
+            <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
+        </f:metadata>
+
+        <h:form id="formAnioList" prependId="false">
+
+            <p:messages closable="true" globalOnly="true"/>
+
+
+            <p:panel header="#{bundle['header.lista']}">
+
+                <p:dataTable id="idAnioTable"   
+                             value="#{anioLectivoController.resultlist}" 
+                             var="_anio"
+                             paginator="true" rows="10">
+
+
+                    <p:column headerText="#{bundle['anioController.fechainicio']}">
+
+                        <h:outputText value="#{_anio.fechaInicio}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{bundle['anioController.fechafin']}">
+
+                        <h:outputText value="#{_anio.fechaFin}" />
+
+                    </p:column>
+
+
+                    <p:column headerText="#{bundle['anioController.duracion']}" >
+                        <h:outputText value="#{_anio.duracion}" />
+
+                    </p:column>
+
+
+                    <p:column headerText="Estado" >
+                        <h:outputText value="#{_anio.estado}" />
+
+                    </p:column>
+
+
+                    <p:column  headerText="#{bundle['boton.acciones']}">
+
+                        <div class="controls">
+
+                            <h:link outcome="edit"
+                                    styleClass="btn">
+                                <i class="icon-edit"></i>
+                                <f:param name="anioLectivoId" value="#{_anio.id}"/>
+                            </h:link>
+
+                            <p:commandButton value="Eliminar"   
+                                             oncomplete="confirmacion.show()"
+                                             ajax="true"
+                                             update=":formAnioList:idDialogoConfirmacion"
+                                             process="@this"
+                                             styleClass="btn-danger">
+                               
+                                <f:param name="anioLectivoId" value="#{_anio.id}" />
+
+                            </p:commandButton>
+                        </div>
+
+                    </p:column>
+
+
+                </p:dataTable>
+
+
+
+
+
+
+            </p:panel>
+
+
+            <div class="form-actions">
+                <h:link  value="#{bundle['boton.nuevo']}"
+                         outcome="edit"
+                         class="btn btn-primary"/>
+            </div>
+
+            <p:confirmDialog id="idDialogoConfirmacion"
+                             header="#{bundle['header.eliminarRegistros']}"
+                             message="#{bundle['mensaje.confirmacion']}:  #{anioLectivoController.current. fechaInicio}" 
+                             widgetVar="confirmacion"
+                             severity="alert">
+
+                <p:commandButton id="idConfirmacion" 
+                                 value="#{bundle['boton.si']}"
+                                 oncomplete="confirmacion.hide()"
+                                 action="#{anioLectivoController.delete()}"
+                                 update=":formAnioList:idAnioTable"
+                                 styleClass="btn btn-danger">
+
+                    <f:param name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
+
+                </p:commandButton>
+
+                <p:commandButton id="idDeclinacion"
+                                 value="#{bundle['boton.no']}"
+                                 oncomplete="confirmacion.hide()"
+                                 action="#{anioLectivoController.endConversation()}">
+
+                </p:commandButton>
+
+
+            </p:confirmDialog>
+
+
+
+        </h:form>
+
+
+
+
+    </ui:define>
+
+</ui:composition>
