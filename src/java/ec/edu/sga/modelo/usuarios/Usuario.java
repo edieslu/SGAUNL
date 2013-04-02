@@ -91,6 +91,8 @@ public class Usuario implements Serializable {
     private TipoUsuario tipoUsuario;
     @OneToMany(mappedBy="usuario")
     private List<Asignatura> asignaturas;
+    @ManyToOne
+    private Role role;
     
 
     public Usuario() {
@@ -250,6 +252,17 @@ public class Usuario implements Serializable {
         this.asignaturas = asignaturas;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+   
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

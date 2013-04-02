@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/css/application.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>                
+        <script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+    </h:head>
+
+    
+    <div class="container" style="height: 100px"/>
+
+    <div class="container">
+
+        <h:form class="form" id="login2" onsubmit="document.getElementById('login2').action='j_security_check';" prependId="false">
+
+
+            <div class="row">
+                <div class=" offset4 span4 offset4">
+                    <p:panel header="#{bundle['loginController.ingreso']}">
+
+                        <h:panelGroup styleClass="control-group">
+                            <p:outputLabel for="j_username" value="Username" />
+                            <p:inputText id="j_username" name="j_username" />            
+                            <p:outputLabel for="j_password" value="Password" />
+                            <p:password id="j_password" name="j_password"/>
+                        </h:panelGroup>
+                    </p:panel>
+                    <div class="form-actions">
+                        <p:commandButton styleClass="btn btn-primary" id="submit" value="Login" ajax="false"/>
+                    </div>
+                </div>
+
+            </div>
+        </h:form>
+
+    </div>
+
+</html>  
