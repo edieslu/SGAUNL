@@ -22,22 +22,27 @@ and open the template in the editor.
                     <h:panelGroup >
                         <script type="text/javascript">
                             $(document).ready(function() {
-                                $('login\\:usuario').attr("placeholder", "username");
-                                $('login\\:password').attr("placeholder", "password");
+                                $('login\\:j_username').attr("placeholder", "username");
+                                $('login\\:j_password').attr("placeholder", "password");
                             });
                         </script>
+                        <h:form class="form" id="login2" 
+                                styleClass="navbar-form pull-right" 
+                                onsubmit="document.getElementById('login2').action='j_security_check';" 
+                                prependId="false">
 
-                        <h:form id="login" prependId="false" styleClass="navbar-form pull-right">
-                            <h:outputText value=" " />
-                            <h:inputText styleClass="span2" value="#{loginController.usuario}" id="usuario" 
-                                         required="true"/>
-                            <h:outputText value=" " />
-                            <h:inputSecret styleClass="span2" value="#{loginController.clave}" id="password"
-                                           required="true" />
-                            <h:outputText value=" " />
-                            <h:commandButton styleClass="btn" value="Ingresar" 
-                                             action="#{loginController.ingresar()}"/>
+
+                                            <p:outputLabel for="j_username" value="Username" />
+                                            <p:inputText id="j_username" name="j_username" styleClass="span2"/>            
+                                            <p:outputLabel for="j_password" value="Password" />
+                                            <p:password id="j_password" name="j_password" styleClass="span2"/>
+                                   
+                                   
+                                   
+                                        <p:commandButton styleClass="btn btn-primary" id="submit" value="Login" ajax="false"/>
+                                 
                         </h:form>
+                      
 
                     </h:panelGroup>
                     <!-- Be sure to leave the brand out there if you want it shown -->

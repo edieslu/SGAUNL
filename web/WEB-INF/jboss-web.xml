@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
   <context-root>/SGAUNL</context-root>
+  <security-domain>java:/jaas/simpleWebAuthenticationPolicy</security-domain>  
 </jboss-web>
+
+

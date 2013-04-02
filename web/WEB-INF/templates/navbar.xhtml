@@ -1,43 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
     <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner" style="background: black">
-                <div class="container">
-                    <h:panelGroup >
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $('login\\:usuario').attr("placeholder", "username");
-                                $('login\\:password').attr("placeholder", "password");
-                            });
-                        </script>
+        <div class="navbar-inner" style="background: black">
+            <div class="container">
 
-                        <h:form id="login" prependId="false" styleClass="navbar-form pull-right">
-                            <h:outputText value=" " />
-                            <h:inputText styleClass="span2" value="#{loginController.usuario}" id="usuario" 
-                                         required="true"/>
-                            <h:outputText value=" " />
-                            <h:inputSecret styleClass="span2" value="#{loginController.clave}" id="password"
-                                           required="true" />
-                            <h:outputText value=" " />
-                            <h:commandButton styleClass="btn" value="Ingresar" 
-                                             action="#{loginController.ingresar()}"/>
-                        </h:form>
 
-                    </h:panelGroup>
-                    <!-- Be sure to leave the brand out there if you want it shown -->
-                    <a class="brand" href="#">SGA-UEAUNL</a>
 
-                    <!-- Everything you want hidden at 940px or less, place within here -->
-                    <div class="nav-collapse collapse">
-                        <!-- .nav, .navbar-search, .navbar-form, etc -->
+                <h:panelGroup rendered="#{empty p:remoteUser()}">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('login\\:usuario').attr("placeholder", "username");
+                            $('login\\:password').attr("placeholder", "password");
+                        });
+                    </script>
 
-                    </div>
+                    <h:form id="login" prependId="false" styleClass="navbar-form pull-right">
+                        <h:outputText value=" " />
+                        <h:inputText styleClass="span2" value="#{loginController.usuario}" id="usuario" 
+                                     required="true"/>
+                        <h:outputText value=" " />
+                        <h:inputSecret styleClass="span2" value="#{loginController.clave}" id="password"
+                                       required="true" />
+                        <h:outputText value=" " />
+                        <h:commandButton styleClass="btn" value="Ingresar" 
+                                         action="#{loginController.ingresar()}"/>
+
+                    </h:form>
+
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{not empty p:remoteUser()}" styleClass="navbar-form pull-right">
+                    <h:link  value="Bienvenido: #{p:remoteUser()}" />
+                    #{'   '}
+                    <p:commandLink  action="#{loginController.logout()}" value="Salir"/> 
+                </h:panelGroup>
+                <!-- Be sure to leave the brand out there if you want it shown -->
+                <a class="brand" href="#">SGA-UEAUNL</a>
+
+                <!-- Everything you want hidden at 940px or less, place within here -->
+                <div class="nav-collapse collapse">
+                    <!-- .nav, .navbar-search, .navbar-form, etc -->
 
                 </div>
+
             </div>
         </div>
+    </div>
 </html>
 

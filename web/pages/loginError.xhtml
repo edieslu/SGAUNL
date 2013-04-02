@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"      
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="#{request.contextPath}/resources/css/application.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery.js"></script>                
+        <script type="text/javascript" src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+    </h:head>
+
+
+    <div class="container" style="height: 100px"/>
+
+    <div class="container">
+
+        <h:form class="form" id="login2" onsubmit="document.getElementById('login2').action='j_security_check';" prependId="false">
+
+
+            <div class="row">
+                <div class=" offset3 span6 offset3">
+                    <p:panel header="Mensaje de Información">
+                        <h3>El usuario o la contraseña son incorrectos</h3>  
+                    </p:panel>
+                    <div class="form-actions">
+                        <h:link styleClass="btn btn-primary" outcome="/pages/index.xhtml" value="Volver"/>  
+
+                    </div>
+                </div>
+
+            </div>
+        </h:form>
+
+    </div>
+
+</html>  
+
+
+
+
+
