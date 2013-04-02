@@ -325,7 +325,7 @@ public class UsuarioController implements Serializable {
             }
 
         }
-        return "/usuario/List";
+        return "list?faces-redirect=true";
     }
 
     public String persist() {
@@ -337,7 +337,7 @@ public class UsuarioController implements Serializable {
         this.endConversation();
         //FacesContext.getCurrentInstance().getMessageList().clear();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/usuario/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
     }
 
@@ -348,7 +348,7 @@ public class UsuarioController implements Serializable {
         ejbFacade.edit(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/usuario/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
     }
 
@@ -357,13 +357,13 @@ public class UsuarioController implements Serializable {
         ejbFacade.remove(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/usuario/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-        return "/usuario/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {

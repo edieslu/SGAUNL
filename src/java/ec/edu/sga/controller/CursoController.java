@@ -101,7 +101,7 @@ public class CursoController implements Serializable {
     //Encuentra todos los cursosByAnioActivo y los presenta en una tabla
     public String findAll() {
         resultlist = ejbFacade.findAllbyAnio();
-        return "curso/List";
+        return "list?faces-redirect=true";
     }
 
     public void addParalelos() {
@@ -127,7 +127,7 @@ public class CursoController implements Serializable {
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-        return "/curso/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     //_______________________PERSISTIR OBJETOS________________________________//
@@ -149,7 +149,7 @@ public class CursoController implements Serializable {
         this.endConversation();
 
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/curso/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
 
     }
@@ -162,7 +162,7 @@ public class CursoController implements Serializable {
         System.out.println("ya modifique");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/curso/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
     }
 
@@ -171,7 +171,7 @@ public class CursoController implements Serializable {
         ejbFacade.remove(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/curso/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
     }
 

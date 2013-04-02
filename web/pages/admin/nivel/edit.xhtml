@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <f:metadata>
+        <f:viewParam name="nivelId" value="#{nivelController.nivelId}">
+
+        </f:viewParam>
+    </f:metadata>
+
+    <ui:composition template="/WEB-INF/templates/plantilla.xhtml">
+        <ui:define name="title">
+            <!--#{loginController.accesoURL(true, "/faces/nivel/Edit.xhtml")}-->
+            <h:outputText value="#{bundle.EditNivelTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <h:form id="formEditNivel">
+                <p:panel header="#{nivelController.nivelId!=null ? bundle['boton.editar'] : bundle['boton.nuevo']}" 
+                         id="panelEditNiveles">
+
+                    <p:panelGrid columns="2">
+
+                        <h:outputLabel value="#{bundle['nivelController.nombre']}"/>
+                        <p:inputText required="true" 
+                                     label="#{bundle['nivelController.nombre']}" 
+                                     value="#{nivelController.current.nombreNivel}"/>
+
+
+                        <h:outputLabel value="#{bundle['nivelController.tipo']}"/>
+                        <p:selectOneMenu label="#{bundle['nivelController.tipo']}"                                   
+                                         required="true" 
+                                         value="#{nivelController.current.tipoNivel}">
+                            <f:selectItem itemLabel="#{bundle.item}" itemValue=""/>
+                            <f:selectItems value="#{typeListController.typeTipoNivel}"/>  
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle['nivelController.descripcion']}"/>
+                        <p:inputTextarea label="#{bundle['nivelController.descripcion']}" 
+                                         required="true" 
+                                         value="#{nivelController.current.descripcionNivel}" />
+
+                        
+                    </p:panelGrid>
+                </p:panel>
+                
+                <div class="form-actions">
+                            <p:commandButton value="#{bundle['boton.guardar']}"
+                                             rendered="#{empty nivelController.current.id}"
+                                             action="#{nivelController.persist()}"
+                                             update="panelEditNiveles"
+                                             icon="#{bundle['icono.guardar']}"
+                                             styleClass="btn btn-primary"/>
+
+                            <p:commandButton value="#{bundle['boton.actualizar']}"
+                                             rendered="#{not empty nivelController.current.id}"
+                                             action="#{nivelController.update()}"
+                                             icon="#{bundle['icono.actualizar']}"
+                                             update="panelEditNiveles"
+                                             styleClass="btn"/>
+
+                            <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                             action="#{nivelController.cancelEdit()}" 
+                                             immediate="true" 
+                                             icon="#{bundle['icono.cancelar']}"
+                                             styleClass="btn"/>
+                        </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

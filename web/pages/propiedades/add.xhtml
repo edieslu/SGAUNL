@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/templates/plantilla.xhtml">
+
+        <ui:define name="content">
+            <p:panel header="Campos personalizados">
+                <p:panelGrid columns="2">
+                    <h:outputLabel value="nombre"/>
+                    <p:inputText value="" />
+                    <h:outputLabel value="descripción"/>
+                    <p:inputTextarea value="" />
+                    <h:outputLabel value="Tipo de dato"/>
+                    <p:selectOneMenu value="">
+                        <f:selectItem itemLabel="campo de texto"/>
+                        <f:selectItem itemLabel="campo de área de texto"/>
+                        <f:selectItem itemLabel="campo de fecha"/>
+                        <f:selectItem itemLabel="campo si/no"/>
+                        <f:selectItem itemLabel="campo de lista de selección"/>                    
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="El campo es requerido"/>
+                    <p:selectBooleanButton label="Requerido" offLabel="No" onLabel="Si"/>
+                    <h:outputLabel value="Valor por defecto"/>
+                    <p:inputText value="" />
+                    <h:outputLabel value="Etiqueta en la vista"/>
+                    <p:inputText value="" />
+                    <h:outputLabel value="Línea de ayuda"/>
+                    <p:inputTextarea value="" />
+
+
+                </p:panelGrid>
+
+            </p:panel>
+            
+            <input type="submit" value="Enviar" class="btn btn-primary"/>
+
+        </ui:define>
+
+
+
+    </ui:composition>
+
+
+</html>
+

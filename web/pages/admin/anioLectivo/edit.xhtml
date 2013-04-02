@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/templates/plantilla.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <f:metadata>
+        <f:viewParam name="anioLectivoId" value="#{anioLectivoController.anioLectivoId}"/>
+    </f:metadata>
+
+
+
+    <ui:define name="content">
+        <!--    #{loginController.accesoURL(true, "/faces/anioLectivo/Edit.xhtml")}-->
+
+        <h:form id="formEdit" class="form" prependId="false">
+
+            <p:messages autoUpdate="true" closable="true"/>
+
+            <p:panel header="#{anioLectivoController.anioLectivoId!=null  ? bundle['boton.editar'] : bundle['boton.nuevo']}" 
+                     id="panelEditAnio">
+
+                <div class="control-group">
+                    <h:outputLabel value="#{bundle['anioController.fechainicio']}"/>
+                    <p:calendar label="#{bundle['anioController.fechainicio']}" 
+                                required="true" 
+                                navigator="true" 
+                                showOn="button" 
+                                value="#{anioLectivoController.current.fechaInicio}"/>
+                    <h:graphicImage value="#{resource['success.gif']}" 
+                                    styleClass="validation-status" />
+
+                    <h:outputLabel value="#{bundle['anioController.fechafin']}"/>
+                    <div class="controls">
+                        <p:calendar label="#{bundle['anioController.fechafin']}" 
+                                    value="#{anioLectivoController.current.fechaFin}" 
+                                    navigator="true" 
+                                    showOn="button"
+                                    required="true"/>
+                    </div>
+                    <span class="help-block">Ingrese una fecha final</span>
+
+                    <h:panelGroup id="duracion" layout="block" class="control-group" rendered="true">
+                        <h:outputLabel styleClass="control-label" value="#{bundle['anioController.duracion']}"/>
+                        <div class="controls">
+                            <p:inputText label="#{bundle['anioController.duracion']}" 
+                                         value="#{anioLectivoController.current.duracion}">
+                                <p:ajax process="@this" partialSubmit="@this" update="@form"/>
+                            </p:inputText>
+                            <p:graphicImage id="image" value="#{resource['success.gif']}" rendered="#{not empty anioController.current.duracion}"
+                                            styleClass="validation-status" />
+                        </div>
+                    </h:panelGroup>
+
+                    <h:outputLabel value="#{bundle['anioController.anioActivo']}"/>
+                    <p:selectBooleanButton value="#{anioLectivoController.current.estado}" 
+                                           onLabel="#{bundle['boton.si']}" offLabel="#{bundle['boton.no']}"
+                                           styleClass="btn btn-primary"/>
+
+                    <h:outputLabel value="#{bundle['anioController.periodoMatriculas']}"/>
+                    <p:calendar label="#{bundle['anioController.periodoMatriculas']}" 
+                                value="#{anioLectivoController.current.periodoMatriculas}" 
+                                navigator="true" 
+                                showOn="button"
+                                required="true"/>
+
+                    <h:outputLabel value="#{bundle['anioController.periodoFinMatriculas']}"/>
+                    <p:calendar label="#{bundle['anioController.periodoFinMatriculas']}" 
+                                value="#{anioLectivoController.current.periodoFinMatriculas}" 
+                                navigator="true" 
+                                showOn="button"
+                                required="true"/>
+
+                </div>
+
+
+            </p:panel>
+            <div class="form-actions">
+                <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                 rendered="#{anioLectivoController.anioLectivoId!=null}"
+                                 action="#{anioLectivoController.update()}"
+                                 update="panelEditAnio"
+                                 styleClass="btn btn-primary"/>
+
+
+                <h:commandButton value="#{bundle['boton.guardar']}" 
+                                 rendered="#{anioLectivoController.anioLectivoId == null}"
+                                 action="#{anioLectivoController.persist()}"
+                                 update="panelEditAnio"
+                                 styleClass="btn btn-primary"/>
+
+                <h:commandButton value="#{bundle['boton.guardar.agregar']}" 
+                                 rendered="#{anioLectivoController.anioLectivoId == null}"
+                                 action="#{anioLectivoController.persistOther()}"
+                                 update="panelEditAnio"
+                                 styleClass="btn"/>
+
+
+
+                <h:commandButton value="#{bundle['boton.cancelar']}" 
+                                 action="#{anioLectivoController.cancelEdit()}"
+                                 immediate="true" 
+                                 styleClass="btn"/>
+
+
+            </div> 
+
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+

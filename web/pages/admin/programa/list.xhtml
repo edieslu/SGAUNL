@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/templates/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="content">
+
+        <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="img" name="ajaxloading.gif" />
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <f:metadata>
+            <f:viewParam name="programaId" value="#{programaController.programaId}"/>
+        </f:metadata>Edit
+
+
+        <h:form id="form" prependId="false">
+
+            <p:messages autoUpdate="true" closable="true"/>
+
+            <p:panel header="#{bundle['header.lista']}">
+
+                <p:dataTable id="tabla" 
+                             var="_programa" value="#{programaController.findAll}">
+
+                    <p:column headerText="#{bundle['programaController.nombre']}">
+                        <h:outputText  value="#{_programa.nombrePrograma}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{bundle['programaController.descripcion']}">
+                        <h:outputText  value="#{_programa.descripciónPrograma}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{bundle['boton.acciones']}">
+                        <p:button  value="#{bundle['boton.editar']}"
+                                   icon="#{bundle['icono.editar']}"
+                                   outcome="#{programaController.outcomeEdit}">
+                            <f:param name="programaId" value="#{_programa.id}"/>
+
+                        </p:button>
+                        <p:commandButton value="#{bundle['boton.eliminar']}"
+                                         icon="#{bundle['icono.eliminar']}"
+                                         oncomplete="confirmacion.show()"
+                                         ajax="true"
+                                         process="@this"
+                                         update=":form:idConfirmDialog">
+                            <f:param name="programaId" value="#{_programa.id}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+
+
+                <f:facet  name="footer">
+
+                    <p:button value="#{bundle['boton.nuevo']}"
+                              icon="#{bundle['icono.agregar']}"
+                              outcome="#{programaController.outcomeEdit}"/>
+                </f:facet>
+
+
+            </p:panel>
+
+            <p:confirmDialog  header="#{bundle['header.eliminarRegistros']}"
+                              message="#{bundle['mensaje.confirmacion']}: #{programaController.current.nombrePrograma}"
+                              id="idConfirmDialog" 
+                              widgetVar="confirmacion"
+                              severity="alert">
+
+                <p:commandButton action="#{programaController.delete()}"
+                                 value="#{bundle['boton.si']}"
+                                 update=":form:tabla"
+                                 oncomplete="confirmacion.hide()">
+                    <f:param name="programaId" value="#{programaController.programaId}"/>
+                </p:commandButton>
+
+                <p:commandButton value="#{bundle['boton.no']}" 
+                                 action="#{programaController.cancelEdit()}"
+                                 oncomplete="confirmacion.hide()"/>
+
+            </p:confirmDialog>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

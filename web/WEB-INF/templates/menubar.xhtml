@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="/pages/index.xhtml"/>
+            <p:submenu label="Administracion">
+                <p:menuitem value="Año Lectivo" url="/pages/admin/anioLectivo/list.xhtml"/>
+                <p:menuitem value="Nivel" url="/pages/admin/nivel/list.xhtml"/>
+                <p:menuitem value="Especialidad" url="/pages/admin/especialidad/list.xhtml"/>
+                <p:menuitem value="Curso" url="/pages/admin/curso/list.xhtml"/>
+                <p:menuitem value="Periodos" url="/pages/admin/periodo/list.xhtml"/>
+                <p:menuitem value="Asignatura" url="/pages/admin/asignatura/list.xhtml"/>
+
+
+            </p:submenu>
+
+            <p:submenu label="Usuarios">
+                <p:menuitem value="Estudiantes" url="/pages/admin/estudiante/list.xhtml"/>
+                <p:menuitem value="Docentes" url="/pages/admin/docente/list.xhtml"/>
+                <p:menuitem value="Administradores" url="/pages/admin/administrador/list.xhtml"/>
+                <p:menuitem value="Usuarios" url="/pages/admin/usuario/list.xhtml"/>
+
+
+            </p:submenu>
+
+        </p:menubar>
+    </h:form>
+</html>
+

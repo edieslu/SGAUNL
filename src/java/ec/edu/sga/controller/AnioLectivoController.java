@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.TransactionAttribute;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.model.SelectItem;
@@ -55,6 +57,7 @@ public class AnioLectivoController implements Serializable {
         return current;
     }
 
+    @TransactionAttribute
     public void setCurrent(AnioLectivo current) {
         System.out.println("Ingreso a fijar Año Lectivo" + this.current);
         this.beginConversation();
@@ -69,7 +72,8 @@ public class AnioLectivoController implements Serializable {
         return null;
     }
 
-    public void setAnioLectivoId(Long anioLectivoId) {
+    
+   public void setAnioLectivoId(Long anioLectivoId) {
         this.beginConversation();
         if (anioLectivoId != null && anioLectivoId.longValue() > 0) { //Verifica que el id no sea vacío
             this.current = ejbFacade.find(anioLectivoId);//Busca un año de acuerdo al ID y lo asigna a current
@@ -83,6 +87,7 @@ public class AnioLectivoController implements Serializable {
     }
 
     //____________________________MÉTODOS_______________________________
+    @TransactionAttribute
     public String persist() {
         System.out.println("Ingreso a grabar el Año Lectivo: " + current.getFechaInicio());
         current.setFechaCreacion(new Date());
@@ -91,7 +96,7 @@ public class AnioLectivoController implements Serializable {
         ejbFacade.create(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.creacion");
-        return "/anioLectivo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String persistOther() {
@@ -113,7 +118,7 @@ public class AnioLectivoController implements Serializable {
         System.out.println("Ya actualicé el año lectivo: " + current.getFechaInicio());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/anioLectivo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String delete() {
@@ -122,13 +127,13 @@ public class AnioLectivoController implements Serializable {
         System.out.println("ya eliminé el año lectivo");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/anioLectivo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("me acaban de llamar: canceledit()");
         this.endConversation();
-        return "/anioLectivo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public void beginConversation() {
@@ -150,7 +155,7 @@ public class AnioLectivoController implements Serializable {
     //Método que encuentra todos los años
     public String findAll() {
         resultlist = ejbFacade.findAll();
-        return "anioLectivo/List";
+        return "list?faces-redirect=true";
     }
 
     //método que activa el año que se está creando y desactiva el año activo

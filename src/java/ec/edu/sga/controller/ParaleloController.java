@@ -104,7 +104,7 @@ public class ParaleloController implements Serializable {
         System.out.println("Ya actualicé el paralelo: " + current.getNombreParalelo());
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.actualizacion");
-        return "/paralelo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String delete() {
@@ -113,13 +113,13 @@ public class ParaleloController implements Serializable {
         System.out.println("ya eliminé el paralelo");
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");
-        return "/paralelo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
     }
 
     public String cancelEdit() {
         System.out.println("Terminando la conversación, cancelando el evento");
         this.endConversation();
-        return "/paralelo/List?faces-redirect=true";
+        return "list?faces-redirect=true";
 
     }
 
