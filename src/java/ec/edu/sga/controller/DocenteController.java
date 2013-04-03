@@ -8,15 +8,8 @@ import ec.edu.sga.controller.util.SessionUtil;
 import ec.edu.sga.facade.RoleFacade;
 import ec.edu.sga.facade.UsuarioFacade;
 import ec.edu.sga.modelo.usuarios.Ficha;
-import ec.edu.sga.modelo.usuarios.FichaMadre;
-import ec.edu.sga.modelo.usuarios.FichaMedica;
-import ec.edu.sga.modelo.usuarios.FichaPadre;
 import ec.edu.sga.modelo.usuarios.FichaPersonal;
 import ec.edu.sga.modelo.usuarios.FichaProfesional;
-import ec.edu.sga.modelo.usuarios.FichaRepresentante;
-import ec.edu.sga.modelo.usuarios.FichaSocioeconomica;
-import ec.edu.sga.modelo.usuarios.Role;
-import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import ec.edu.sga.modelo.usuarios.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,17 +18,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.component.accordionpanel.AccordionPanel;
-import org.primefaces.component.panel.Panel;
-import org.primefaces.component.tabview.Tab;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -76,6 +61,8 @@ public class DocenteController implements Serializable {
         resultlist = new ArrayList<Usuario>();
     }
 //*********** GETTER AND SETTER***********//
+    
+    
 
     public Long getUsuarioId() {
         return usuarioId;

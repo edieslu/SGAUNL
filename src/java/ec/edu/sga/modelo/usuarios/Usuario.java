@@ -51,7 +51,7 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
     + "or"
     + " lower(u.apellidos) like lower(concat('%',:clave,'%')) "
     + "order by u.nombres"),
-     @NamedQuery(name = "Usuario.buscarPorDocentes",
+    @NamedQuery(name = "Usuario.buscarPorDocentes",
     query = "select u from Usuario u where"
     + " (lower(u.dni) like lower(concat('%',:clave,'%'))"
     + "or"
