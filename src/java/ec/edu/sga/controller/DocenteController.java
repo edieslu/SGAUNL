@@ -21,6 +21,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import prueba.ciclodevida.DepuracionListener;
 
 /**
  *
@@ -29,6 +32,8 @@ import javax.inject.Named;
 @Named(value = "docenteController")
 @ConversationScoped
 public class DocenteController implements Serializable {
+    
+    private static final Log log = LogFactory.getLog(DocenteController.class);
 
     private static final long serialVersionUID = 4166635535168356318L;
     private Usuario current;
@@ -47,7 +52,7 @@ public class DocenteController implements Serializable {
 
 // ---------------------- Constructor de la Clase ----------------------
     public DocenteController() {
-        System.out.println("Constructor de Usuario Controller");
+        log.info("Constructor de Usuario Controller");
         current = new Usuario();
         ficha = new Ficha();
         current.setFicha(ficha);
@@ -187,10 +192,11 @@ public class DocenteController implements Serializable {
 
         } else {
             System.out.println("Ingreso a buscar con criterio: " + criterio);
+            log.info("Ingreso a buscar con criterio: " + criterio);
             resultlist = ejbFacade.findDocentes(criterio);
-            System.out.println("Encontre Docente***********:" + resultlist.size());
+            log.info("Encontre Docente***********:" + resultlist.size());
             for (Usuario usuario : resultlist) {
-                System.out.println("Docente encontrado " + usuario.getNombres());
+                log.info("Docente encontrado " + usuario.getNombres());
                 
             }
             if (resultlist.isEmpty()) {
