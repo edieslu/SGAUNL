@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <f:metadata>
-        <f:viewParam name="usuarioId" value="#{usuarioController.usuarioId}"/>
+        <f:viewParam name="usuarioId" value="#{docenteController.usuarioId}"/>
     </f:metadata>
 
     <ui:composition template="/WEB-INF/templates/plantilla.xhtml">
@@ -36,17 +36,17 @@ and open the template in the editor.
                 <p:panel header="#{bundle['header.lista']}">
                     <h:panelGrid columns="3">
                         <h:outputText value="#{bundle['label.buscar']}:"/>
-                        <p:inputText id="criterio" value="#{usuarioController.criterio}" 
+                        <p:inputText id="criterio" value="#{docenteController.criterio}" 
                                      size="30" label="#{bundle['label.buscar']}" 
                                      title="#{bundle['label.buscar']}">
                         </p:inputText>
                         <p:commandButton value="#{bundle['label.buscar']}" 
-                                         action="#{usuarioController.find}"
+                                         action="#{docenteController.find}"
                                          ajax="true" icon="#{bundle['icono.buscar']}" 
                                          update="@form listaUsuarios">
                         </p:commandButton>
                     </h:panelGrid>
-                    <p:dataTable id="listaUsuarios" value="#{usuarioController.docentes}" 
+                    <p:dataTable id="listaUsuarios" value="#{docenteController.docentes}" 
                                  var="usuario" paginator="true" rows="10">
 
                         <p:column headerText="#{bundle['usuarioController.dni']}" >

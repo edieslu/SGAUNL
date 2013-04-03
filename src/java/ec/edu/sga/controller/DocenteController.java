@@ -5,6 +5,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.RoleFacade;
 import ec.edu.sga.facade.UsuarioFacade;
 import ec.edu.sga.modelo.usuarios.Ficha;
 import ec.edu.sga.modelo.usuarios.FichaMadre;
@@ -14,6 +15,7 @@ import ec.edu.sga.modelo.usuarios.FichaPersonal;
 import ec.edu.sga.modelo.usuarios.FichaProfesional;
 import ec.edu.sga.modelo.usuarios.FichaRepresentante;
 import ec.edu.sga.modelo.usuarios.FichaSocioeconomica;
+import ec.edu.sga.modelo.usuarios.Role;
 import ec.edu.sga.modelo.usuarios.TipoUsuario;
 import ec.edu.sga.modelo.usuarios.Usuario;
 import java.io.Serializable;
@@ -48,11 +50,6 @@ public class DocenteController implements Serializable {
     private String criterio;
     private Ficha ficha;
     private FichaPersonal fichaP;
-    private FichaMedica fichaM;
-    private FichaSocioeconomica fichaS;
-    private FichaPadre fichaPadre;
-    private FichaMadre fichaMadre;
-    private FichaRepresentante fichaRepresentante;
     private FichaProfesional fichaProfesional;
     @EJB
     private ec.edu.sga.facade.UsuarioFacade ejbFacade;
@@ -60,6 +57,8 @@ public class DocenteController implements Serializable {
     @Inject
     Conversation conversation;
     private Long usuarioId;
+    @EJB
+    private RoleFacade ejbFacadeRole;
 
 // ---------------------- Constructor de la Clase ----------------------
     public DocenteController() {
@@ -71,21 +70,6 @@ public class DocenteController implements Serializable {
         fichaP = new FichaPersonal();
         fichaP.setFicha(ficha);
         ficha.setFichaPersonal(fichaP);
-        fichaM = new FichaMedica();
-        fichaM.setFicha(ficha);
-        ficha.setFichaMedica(fichaM);
-        fichaS = new FichaSocioeconomica();
-        fichaS.setFicha(ficha);
-        ficha.setFichaSocio(fichaS);
-        fichaPadre = new FichaPadre();
-        fichaPadre.setFicha(ficha);
-        ficha.setFichaPadre(fichaPadre);
-        fichaMadre = new FichaMadre();
-        fichaMadre.setFicha(ficha);
-        ficha.setFichaMadre(fichaMadre);
-        fichaRepresentante = new FichaRepresentante();
-        fichaRepresentante.setFicha(ficha);
-        ficha.setFichaRepresentante(fichaRepresentante);
         fichaProfesional = new FichaProfesional();
         fichaProfesional.setFicha(ficha);
         ficha.setFichaProfesional(fichaProfesional);
@@ -116,21 +100,6 @@ public class DocenteController implements Serializable {
             fichaP = new FichaPersonal();
             fichaP.setFicha(ficha);
             ficha.setFichaPersonal(fichaP);
-            fichaM = new FichaMedica();
-            fichaM.setFicha(ficha);
-            ficha.setFichaMedica(fichaM);
-            fichaS = new FichaSocioeconomica();
-            fichaS.setFicha(ficha);
-            ficha.setFichaSocio(fichaS);
-            fichaPadre = new FichaPadre();
-            fichaPadre.setFicha(ficha);
-            ficha.setFichaPadre(fichaPadre);
-            fichaMadre = new FichaMadre();
-            fichaMadre.setFicha(ficha);
-            ficha.setFichaMadre(fichaMadre);
-            fichaRepresentante = new FichaRepresentante();
-            fichaRepresentante.setFicha(ficha);
-            ficha.setFichaRepresentante(fichaRepresentante);
             fichaProfesional = new FichaProfesional();
             fichaProfesional.setFicha(ficha);
             ficha.setFichaProfesional(fichaProfesional);
@@ -187,54 +156,6 @@ public class DocenteController implements Serializable {
         this.fichaP = fichaP;
     }
 
-    public FichaMedica getFichaM() {
-        if (fichaM == null) {
-            fichaM = new FichaMedica();
-
-        }
-        return fichaM;
-    }
-
-    public void setFichaM(FichaMedica fichaM) {
-        this.fichaM = fichaM;
-    }
-
-    public FichaSocioeconomica getFichaS() {
-        if (fichaS == null) {
-            fichaS = new FichaSocioeconomica();
-
-        }
-        return fichaS;
-    }
-
-    public void setFichaS(FichaSocioeconomica fichaS) {
-        this.fichaS = fichaS;
-    }
-
-    public FichaPadre getFichaPadre() {
-        return fichaPadre;
-    }
-
-    public void setFichaPadre(FichaPadre fichaPadre) {
-        this.fichaPadre = fichaPadre;
-    }
-
-    public FichaMadre getFichaMadre() {
-        return fichaMadre;
-    }
-
-    public void setFichaMadre(FichaMadre fichaMadre) {
-        this.fichaMadre = fichaMadre;
-    }
-
-    public FichaRepresentante getFichaRepresentante() {
-        return fichaRepresentante;
-    }
-
-    public void setFichaRepresentante(FichaRepresentante fichaRepresentante) {
-        this.fichaRepresentante = fichaRepresentante;
-    }
-
     public FichaProfesional getFichaProfesional() {
         return fichaProfesional;
     }
@@ -256,46 +177,7 @@ public class DocenteController implements Serializable {
         return ejbFacade.findAll();
     } // Fin public List<Usuario> listado
 
-    public void renderTabs(ValueChangeEvent e) {
-
-        FacesContext fc = FacesContext.getCurrentInstance();
-        UIViewRoot uiViewRoot = fc.getViewRoot();
-        TipoUsuario tipo = (TipoUsuario) e.getNewValue();
-        System.out.println("Valor de idRol: " + tipo);
-        System.out.println("Inicio de IF");
-        RequestContext context = RequestContext.getCurrentInstance();
-        //  context.execute("alert('Prueba')");
-        if (tipo.getNombre().equalsIgnoreCase("estudiante")) {
-
-            Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
-            panelPersonales.setRendered(true);
-            Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
-            panelDatosFamilia.setRendered(true);
-            Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
-            panelMedicos.setRendered(true);
-            Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
-            panelEconomicos.setRendered(true);
-            Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
-            panelProfesional.setRendered(false);
-        } else {
-
-            if (tipo.getNombre().equalsIgnoreCase("Secretaria") || (tipo.getNombre().equalsIgnoreCase("Docente"))) {
-                //context.execute("alert('PruebaAcord Tab 2')");
-                Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
-                panelPersonales.setRendered(true);
-                Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
-                panelDatosFamilia.setRendered(false);
-                Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
-                panelMedicos.setRendered(false);
-                Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
-                panelEconomicos.setRendered(false);
-                Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
-                panelProfesional.setRendered(true);
-            }
-        }
-    }
     // METODOS DE INICIO Y FINALIZACION DE LA CONVERSACION*******//
-
     public void beginConversation() {
         if (conversation.isTransient()) {
             conversation.begin();
@@ -318,7 +200,12 @@ public class DocenteController implements Serializable {
 
         } else {
             System.out.println("Ingreso a buscar con criterio: " + criterio);
-            resultlist = ejbFacade.buscarPorClave(criterio);
+            resultlist = ejbFacade.findDocentes(criterio);
+            System.out.println("Encontre Docente***********:" + resultlist.size());
+            for (Usuario usuario : resultlist) {
+                System.out.println("Docente encontrado " + usuario.getNombres());
+                
+            }
             if (resultlist.isEmpty()) {
                 SessionUtil.agregarMensajeInformacion("mensaje.busqueda.noEncontrada");
             } else {
@@ -330,8 +217,8 @@ public class DocenteController implements Serializable {
     }
 
     public String persist() {
-
-        System.out.println("========> INGRESO a Grabar nuevo Usuario: " + current.getNombres());
+        System.out.println("========> INGRESO a Grabar nuevo Docente: " + current.getNombres());
+        current.setRole(ejbFacadeRole.find(Long.parseLong("3")));
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
@@ -376,14 +263,14 @@ public class DocenteController implements Serializable {
     }
 
     public List<Usuario> getDocentes() {
-        return resultlist = ejbFacade.findbyRol("docente");
+        return resultlist;
     }
 
     public List<Usuario> getEstudiantes() {
-        return resultlist = ejbFacade.findbyRol("estudiante");
+        return resultlist;
     }
 
     public List<Usuario> getAdmin() {
-        return resultlist = ejbFacade.findbyRol("admin");
+        return resultlist;
     }
 }

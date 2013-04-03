@@ -5,6 +5,7 @@
 package ec.edu.sga.controller;
 
 import ec.edu.sga.controller.util.SessionUtil;
+import ec.edu.sga.facade.RoleFacade;
 import ec.edu.sga.facade.UsuarioFacade;
 import ec.edu.sga.modelo.usuarios.Ficha;
 import ec.edu.sga.modelo.usuarios.FichaMadre;
@@ -56,6 +57,8 @@ public class EstudianteController implements Serializable {
     private FichaProfesional fichaProfesional;
     @EJB
     private ec.edu.sga.facade.UsuarioFacade ejbFacade;
+    @EJB
+    private RoleFacade ejbFacadeRole;
     private List<Usuario> resultlist;
     @Inject
     Conversation conversation;
@@ -251,49 +254,21 @@ public class EstudianteController implements Serializable {
         this.resultlist = resultlist;
     }
 
+    public RoleFacade getEjbFacadeRole() {
+        return ejbFacadeRole;
+    }
+
+    public void setEjbFacadeRole(RoleFacade ejbFacadeRole) {
+        this.ejbFacadeRole = ejbFacadeRole;
+    }
+
+    
 //******************Metodos del managed Bean************************//
     public List<Usuario> getListado() {
         return ejbFacade.findAll();
     } // Fin public List<Usuario> listado
 
-    public void renderTabs(ValueChangeEvent e) {
-
-        FacesContext fc = FacesContext.getCurrentInstance();
-        UIViewRoot uiViewRoot = fc.getViewRoot();
-        TipoUsuario tipo = (TipoUsuario) e.getNewValue();
-        System.out.println("Valor de idRol: " + tipo);
-        System.out.println("Inicio de IF");
-        RequestContext context = RequestContext.getCurrentInstance();
-        //  context.execute("alert('Prueba')");
-        if (tipo.getNombre().equalsIgnoreCase("estudiante")) {
-
-            Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
-            panelPersonales.setRendered(true);
-            Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
-            panelDatosFamilia.setRendered(true);
-            Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
-            panelMedicos.setRendered(true);
-            Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
-            panelEconomicos.setRendered(true);
-            Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
-            panelProfesional.setRendered(false);
-        } else {
-
-            if (tipo.getNombre().equalsIgnoreCase("Secretaria") || (tipo.getNombre().equalsIgnoreCase("Docente"))) {
-                //context.execute("alert('PruebaAcord Tab 2')");
-                Panel panelPersonales = (Panel) uiViewRoot.findComponent("formUsuario:idDatosPersonales");
-                panelPersonales.setRendered(true);
-                Panel panelDatosFamilia = (Panel) uiViewRoot.findComponent("formUsuario:idDatosFamilia");
-                panelDatosFamilia.setRendered(false);
-                Panel panelMedicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosMedicos");
-                panelMedicos.setRendered(false);
-                Panel panelEconomicos = (Panel) uiViewRoot.findComponent("formUsuario:idDatosEconomicos");
-                panelEconomicos.setRendered(false);
-                Panel panelProfesional = (Panel) uiViewRoot.findComponent("formUsuario:idDatosProfesional");
-                panelProfesional.setRendered(true);
-            }
-        }
-    }
+   
     // METODOS DE INICIO Y FINALIZACION DE LA CONVERSACION*******//
 
     public void beginConversation() {
@@ -318,7 +293,8 @@ public class EstudianteController implements Serializable {
 
         } else {
             System.out.println("Ingreso a buscar con criterio: " + criterio);
-            resultlist = ejbFacade.buscarPorClave(criterio);
+            resultlist = ejbFacade.findEstudiantes();
+            System.out.println("Encontre Estudiante***********:" + current.getNombres());
             if (resultlist.isEmpty()) {
                 SessionUtil.agregarMensajeInformacion("mensaje.busqueda.noEncontrada");
             } else {
@@ -331,7 +307,8 @@ public class EstudianteController implements Serializable {
 
     public String persist() {
 
-        System.out.println("========> INGRESO a Grabar nuevo Usuario: " + current.getNombres());
+        System.out.println("========> INGRESO a Grabar nuevo Estudiante: " + current.getNombres());
+        current.setRole(ejbFacadeRole.find(Long.parseLong("4")));
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
@@ -376,14 +353,14 @@ public class EstudianteController implements Serializable {
     }
 
     public List<Usuario> getDocentes() {
-        return resultlist = ejbFacade.findbyRol("docente");
+        return resultlist;
     }
 
     public List<Usuario> getEstudiantes() {
-        return resultlist = ejbFacade.findbyRol("estudiante");
+        return resultlist;
     }
 
     public List<Usuario> getAdmin() {
-        return resultlist = ejbFacade.findbyRol("admin");
+        return resultlist ;
     }
 }

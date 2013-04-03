@@ -318,7 +318,7 @@ public class AdministradorController implements Serializable {
 
         } else {
             System.out.println("Ingreso a buscar con criterio: " + criterio);
-            resultlist = ejbFacade.buscarPorClave(criterio);
+            resultlist = ejbFacade.findAdmin();
             if (resultlist.isEmpty()) {
                 SessionUtil.agregarMensajeInformacion("mensaje.busqueda.noEncontrada");
             } else {
@@ -376,14 +376,14 @@ public class AdministradorController implements Serializable {
     }
 
     public List<Usuario> getDocentes() {
-        return resultlist = ejbFacade.findbyRol("docente");
+        return resultlist ;
     }
 
     public List<Usuario> getEstudiantes() {
-        return resultlist = ejbFacade.findbyRol("estudiante");
+        return resultlist;
     }
 
     public List<Usuario> getAdmin() {
-        return resultlist = ejbFacade.findbyRol("admin");
+        return resultlist ;
     }
 }

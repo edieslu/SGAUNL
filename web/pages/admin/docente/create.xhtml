@@ -48,7 +48,7 @@ and open the template in the editor.
 
                 <p:messages closable="true" globalOnly="true"/>
                 <p:panel id="editPanelUsuario"
-                         header="#{usuarioController.current.id != null ? bundle['header.editar'] : bundle['header.nuevo']}" 
+                         header="#{docenteController.current.id != null ? bundle['header.editar'] : bundle['header.nuevo']}" 
                          >
 
                     <p:panel id="idDatosLogin" toggleable="true" toggleOrientation="vertical"
@@ -66,15 +66,7 @@ and open the template in the editor.
                             <h:outputLabel value="#{bundle['usuarioController.estado']}:"/>
                             <p:selectBooleanCheckbox value="#{docenteController.current.estado}"
                                                      label="#{bundle['usuarioController.estado']}"/>
-                            <h:outputText value="#{bundle['usuarioController.tipoUsuario']}:*"/>
-                            <p:selectOneMenu value="#{docenteController.current.tipoUsuario}" 
-                                             effect="fade" required="true"
-                                             immediate="true" converter="genericConverter">
-                                <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
-                                <f:selectItems value="#{tipoUsuarioController.itemsAvailableSelectOne}"
-                                               />  
-                                <p:ajax update="@form"/>
-                            </p:selectOneMenu>
+
                         </h:panelGrid>
                     </p:panel>
 
@@ -202,7 +194,7 @@ and open the template in the editor.
                         </h:panelGrid>
                     </p:panel>
 
-                    
+
                     <p:panel id="idDatosProfesional" header="Datos Profesionales" rendered="true"
                              toggleOrientation="vertical" toggleable="true">
                         <h:panelGrid columns="4">
@@ -240,22 +232,22 @@ and open the template in the editor.
                         </h:panelGrid>
 
                     </p:panel>
-                    
+
 
 
                     <p:commandButton id="idguardar" value="#{bundle['boton.guardar']}"
-                                     action="#{usuarioController.persist()}" 
-                                     rendered="#{usuarioController.current.id == null}" 
+                                     action="#{docenteController.persist()}" 
+                                     rendered="#{docenteController.current.id == null}" 
                                      update="editPanelUsuario" icon="#{bundle['icono.guardar']}"/>
 
                     <p:commandButton value="#{bundle['boton.actualizar']}" 
-                                     action="#{usuarioController.update()}" 
-                                     rendered="#{usuarioController.current.id != null}" 
+                                     action="#{docenteController.update()}" 
+                                     rendered="#{docenteController.current.id != null}" 
                                      update="editPanelUsuario" 
                                      icon="#{bundle['icono.actualizar']}"
                                      />
                     <p:commandButton value="#{bundle['boton.cancelar']}" 
-                                     action="#{usuarioController.cancelEdit()}" 
+                                     action="#{docenteController.cancelEdit()}" 
                                      immediate="true" icon="#{bundle['icono.cancelar']}"/>
                 </p:panel>
             </h:form>
