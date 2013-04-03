@@ -55,9 +55,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
     }
     
-    public List<Usuario> findbyRol(String nombreusuario){
-        Query query = em.createNamedQuery("Usuario.findbyRol");
-        query.setParameter("nombreusuario", nombreusuario);
+    public List<Usuario> findEstudiantes(){
+        Query query = em.createNamedQuery("Usuario.findEstudiantes");
+        return query.getResultList();
+    }
+     public List<Usuario> findDocentes(String clave){
+        Query query = em.createNamedQuery("Usuario.buscarPorDocentes");
+         query.setParameter("clave", clave);
+        return query.getResultList();
+    }
+      public List<Usuario> findAdmin(){
+        Query query = em.createNamedQuery("Usuario.findAdmin");
         return query.getResultList();
     }
 }

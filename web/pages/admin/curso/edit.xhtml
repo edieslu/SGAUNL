@@ -26,33 +26,33 @@
             </p:ajaxStatus>
 
 
-            <h:form id="formCursoEdit" prependId="false">
+            <h:form id="formCursoEdit" prependId="false" styleClass="form-horizontal">
                 <p:panel header="#{cursoController.cursoId!=null  ? bundle['header.editar'] : bundle['header.nuevo']}" 
-                         id="panelEditCurso"
-                         styleClass = "myPanelStyle myPanelStyleTitle">
+                         id="panelEditCurso">
 
                     <p:messages  closable="true"/>
 
-                    <p:panelGrid columns="2">
-                        <h:outputLabel value="#{bundle['cursoController.nombre']}"/>
+                    <h:panelGroup styleClass="control-group">
+                        <h:outputLabel value="#{bundle['cursoController.nombre']}"
+                                       styleClass="control-label"/>
                         <p:inputText id="idNombre" label="#{bundle['cursoController.nombre']}"
                                      required="true"
                                      value="#{cursoController.current.nombreCurso}" 
                                      validatorMessage="No ha ingresado un nombre para el curso"
-                                     styleClass="letras">
+                                     styleClass="letras controls" >
                         </p:inputText>
 
 
-                        <h:outputLabel value="#{bundle['cursoController.orden']}"/>
+                        <h:outputLabel value="#{bundle['cursoController.orden']}" styleClass="control-label"/>
                         <p:inputText id="idOrden" label="#{bundle['cursoController.orden']}"
                                      required="true"
                                      value="#{cursoController.current.orden}" 
                                      validatorMessage="No ha ingresado un orden para el curso"
-                                     styleClass="numeros">
+                                     styleClass="numeros controls">
                         </p:inputText>
 
 
-                        <h:outputLabel value="#{bundle['cursoController.nivel']}"/>
+                        <h:outputLabel value="#{bundle['cursoController.nivel']}" styleClass="control-label"/>
                         <p:selectOneMenu id="idNivel" 
                                          converter="genericConverter"
                                          value="#{cursoController.current.nivel}"
@@ -68,7 +68,7 @@
 
                         <h:outputLabel value="#{bundle['cursoController.especialidad']}" 
                                        id="idLabelEspecialidad"
-                                       rendered="false"/>
+                                       rendered="false" styleClass="control-label"/>
                         <p:selectOneMenu id="idEspecialidad"
                                          rendered="false"
                                          label="#{bundle['cursoController.especialidad']}"
@@ -80,35 +80,31 @@
                                 value="#{especialidadController.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
 
-
-
-
-
-                        <f:facet name="footer">
-                            <p:commandButton value="#{bundle['boton.actualizar']}" 
-                                             rendered="#{cursoController.cursoId!=null}"
-                                             action="#{cursoController.update()}"
-                                             update="panelEditCurso"
-                                             icon="#{bundle['icono.actualizar']}"/>
-
-
-                            <p:commandButton value="#{bundle['boton.guardar']}" 
-                                             rendered="#{cursoController.cursoId == null}"
-                                             action="#{cursoController.persist()}"
-                                             update="panelEditCurso"
-                                             icon="#{bundle['icono.guardar']}"/>
-
-
-                            <p:commandButton value="#{bundle['boton.cancelar']}" 
-                                             action="#{cursoController.cancelEdit()}"
-                                             immediate="true" 
-                                             icon="#{bundle['icono.cancelar']}"/>
-
-
-                        </f:facet> 
-                    </p:panelGrid>
+                    </h:panelGroup>
                 </p:panel>
+                <div class="form-actions">
+                    <p:commandButton value="#{bundle['boton.actualizar']}" 
+                                     rendered="#{cursoController.cursoId!=null}"
+                                     action="#{cursoController.update()}"
+                                     update="panelEditCurso"
+                                     icon="#{bundle['icono.actualizar']}"
+                                     styleClass="btn btn-primary"/>
 
+
+                    <p:commandButton value="#{bundle['boton.guardar']}" 
+                                     rendered="#{cursoController.cursoId == null}"
+                                     action="#{cursoController.persist()}"
+                                     update="panelEditCurso"
+                                     icon="#{bundle['icono.guardar']}"/>
+
+
+                    <p:commandButton value="#{bundle['boton.cancelar']}" 
+                                     action="#{cursoController.cancelEdit()}"
+                                     immediate="true" 
+                                     icon="#{bundle['icono.cancelar']}"/>
+
+
+                </div>
                 <p:panel header="#{bundle['boton.agregar.paralelo']}">
 
 

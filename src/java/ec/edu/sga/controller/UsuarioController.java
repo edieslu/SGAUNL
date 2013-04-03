@@ -375,14 +375,14 @@ public class UsuarioController implements Serializable {
     }
 
     public List<Usuario> getDocentes() {
-        return resultlist = ejbFacade.findbyRol("docente");
+        return resultlist ;
     }
 
     public List<Usuario> getEstudiantes() {
-        return resultlist = ejbFacade.findbyRol("estudiante");
+        return resultlist ;
     }
 
     public List<Usuario> getAdmin() {
-        return resultlist = ejbFacade.findbyRol("admin");
+        return resultlist ;
     }
 }

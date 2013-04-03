@@ -40,7 +40,9 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
 @NamedQueries({
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login AND u.clave = :clave"),
-    @NamedQuery(name = "Usuario.findbyRol", query = "SELECT u FROM Usuario u join u.tipoUsuario t  WHERE t.nombre=:nombreusuario"),
+    @NamedQuery(name = "Usuario.findEstudiantes", query = "SELECT u FROM Usuario u WHERE u.role.name like 'ESTUDIANTE'"),
+    @NamedQuery(name = "Usuario.findDocentes", query = "SELECT u FROM Usuario u WHERE u.role.name like 'DOCENTE'"),
+    @NamedQuery(name = "Usuario.findAdmin", query = "SELECT u FROM Usuario u WHERE u.role.name like 'ADMIN'"),
     @NamedQuery(name = "Usuario.buscarPorClave",
     query = "select u from Usuario u where"
     + " lower(u.dni) like lower(concat('%',:clave,'%'))"
@@ -48,9 +50,17 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
     + " lower(u.nombres) like lower(concat('%',:clave,'%')) "
     + "or"
     + " lower(u.apellidos) like lower(concat('%',:clave,'%')) "
-    + "or("
-    + " lower(u.nombres) like lower(concat('%',:clave,'%')) and lower(u.apellidos) like lower(concat('%',:clave,'%')))"
     + "order by u.nombres"),
+     @NamedQuery(name = "Usuario.buscarPorDocentes",
+    query = "select u from Usuario u where"
+    + " (lower(u.dni) like lower(concat('%',:clave,'%'))"
+    + "or"
+    + " lower(u.nombres) like lower(concat('%',:clave,'%')) "
+    + "or"
+    + " lower(u.apellidos) like lower(concat('%',:clave,'%'))) "
+    + "and u.role.name='DOCENTE'"
+    + "order by u.nombres"),
+     
     @NamedQuery(name = "Usuario.buscarPorId",
     query = "select distinct u from Usuario u left join fetch u.ficha where"
     + " u.id=:id")
@@ -89,11 +99,10 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @ManyToOne
     private TipoUsuario tipoUsuario;
-    @OneToMany(mappedBy="usuario")
+    @OneToMany(mappedBy = "usuario")
     private List<Asignatura> asignaturas;
     @ManyToOne
     private Role role;
-    
 
     public Usuario() {
         matriculas = new ArrayList<Matricula>();
@@ -260,9 +269,6 @@ public class Usuario implements Serializable {
         this.role = role;
     }
 
-   
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
