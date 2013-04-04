@@ -41,7 +41,7 @@ and open the template in the editor.
                                      title="#{bundle['label.buscar']}">
                         </p:inputText>
                         <p:commandButton value="#{bundle['label.buscar']}" 
-                                         action="#{estudianteController.find}"
+                                         actionListener="#{estudianteController.find}"
                                          ajax="true" icon="#{bundle['icono.buscar']}" 
                                          update="@form listaUsuarios">
                         </p:commandButton>

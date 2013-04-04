@@ -52,7 +52,7 @@ public class DocenteController implements Serializable {
 
 // ---------------------- Constructor de la Clase ----------------------
     public DocenteController() {
-        log.info("Constructor de Usuario Controller");
+        log.info("Constructor de Docente Controller");
         current = new Usuario();
         ficha = new Ficha();
         current.setFicha(ficha);
@@ -74,17 +74,17 @@ public class DocenteController implements Serializable {
     }
 
     public void setUsuarioId(Long usuarioId) {
-        System.out.println("========> INGRESO a Fijar Estudiante: " + usuarioId);
+        System.out.println("========> INGRESO a Fijar Docente: " + usuarioId);
         this.beginConversation();
         if (usuarioId != null && usuarioId.longValue() > 0) {
             //this.current = ejbFacade.buscarPorId(estudianteId);
             this.current = ejbFacade.find(usuarioId);
 //            List<Contacto> res= ejbFacade.buscarContactos(estudianteId);
 //            this.current.setContactos(res);
-            System.out.println("========> INGRESO a Editar Usuario: " + current.getNombres());
-            System.out.println("========> INGRESO a Editar Usuario: " + current.getTipoUsuario().getNombre());
+            System.out.println("========> INGRESO a Editar Docente: " + current.getNombres());
+            System.out.println("========> INGRESO a Editar Docente: " + current.getTipoUsuario().getNombre());
         } else {
-            System.out.println("========> INGRESO a Crear Estudiante: ");
+            System.out.println("========> INGRESO a Crear Docente: ");
             this.current = new Usuario();
             ficha = new Ficha();
             current.setFicha(ficha);
@@ -103,7 +103,7 @@ public class DocenteController implements Serializable {
     }
 
     public void setCurrent(Usuario current) {
-        System.out.println("========> INGRESO a fijar Usuario: " + current);
+        System.out.println("========> INGRESO a fijar Docente: " + current);
         this.beginConversation();
         this.current = current;
     }
@@ -211,7 +211,7 @@ public class DocenteController implements Serializable {
 
     public String persist() {
         System.out.println("========> INGRESO a Grabar nuevo Docente: " + current.getNombres());
-        current.setRole(ejbFacadeRole.find(Long.parseLong("3")));
+        current.setRole(ejbFacadeRole.find(Long.parseLong("DOCENTE")));
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
         ejbFacade.create(current);

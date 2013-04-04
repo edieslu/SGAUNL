@@ -66,7 +66,7 @@ public class EstudianteController implements Serializable {
 
 // ---------------------- Constructor de la Clase ----------------------
     public EstudianteController() {
-        System.out.println("Constructor de Usuario Controller");
+        System.out.println("Constructor de Estudiante Controller");
         current = new Usuario();
         ficha = new Ficha();
         current.setFicha(ficha);
@@ -89,9 +89,7 @@ public class EstudianteController implements Serializable {
         fichaRepresentante = new FichaRepresentante();
         fichaRepresentante.setFicha(ficha);
         ficha.setFichaRepresentante(fichaRepresentante);
-        fichaProfesional = new FichaProfesional();
-        fichaProfesional.setFicha(ficha);
-        ficha.setFichaProfesional(fichaProfesional);
+        
         resultlist = new ArrayList<Usuario>();
     }
 //*********** GETTER AND SETTER***********//
@@ -108,8 +106,8 @@ public class EstudianteController implements Serializable {
             this.current = ejbFacade.find(usuarioId);
 //            List<Contacto> res= ejbFacade.buscarContactos(estudianteId);
 //            this.current.setContactos(res);
-            System.out.println("========> INGRESO a Editar Usuario: " + current.getNombres());
-            System.out.println("========> INGRESO a Editar Usuario: " + current.getTipoUsuario().getNombre());
+            System.out.println("========> INGRESO a Editar Estudiante: " + current.getNombres());
+            System.out.println("========> INGRESO a Editar Estudiante: " + current.getTipoUsuario().getNombre());
         } else {
             System.out.println("========> INGRESO a Crear Estudiante: ");
             this.current = new Usuario();
@@ -134,9 +132,7 @@ public class EstudianteController implements Serializable {
             fichaRepresentante = new FichaRepresentante();
             fichaRepresentante.setFicha(ficha);
             ficha.setFichaRepresentante(fichaRepresentante);
-            fichaProfesional = new FichaProfesional();
-            fichaProfesional.setFicha(ficha);
-            ficha.setFichaProfesional(fichaProfesional);
+           
         }
     }
 
@@ -145,7 +141,7 @@ public class EstudianteController implements Serializable {
     }
 
     public void setCurrent(Usuario current) {
-        System.out.println("========> INGRESO a fijar Usuario: " + current);
+        System.out.println("========> INGRESO a fijar Estudiante: " + current);
         this.beginConversation();
         this.current = current;
     }
@@ -293,8 +289,8 @@ public class EstudianteController implements Serializable {
 
         } else {
             System.out.println("Ingreso a buscar con criterio: " + criterio);
-            resultlist = ejbFacade.findEstudiantes();
-            System.out.println("Encontre Estudiante***********:" + current.getNombres());
+            resultlist = ejbFacade.findEstudiantes(criterio);
+            System.out.println("Encontre Estudiante***********:" + resultlist.size());
             if (resultlist.isEmpty()) {
                 SessionUtil.agregarMensajeInformacion("mensaje.busqueda.noEncontrada");
             } else {
@@ -308,7 +304,7 @@ public class EstudianteController implements Serializable {
     public String persist() {
 
         System.out.println("========> INGRESO a Grabar nuevo Estudiante: " + current.getNombres());
-        current.setRole(ejbFacadeRole.find(Long.parseLong("4")));
+        current.setRole(ejbFacadeRole.find(Long.parseLong("ESTUDIANTE")));
         current.setFechaCreacion(new Date());
         current.setFechaActualizacion(new Date());
         ejbFacade.create(current);
@@ -321,7 +317,7 @@ public class EstudianteController implements Serializable {
 
     public String update() {
 
-        System.out.println("========> INGRESO a Actualizar Usuario: " + current.getNombres());
+        System.out.println("========> INGRESO a Actualizar Estudiante: " + current.getNombres());
         current.setFechaActualizacion(new Date());
         ejbFacade.edit(current);
         this.endConversation();
@@ -331,7 +327,7 @@ public class EstudianteController implements Serializable {
     }
 
     public String delete() {
-        System.out.println("========> INGRESO a Eliminar Usuario: " + current.getNombres());
+        System.out.println("========> INGRESO a Eliminar Estudiante: " + current.getNombres());
         ejbFacade.remove(current);
         this.endConversation();
         SessionUtil.agregarMensajeInformacionOtraPagina("mensaje.eliminacion");

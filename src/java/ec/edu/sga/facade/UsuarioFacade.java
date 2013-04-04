@@ -54,17 +54,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
-    
-    public List<Usuario> findEstudiantes(){
-        Query query = em.createNamedQuery("Usuario.findEstudiantes");
+
+    public List<Usuario> findEstudiantes(String clave) {
+        Query query = em.createNamedQuery("Usuario.buscarPorEstudiantes");
+        query.setParameter("clave", clave);
         return query.getResultList();
     }
-     public List<Usuario> findDocentes(String clave){
+
+    public List<Usuario> findDocentes(String clave) {
         Query query = em.createNamedQuery("Usuario.buscarPorDocentes");
-         query.setParameter("clave", clave);
+        query.setParameter("clave", clave);
         return query.getResultList();
     }
-      public List<Usuario> findAdmin(){
+
+    public List<Usuario> findAdmin() {
         Query query = em.createNamedQuery("Usuario.findAdmin");
         return query.getResultList();
     }
