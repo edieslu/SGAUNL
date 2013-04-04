@@ -205,55 +205,61 @@ and open the template in the editor.
                                     <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDni" />
                                     <p:inputText id="idDni" 
                                                  label="#{bundle['usuarioController.dni']}" 
-                                                 value="#{estudianteController.current.ficha.fichaPadre.dni}"
-                                                 /> 
+                                                 value="#{estudianteController.current.ficha.fichaPadre.dni}">
+                                        <span class="help-block">Ingrese cedula, ruc o pasaporte </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombrePapa" />
                                     <p:inputText id="idNombrePapa" 
                                                  label="#{bundle['usuarioController.nombres']}" 
-                                                 value="#{estudianteController.current.ficha.fichaPadre.nombres}"
-                                                 /> 
+                                                 value="#{estudianteController.current.ficha.fichaPadre.nombres}"> 
+                                        <span class="help-block">Ingrese el nombre Ej: Manuel, Juan </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosPapa" />
                                     <p:inputText id="idApellidosPapa" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.apellidos}" 
                                                  title="#{bundle['usuarioController.apellidos']}" 
-                                                 label="#{bundle['usuarioController.apellidos']}"/>
+                                                 label="#{bundle['usuarioController.apellidos']}">
+                                        <span class="help-block">Ingrese el apellido Ej: Carrión, Toro </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesion" />
 
                                     <p:inputText id="idProfesion" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.profesion}" 
                                                  title="#{bundle['usuarioController.profesion']}" 
-                                                 label="#{bundle['usuarioController.profesion']}"/>
+                                                 label="#{bundle['usuarioController.profesion']}">
+                                        <span class="help-block">Ingrese la profesión Ej: Ing Civil, Chofer </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.lugarTrabajo']}:" for="idLugarTrabajo" />
                                     <p:inputText id="idLugarTrabajo" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.lugarTrabajo}" 
                                                  title="#{bundle['usuarioController.lugarTrabajo']}" 
-                                                 label="#{bundle['usuarioController.lugarTrabajo']}"/>
+                                                 label="#{bundle['usuarioController.lugarTrabajo']}">
+                                        <span class="help-block">Ingrese lugar de trabajo Ej: Tía, Romar </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.telefonoTrabajo']}:" for="idTelPapa" />
                                     <p:inputText id="idTelPapa" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.telefonoTrabajo}" 
                                                  title="#{bundle['usuarioController.telefonoTrabajo']}" 
-                                                 label="#{bundle['usuarioController.telefonoTrabajo']}"/>
+                                                 label="#{bundle['usuarioController.telefonoTrabajo']}">
+                                        <span class="help-block">Ingrese el telefono del trabajo Ej: 2567890</span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelPapa" />
                                     <p:inputText id="idCelPapa" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.celular}" 
                                                  title="#{bundle['usuarioController.celular']}" 
-                                                 label="#{bundle['usuarioController.celular']}"/>
+                                                 label="#{bundle['usuarioController.celular']}">
+                                        <span class="help-block">Ingrese el celular Ej: 0992123456 </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmail" />
                                     <p:inputText id="idEmail" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.email}" 
                                                  title="#{bundle['usuarioController.email']}" 
-                                                 label="#{bundle['usuarioController.email']}"/>
-
+                                                 label="#{bundle['usuarioController.email']}">
+                                        <span class="help-block">Ingrese el email Ej: juan_1@example.com </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.nacionalidad']}:" for="idNacionalidadPapa" />
                                     <p:inputText id="idNacionalidadPapa" 
                                                  value="#{estudianteController.current.ficha.fichaPadre.nacionalidad}" 
                                                  title="#{bundle['usuarioController.nacionalidad']}" 
-                                                 label="#{bundle['usuarioController.nacionalidad']}"/>
+                                                 label="#{bundle['usuarioController.nacionalidad']}">
+                                        <span class="help-block">Ingrese la nacionalidad Ej: Ecuatoriana, Colombiana </span> </p:inputText>
                                 </h:panelGrid>
                             </p:tab>
 
@@ -262,57 +268,60 @@ and open the template in the editor.
                                     <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDniMama" />
                                     <p:inputText id="idDniMama" 
                                                  label="#{bundle['usuarioController.dni']}" 
-                                                 value="#{estudianteController.current.ficha.fichaMadre.dni}"
-                                                 /> 
+                                                 value="#{estudianteController.current.ficha.fichaMadre.dni}"> 
+                                        <span class="help-block">Ingrese cedula, ruc o pasaporte </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombreMama" />
                                     <p:inputText id="idNombreMama" 
                                                  label="#{bundle['usuarioController.nombres']}" 
-                                                 value="#{estudianteController.current.ficha.fichaMadre.nombres}"
-                                                 /> 
-
+                                                 value="#{estudianteController.current.ficha.fichaMadre.nombres}"> 
+                                        <span class="help-block">Ingrese el nombre Ej: María, Ana </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosMama" />
                                     <p:inputText id="idApellidosMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.apellidos}" 
                                                  title="#{bundle['usuarioController.apellidos']}" 
-                                                 label="#{bundle['usuarioController.apellidos']}"/>
-
+                                                 label="#{bundle['usuarioController.apellidos']}">
+                                        <span class="help-block">Ingrese el apellido Ej: Pineda, Palma </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesionMama" />
 
                                     <p:inputText id="idProfesionMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.profesion}" 
                                                  title="#{bundle['usuarioController.profesion']}" 
-                                                 label="#{bundle['usuarioController.profesion']}"/>
-
+                                                 label="#{bundle['usuarioController.profesion']}">
+                                        <span class="help-block">Ingrese la Profesión Ej: Doctora, Ama de Casa </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.lugarTrabajo']}:" for="idLugarTrabajoMama" />
                                     <p:inputText id="idLugarTrabajoMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.lugarTrabajo}" 
                                                  title="#{bundle['usuarioController.lugarTrabajo']}" 
-                                                 label="#{bundle['usuarioController.lugarTrabajo']}"/>
+                                                 label="#{bundle['usuarioController.lugarTrabajo']}">
+                                        <span class="help-block">Ingrese el lugar de trabajo Ej: Hospital Americano </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.telefonoTrabajo']}:" for="idTelTrabajoMama" />
                                     <p:inputText id="idTelTrabajo" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.telefonoTrabajo}" 
                                                  title="#{bundle['usuarioController.telefonoTrabajo']}" 
-                                                 label="#{bundle['usuarioController.telefonoTrabajo']}"/>
+                                                 label="#{bundle['usuarioController.telefonoTrabajo']}">
+                                        <span class="help-block">Ingrese el telefono del trabajo Ej: 2567890 </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelMama" />
                                     <p:inputText id="idCelMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.celular}" 
                                                  title="#{bundle['usuarioController.celular']}" 
-                                                 label="#{bundle['usuarioController.celular']}"/>
-
+                                                 label="#{bundle['usuarioController.celular']}">
+                                        <span class="help-block">Ingrese el celular Ej: 0991234567 </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmailMama" />
                                     <p:inputText id="idEmailMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.email}" 
                                                  title="#{bundle['usuarioController.email']}" 
-                                                 label="#{bundle['usuarioController.email']}"/>
+                                                 label="#{bundle['usuarioController.email']}">
+                                        <span class="help-block">Ingrese el email Ej: ana.12@example.com </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.nacionalidad']}:" for="idNacionalidadMama" />
                                     <p:inputText id="idNacionalidadMama" 
                                                  value="#{estudianteController.current.ficha.fichaMadre.nacionalidad}" 
                                                  title="#{bundle['usuarioController.nacionalidad']}" 
-                                                 label="#{bundle['usuarioController.nacionalidad']}"/>
+                                                 label="#{bundle['usuarioController.nacionalidad']}">
+                                        <span class="help-block">Ingrese la nacionalidad Ej: Ecuatoriana, Colombiana</span> </p:inputText>
                                 </h:panelGrid>
                             </p:tab>
                             <p:tab title="Datos del Representante">
@@ -320,56 +329,56 @@ and open the template in the editor.
                                     <h:outputLabel value="#{bundle['usuarioController.dni']}:" for="idDniRepre" />
                                     <p:inputText id="idDniRepre" 
                                                  label="#{bundle['usuarioController.dni']}" 
-                                                 value="#{estudianteController.current.ficha.fichaRepresentante.dni}"
-                                                 /> 
+                                                 value="#{estudianteController.current.ficha.fichaRepresentante.dni}"> 
+                                        <span class="help-block">Ingrese cedula, ruc o pasaporte </span> </p:inputText>
 
                                     <h:outputLabel value="#{bundle['usuarioController.nombres']}:" for="idNombreRepre" />
                                     <p:inputText id="idNombreRepre" 
                                                  label="#{bundle['usuarioController.nombres']}" 
-                                                 value="#{estudianteController.current.ficha.fichaRepresentante.nombres}"
-                                                 /> 
-
+                                                 value="#{estudianteController.current.ficha.fichaRepresentante.nombres}"> 
+                                        <span class="help-block">Ingrese el nombre Ej: Manuel, Juan </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.apellidos']}:" for="idApellidosRepre" />
                                     <p:inputText id="idApellidosRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.apellidos}" 
                                                  title="#{bundle['usuarioController.apellidos']}" 
-                                                 label="#{bundle['usuarioController.apellidos']}"/>
-
+                                                 label="#{bundle['usuarioController.apellidos']}">
+                                        <span class="help-block">Ingrese el apellido Ej: Espinosa, González </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.profesion']}:" for="idProfesionRepre" />
                                     <p:inputText id="idProfesionRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.profesion}" 
                                                  title="#{bundle['usuarioController.profesion']}" 
-                                                 label="#{bundle['usuarioController.profesion']}"/>
-
+                                                 label="#{bundle['usuarioController.profesion']}">
+                                        <span class="help-block">Ingrese la profesión Ej: Licenciado </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.direccion']}:" for="idDireccionRepre" />
                                     <p:inputText id="idDireccionRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.domicilio}" 
                                                  title="#{bundle['usuarioController.direccion']}" 
-                                                 label="#{bundle['usuarioController.direccion']}"/>
-
+                                                 label="#{bundle['usuarioController.direccion']}">
+                                        <span class="help-block">Ingrese la dirección Ej: Lourdes 11-10 y sucre </span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.telefono']}:" for="idTelefonoRepre" />
                                     <p:inputText id="idTelefonoRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.telefono}" 
                                                  title="#{bundle['usuarioController.telefono']}" 
-                                                 label="#{bundle['usuarioController.telefono']}"/>
-
+                                                 label="#{bundle['usuarioController.telefono']}">
+                                        <span class="help-block">Ingrese el telefono Ej: 2565698</span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.celular']}:" for="idCelRepre" />
                                     <p:inputText id="idCelRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.celular}" 
                                                  title="#{bundle['usuarioController.celular']}" 
-                                                 label="#{bundle['usuarioController.celular']}"/>
-
+                                                 label="#{bundle['usuarioController.celular']}">
+                                        <span class="help-block">Ingrese el celular Ej: 0999345678</span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.email']}:" for="idEmailRepre" />
                                     <p:inputText id="idEmailRepre" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.email}" 
                                                  title="#{bundle['usuarioController.email']}" 
-                                                 label="#{bundle['usuarioController.email']}"/>
-
+                                                 label="#{bundle['usuarioController.email']}">
+                                        <span class="help-block">Ingrese el email Ej: luis12@example.com</span> </p:inputText>
                                     <h:outputLabel value="#{bundle['usuarioController.parentezco']}:" for="idParentezco" />
                                     <p:inputText id="idParentezco" 
                                                  value="#{estudianteController.current.ficha.fichaRepresentante.parentezco}" 
                                                  title="#{bundle['usuarioController.parentezco']}" 
-                                                 label="#{bundle['usuarioController.parentezco']}"/>
+                                                 label="#{bundle['usuarioController.parentezco']}">
+                                        <span class="help-block">Parentezco Ej: Mamá, Tío..</span> </p:inputText>
                                 </h:panelGrid>
                             </p:tab>
                         </p:tabView>
@@ -383,33 +392,37 @@ and open the template in the editor.
                                              value="#{estudianteController.current.ficha.fichaMedica.tipoSangre}">
 
                                 <f:selectItem itemLabel="#{bundle['item']}" itemValue=""/>
-                                <f:selectItems value="#{typeListController.typeListSangre}" />  
+                                <f:selectItems value="#{typeListController.typeListSangre}" /> 
+                                <span class="help-block">Seleccione el tipo de sangre</span>
                             </p:selectOneMenu>
 
                             <h:outputLabel value="#{bundle['usuarioController.alergias']}:" for="alergias" />
                             <p:inputText id="alergias" 
                                          value="#{estudianteController.current.ficha.fichaMedica.alergias}" 
                                          title="#{bundle['usuarioController.alergias']}" 
-                                         label="#{bundle['usuarioController.alergias']}"/>
+                                         label="#{bundle['usuarioController.alergias']}">
+                                <span class="help-block">Ingrese alguna alergia Ej: polvo, humo.. </span> </p:inputText>
 
                             <h:outputLabel value="#{bundle['usuarioController.hospital']}:" for="hospital" />
                             <p:inputText id="hospital" 
                                          value="#{estudianteController.current.ficha.fichaMedica.hospital}" 
                                          title="#{bundle['usuarioController.hospital']}" 
-                                         label="#{bundle['usuarioController.hospital']}"/>
+                                         label="#{bundle['usuarioController.hospital']}">
+                                <span class="help-block">Ingrese un hospital o clínica de confianza</span> </p:inputText>
 
                             <h:outputLabel value="#{bundle['usuarioController.telefonoHospital']}:" for="telefonoHosp" />
                             <p:inputText id="telefonoHosp" 
                                          value="#{estudianteController.current.ficha.fichaMedica.telefonoHospital}" 
                                          title="#{bundle['usuarioController.telefonoHospital']}" 
-                                         label="#{bundle['usuarioController.telefonoHospital']}"/>
+                                         label="#{bundle['usuarioController.telefonoHospital']}">
+                                <span class="help-block">Ingrese el telefono Ej: 2586013</span> </p:inputText>
 
                             <h:outputLabel value="#{bundle['usuarioController.observaciones']}:" for="observaciones" />
                             <p:inputTextarea id="observaciones" 
                                              value="#{estudianteController.current.ficha.fichaMedica.observaciones}" 
                                              title="#{bundle['usuarioController.observaciones']}"
-                                             label="#{bundle['usuarioController.observaciones']}"/>
-
+                                             label="#{bundle['usuarioController.observaciones']}">
+                                <span class="help-block">Ingrese alguna restricción adicional</span> </p:inputTextarea>
                         </h:panelGrid>
                     </p:panel>
                     <p:panel id="idDatosEconomicos" header="Datos Socio-Economicos" rendered="true"
@@ -418,14 +431,14 @@ and open the template in the editor.
                             <h:outputLabel value="#{bundle['usuarioController.internet']}:" for="internet" />
                             <p:selectBooleanCheckbox id="internet" 
                                                      label="#{bundle['usuarioController.internet']}" 
-                                                     value="#{estudianteController.current.ficha.fichaSocio.internet}"
-                                                     /> 
-
+                                                     value="#{estudianteController.current.ficha.fichaSocio.internet}"/> 
+                                
                             <h:outputLabel value="#{bundle['usuarioController.viveCon']}:" for="viveCon" />
                             <p:inputText id="viveCon" 
                                          value="#{estudianteController.current.ficha.fichaSocio.viveCon}" 
                                          title="#{bundle['usuarioController.viveCon']}" 
-                                         label="#{bundle['usuarioController.viveCon']}"/>
+                                         label="#{bundle['usuarioController.viveCon']}">
+                                <span class="help-block"> Vove con ? Ej: Padres, Tíos..</span> </p:inputText>
                         </h:panelGrid>
                     </p:panel>
 
