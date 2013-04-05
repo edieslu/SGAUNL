@@ -8,12 +8,14 @@ import ec.edu.sga.facade.AnioLectivoFacade;
 import ec.edu.sga.modelo.matriculacion.AnioLectivo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 /**
  *
@@ -52,6 +54,14 @@ public class AnioLectivoListController extends LazyDataModel<AnioLectivo> {
     public void setAnioLectivoSelected(AnioLectivo anioLectivoSelected) {
         this.anioLectivoSelected = anioLectivoSelected;
     }
+    
+    
+    @Override  
+    public List<AnioLectivo> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {  
+    
+        return null;
+    }
+    
     
     
     

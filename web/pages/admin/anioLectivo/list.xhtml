@@ -65,26 +65,30 @@
                              paginator="true" rows="10">
 
 
-                    <p:column headerText="#{bundle['anioController.fechainicio']}">
+                    <p:column headerText="#{bundle['anioController.fechainicio']}" 
+                              sortBy="#{_anio.fechaInicio}">
 
                         <h:outputText value="#{_anio.fechaInicio}"/>
 
                     </p:column>
 
-                    <p:column headerText="#{bundle['anioController.fechafin']}">
+                    <p:column headerText="#{bundle['anioController.fechafin']}"
+                              #{_anio.fechaFin}>
 
                         <h:outputText value="#{_anio.fechaFin}" />
 
                     </p:column>
 
 
-                    <p:column headerText="#{bundle['anioController.duracion']}" >
+                    <p:column headerText="#{bundle['anioController.duracion']}" 
+                              #{_anio.duracion}>
                         <h:outputText value="#{_anio.duracion}" />
 
                     </p:column>
 
 
-                    <p:column headerText="Estado" >
+                    <p:column headerText="Estado" 
+                              #{_anio.estado}>
                         <h:outputText value="#{_anio.estado}" />
 
                     </p:column>
