@@ -60,7 +60,15 @@ valueColumnName = "valor", pkColumnValue = "Usuario", initialValue = 1, allocati
     + " lower(u.apellidos) like lower(concat('%',:clave,'%'))) "
     + "and u.role.name='DOCENTE'"
     + "order by u.nombres"),
-     
+    @NamedQuery(name = "Usuario.buscarPorEstudiantes",
+    query = "select u from Usuario u where"
+    + " (lower(u.dni) like lower(concat('%',:clave,'%'))"
+    + "or"
+    + " lower(u.nombres) like lower(concat('%',:clave,'%')) "
+    + "or"
+    + " lower(u.apellidos) like lower(concat('%',:clave,'%'))) "
+    + "and u.role.name='ESTUDIANTE'"
+    + "order by u.nombres"),
     @NamedQuery(name = "Usuario.buscarPorId",
     query = "select distinct u from Usuario u left join fetch u.ficha where"
     + " u.id=:id")
